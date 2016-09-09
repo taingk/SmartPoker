@@ -1,0 +1,18 @@
+{
+  "name": "SmartGames Poker Texas Hold'em No-limit",
+  "version": "1.0.0",
+  "description": "Poker game cross-platform",
+  "dependencies":
+	  {
+	    "express": "4.3.1",
+	    "socket.io": "1.0.2"
+	  },
+  "conf":
+			{
+			   "host": "http://82.127.122.187",
+			   "port": "1337",
+			   "start_bankroll": "500",
+			   "small_blind": "10",
+			   "big_blind": "20"
+			}
+}

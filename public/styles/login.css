@@ -1,0 +1,538 @@
+html {
+    /*overflow: hidden;*/
+}
+@font-face {
+    font-family: 'Roboto-italic';
+    src: url('../polices/Roboto-Thin.ttf');
+    font-family: 'Roboto-bold';
+    src: url('polices/Roboto-Bold.ttf');
+}
+@media (orientation: landscape) {
+	@font-face {
+	    font-family: 'Roboto-italic';
+	    src: url('../polices/Roboto-Thin.ttf');
+	    font-family: 'Roboto-bold';
+	    src: url('polices/Roboto-Bold.ttf');
+	}
+    body {
+        /*	width: auto;*/
+        margin: 0 auto;
+        background-position: top center;
+        background-color: #00BFA5;
+        background-repeat: no-repeat;
+    }
+    #container {
+        position: absolute;
+        background-image: url("../img/player_login.png");
+        background-repeat: no-repeat;
+        width: 40%;
+        height: 100%;
+        left: 30%;
+        background-size: 100% 100%;
+    }
+    @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (device-width: 414px) and (device-height: 736px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 3) and (-webkit-device-pixel-ratio: 3) {
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        img, table, td, blockquote, code, pre, textarea, input, iframe, object, embed, video {
+            max-width: 100%;
+        }
+        img {
+            height: auto;
+        }
+        textarea, table, td, th, code, pre, samp {
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            hyphens: auto;
+            word-wrap: break-word;
+        }
+        code, pre, samp {
+            white-space: pre-wrap;
+        }
+    }
+    #nick_zone {
+        border: 1px solid #ddd;
+        font: 2em/1.2 "Roboto-bold";
+        position: absolute;
+        line-height: 15px;
+        top: 70%;
+        left: 5%;
+        width: 90%;
+        height: 8%;
+        border-radius: 5px;
+        z-index: 42;
+    }
+    #play {
+        position: absolute;
+        font: 4em/1.2 "Roboto-bold";
+        top: 80%;
+        left: 5%;
+        width: 90%;
+        height: 8%;
+        border: 0px solid #ddd;
+        border-radius: 5px;
+        z-index: 42;
+        display: flex;
+        background-color: #00A28F;
+    }
+    #msg {
+        color: red;
+        position: absolute;
+        font: 1.5em "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        left: 5%;
+        top: 49%;
+        width: 90%;
+        height: 8%;
+    }
+    /* GAME */
+    #disconnect {
+        position: absolute;
+        background-color: #00A28F;
+        display: flex;
+        top: 3%;
+        right: 5%;
+        width: 10%;
+        border: 5px solid white;
+        border-radius: 50px;
+    }
+    #cross {
+        margin: auto;
+        font: 2em "Roboto-bold";
+        color: white;
+    }
+    #card1 {
+        position: absolute;
+        left: 5%;
+        top: 3%;
+        width: 20%;
+        height: 20%;
+        visibility: hidden;
+    }
+    #card2 {
+        position: absolute;
+        left: 27%;
+        top: 3%;
+        width: 20%;
+        height: 20%;
+        visibility: hidden;
+    }
+    /* HEADER */
+    #player_name {
+        color: #FFFFFF;
+        font: 1.5em "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        position: absolute;
+        top: 3%;
+        left: 51%;
+    }
+    #hand_value {
+        color: #FFFFFF;
+        font: 1.5em/1.2 "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        position: absolute;
+        top: 9%;
+        left: 51%;
+    }
+    /* !HEADER*/
+    /* BETS LIMITS */
+    #min_bet, #max_bet {
+        visibility: hidden;
+        color: #FDD835;
+        font: 4em/1.2 "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        position: absolute;
+        width: 84px;
+        height: 24px;
+        margin-top: 264px;
+    }
+    #min_bet {
+        left: 0%;
+        top: 28%;
+        width: 50%;
+    }
+    #max_bet {
+        left: 50%;
+        top: 28%;
+        width: 50%;
+    }
+    /* !BETS LIMITS */
+    #aim {
+        position: absolute;
+        left: 45%;
+        top: 41%;
+        width: 81px;
+        height: 118px;
+        visibility: hidden;
+    }
+    /* ACTIONS */
+    #choice1 {
+        position: absolute;
+        left: 5%;
+        top: 57%;
+        width: 90%;
+        height: 10%;
+        font-size: 2em;
+        border: 0px solid black;
+        border-radius: 19px;
+        background-color: #424242;
+        display: flex;
+        visibility: hidden;
+    }
+    #choice2 {
+        position: absolute;
+        left: 5%;
+        top: 72%;
+        width: 90%;
+        height: 10%;
+        font-size: 2em;
+        border: 0px solid black;
+        border-radius: 19px;
+        background-color: #424242;
+        display: flex;
+        visibility: hidden;
+    }
+    #choice3 {
+        position: absolute;
+        left: 5%;
+        top: 86%;
+        width: 90%;
+        height: 10%;
+        font-size: 2em;
+        border: 0px solid black;
+        border-radius: 19px;
+        background-color: #424242;
+        display: flex;
+        visibility: hidden;
+    }
+    #playtxt {
+        position: relative;
+        color: #FFFFFF;
+        font: 0.5em "Roboto-bold";
+        margin: auto;
+    }
+    #c1, #c2, #c3, #c1_amount, #c2_amount, #hidenshow, {
+        position: relative;
+        color: #FFFFFF;
+        font: 1em "Roboto-bold";
+        margin: auto;
+    }
+    #bet_pot {
+        visibility: hidden;
+        position: absolute;
+        top: 48%;
+        width: 100%;
+        display: flex;
+    }
+    #pot1, #pot2, #pot3, #allin {
+        margin: auto;
+        height: 100%;
+        width: 15%;
+        border: 5px solid black;
+        background: white;
+        font: 1em "Roboto-bold";
+    }
+    /* !ACTIONS */
+    /* MONEY SLIDER */
+    #slider {
+        position: absolute;
+        left: 10%;
+        top: 40%;
+        height: 3%;
+        width: 80%;
+        visibility: hidden;
+        border: 5px solid black;
+    }
+    #tot_amount {
+        position: absolute;
+        top: 31%;
+        width: 100%;
+        display: flex;
+    }
+    #raise_amount {
+        font: 1.5em "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        color: white;
+        margin: auto;
+    }
+    /* !MONEY SLIDER */
+    #curtain {
+        font: 2em "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        color: #FFFFFF;
+        position: absolute;
+        top: 55%;
+        margin-left: 3%;
+        background-color: #00BFA5;
+        width: 95%;
+        height: 49%;
+        z-index: 43;
+        visibility: hidden;
+    }
+    #hide_cards {
+        position: absolute;
+        top: 16%;
+        left: 50%;
+        width: 30%;
+        height: 7%;
+        visibility: hidden;
+        border: 0px solid black;
+        border-radius: 19px;
+        background-color: #424242;
+        display: flex;
+    }
+}
+@media (orientation: portrait) {
+    body {
+        /*	width: auto;*/
+        margin: 0 auto;
+        background-position: top center;
+        background-color: #00BFA5;
+        background-repeat: no-repeat;
+    }
+    #container {
+        position: absolute;
+        background-image: url("../img/player_login.png");
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100% 100%;
+    }
+    @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 3) and (-webkit-device-pixel-ratio: 3) {
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        img, table, td, blockquote, code, pre, textarea, input, iframe, object, embed, video {
+            max-width: 100%;
+        }
+        img {
+            height: auto;
+        }
+        textarea, table, td, th, code, pre, samp {
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            hyphens: auto;
+            word-wrap: break-word;
+        }
+        code, pre, samp {
+            white-space: pre-wrap;
+        }
+    }
+    #nick_zone {
+        border: 1px solid #ddd;
+        font: 4em/1.2 "Roboto-bold";
+        position: absolute;
+        line-height: 15px;
+        top: 70%;
+        left: 5%;
+        width: 90%;
+        height: 8%;
+        border-radius: 5px;
+        z-index: 42;
+    }
+    #play {
+        position: absolute;
+        font: 4em/1.2 "Roboto-bold";
+        top: 80%;
+        left: 5%;
+        width: 90%;
+        height: 8%;
+        border: 0px solid #ddd;
+        border-radius: 5px;
+        z-index: 42;
+        display: flex;
+        background-color: #00A28F;
+    }
+    #msg {
+        color: red;
+        position: absolute;
+        font: 4em/1.2 "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        left: 5%;
+        top: 52%;
+        width: 90%;
+        height: 8%;
+    }
+    /* GAME */
+    #disconnect {
+        position: absolute;
+        background-color: #00A28F;
+        display: flex;
+        top: 3%;
+        right: 5%;
+        width: 10%;
+        border: 5px solid white;
+        border-radius: 50px;
+    }
+    #cross {
+        margin: auto;
+        font: 500% "Roboto-bold";
+        color: white;
+    }
+    #card1 {
+        position: absolute;
+        left: 5%;
+        top: 3%;
+        width: 20%;
+        height: 20%;
+        visibility: hidden;
+    }
+    #card2 {
+        position: absolute;
+        left: 27%;
+        top: 3%;
+        width: 20%;
+        height: 20%;
+        visibility: hidden;
+    }
+    /* HEADER */
+    #player_name {
+        color: #FFFFFF;
+        font: 5em/1 "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        position: absolute;
+        top: 3%;
+        left: 51%;
+    }
+    #hand_value {
+        color: #FFFFFF;
+        font: 3.5em/1.2 "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        position: absolute;
+        top: 9%;
+        left: 51%;
+    }
+    /* !HEADER*/
+    /* BETS LIMITS */
+    #min_bet, #max_bet {
+        visibility: hidden;
+        color: #FDD835;
+        font: 4em/1.2 "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        position: absolute;
+        width: 84px;
+        height: 24px;
+        margin-top: 264px;
+    }
+    #min_bet {
+        left: 0%;
+        top: 28%;
+        width: 50%;
+    }
+    #max_bet {
+        left: 50%;
+        top: 28%;
+        width: 50%;
+    }
+    /* !BETS LIMITS */
+    #aim {
+        position: absolute;
+        left: 45%;
+        top: 41%;
+        width: 81px;
+        height: 118px;
+        visibility: hidden;
+    }
+    /* ACTIONS */
+    #choice1 {
+        position: absolute;
+        left: 5%;
+        top: 57%;
+        width: 90%;
+        height: 10%;
+        font-size: 2em;
+        border: 0px solid black;
+        border-radius: 19px;
+        background-color: #424242;
+        display: flex;
+        visibility: hidden;
+    }
+    #choice2 {
+        position: absolute;
+        left: 5%;
+        top: 72%;
+        width: 90%;
+        height: 10%;
+        font-size: 2em;
+        border: 0px solid black;
+        border-radius: 19px;
+        background-color: #424242;
+        display: flex;
+        visibility: hidden;
+    }
+    #choice3 {
+        position: absolute;
+        left: 5%;
+        top: 86%;
+        width: 90%;
+        height: 10%;
+        font-size: 2em;
+        border: 0px solid black;
+        border-radius: 19px;
+        background-color: #424242;
+        display: flex;
+        visibility: hidden;
+    }
+    #c1, #c2, #c3, #c1_amount, #c2_amount, #hidenshow, #playtxt {
+        position: relative;
+        color: #FFFFFF;
+        font: 2em "Roboto-bold";
+        margin: auto;
+    }
+    #bet_pot {
+        visibility: hidden;
+        position: absolute;
+        top: 48%;
+        width: 100%;
+        display: flex;
+    }
+    #pot1, #pot2, #pot3, #allin {
+        margin: auto;
+        height: 100%;
+        width: 15%;
+        border: 5px solid black;
+        background: white;
+        font: 2.5em "Roboto-bold";
+    }
+    /* !ACTIONS */
+    /* MONEY SLIDER */
+    #slider {
+        position: absolute;
+        left: 10%;
+        top: 40%;
+        height: 3%;
+        width: 80%;
+        visibility: hidden;
+        border: 5px solid black;
+    }
+    #tot_amount {
+        position: absolute;
+        top: 31%;
+        width: 100%;
+        display: flex;
+    }
+    #raise_amount {
+        font: 5em/1.2 "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        color: white;
+        margin: auto;
+    }
+    /* !MONEY SLIDER */
+    #curtain {
+        font: 4em/1.2 "Roboto-bold", "Roboto-italic", "Helvetica neue", Arial, sans-serif;
+        color: #FFFFFF;
+        position: absolute;
+        top: 55%;
+        margin-left: 3%;
+        background-color: #00BFA5;
+        width: 95%;
+        height: 49%;
+        z-index: 43;
+        visibility: hidden;
+    }
+    #hide_cards {
+        position: absolute;
+        top: 16%;
+        left: 50%;
+        width: 30%;
+        height: 7%;
+        visibility: hidden;
+        border: 0px solid black;
+        border-radius: 19px;
+        background-color: #424242;
+        display: flex;
+    }
+}

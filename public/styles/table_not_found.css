@@ -1,0 +1,34 @@
+html
+{
+	overflow: hidden;
+}
+
+body
+{
+	margin: 0 auto;
+	width: 1280px;
+	height: 720px;
+	max-width: 1280px;
+	max-height: 720px;
+	background-image: url("../img/table_not_found_tv.png");
+	background-repeat: no-repeat;
+	display: block;
+}
+
+@font-face
+{
+	font-family: 'Roboto-italic';
+	src: url('polices/Roboto-Thin.ttf');
+	font-family: 'Roboto-bold';
+	src: url('polices/Roboto-Bold.ttf');
+}
+
+#new_table_btn
+{
+	position: absolute;
+	left: 512px;
+	top: 408px;
+	width: 256px;
+	height: 67px;
+	display: block;
+}
