@@ -107,11 +107,7 @@ function	doublesb(){
 //var doublebb = setInterval(function() {cfg.conf.big_blind = cfg.conf.big_blind * 2; callBack}, 10000);
 
 function 	callBack(fct_retour) {
-	fct_retour(); // appel de la fonction
-}
-
-function 	sb() {
-	console.log(sb);
+	console.log(fct_retour); // appel de la fonction
 }
 
 function	treat_decision(table, seat, decision, bet_amount, player, seat_nb)
