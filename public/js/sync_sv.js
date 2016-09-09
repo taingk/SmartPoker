@@ -3,7 +3,11 @@ function	sync_sv()
 	socket.emit("get seated players");
 	socket.on("need sbbb", function(sb, bb) {
 		console.log('Salut ca va ou pas');
-		console.log(sb, bb);
+		setInterval(function() {
+			sb = sb * 2;
+			console.log(sb);
+		}, 10000);
+		console.log(sb);
 	})
 	socket.on("seated players info", function(seat, seat_idx)
 	{
