@@ -156,7 +156,7 @@ io.on("connection", function(socket)
 								'2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', 'td', 'jd', 'qd', 'kd', '1d',
 								'2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', 'th', 'jh', 'qh', 'kh', '1h');
     	console.log("Creating a new table...\nTable ID: " + table_id);
-    	curgame = new Game(deck, -1, -1, doublesb()/*cfg.conf.small_blind*/, -1, cfg.conf.big_blind, 0, 0, 0, 0, "waiting", 0, new Array());
+    	curgame = new Game(deck, -1, -1, cfg.conf.small_blind, -1, cfg.conf.big_blind, 0, 0, 0, 0, "waiting", 0, new Array());
 	    table = new_table(table_id, 0, "waiting", new Array(),
 	    	    +cfg.conf.start_bankroll, new_table_seats(), curgame, new Array(), new Array()); // We're also calling a function.
 	    tables.push(table);

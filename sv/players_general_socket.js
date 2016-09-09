@@ -60,9 +60,7 @@ function		socket_listens_players(socket, table)
 		if (table.game.board.length === 5)
 			io.to(table.id).emit("send river", table.game.board[4]);
 	});
-	socket.on("need sb", function() {
-		console.log('Salut ca va ou pas');
-	})
+
 	socket.on("player decision", function(decision, channel_id, bet_amount)
 	{
 		if (!decision || !channel_id)
