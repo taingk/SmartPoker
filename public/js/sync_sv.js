@@ -177,8 +177,18 @@ function	sync_sv()
 
 function restart() {
 	//fonction reinitialiser la game
-	socket.emit('restart');
-	socket.on('refresh game', function(){
-		console.log('Ca refresh');
+	var aTable = [];
+	var aGame = [];
+
+	socket.emit('get table');
+	socket.on('your table', function(table, game){
+		aTable = table;
+		aGame = game;
+		console.log(aTable, aGame);
+
+		socket.emit('restart', aTable.id);
+		socket.on('refresh game', function(){
+			console.log('Ca refresh');
+		});
 	});
 }

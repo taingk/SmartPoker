@@ -163,9 +163,9 @@ io.on("connection", function(socket)
 	    socket.join(table.id);
    		send_qrcodes(table, table.seats);
    		table.game.turn_to = "joiners";
-		socket.on('restart', function(){
+		socket.on('restart', function(id){
 			console.log('Restart!');
-			io.to(table.id).emit('refresh game');
+			io.to(id).emit('refresh game');
 		});
 	}
    	if (device_client)

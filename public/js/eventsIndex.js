@@ -123,13 +123,4 @@ function 	back_func()
 		show_prompt(2);
 }
 
-var aTable = [];
-var aGame = [];
-socket.emit('get table');
-socket.on('your table', function(table, game){
-	aTable = table;
-	aGame = game;
-	console.log(aTable, aGame);
-});
-
 var eventIndexReady=true;
