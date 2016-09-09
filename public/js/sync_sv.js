@@ -7,7 +7,6 @@ function	sync_sv()
 			sb = sb * 2;
 			console.log(sb);
 		}, 10000);
-		console.log(sb);
 	})
 	socket.on("seated players info", function(seat, seat_idx)
 	{
