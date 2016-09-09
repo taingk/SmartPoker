@@ -97,6 +97,23 @@ function		socket_listens_players(socket, table)
 	});
 }
 
+function	doublesb(){
+	setInterval(function() {
+		var sb = cfg.conf.small_blind = cfg.conf.small_blind * 2;
+		callBack(sb);
+	}, 10000);
+}
+
+//var doublebb = setInterval(function() {cfg.conf.big_blind = cfg.conf.big_blind * 2; callBack}, 10000);
+
+function 	callBack(fct_retour) {
+	fct_retour(); // appel de la fonction
+}
+
+function 	sb() {
+	console.log(sb);
+}
+
 function	treat_decision(table, seat, decision, bet_amount, player, seat_nb)
 {
 	if (decision == "CHECK" && +seat.bet === +table.game.curbet)

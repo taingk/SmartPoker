@@ -146,13 +146,12 @@ io.on("connection", function(socket)
     var client_ip = socket.request.connection.remoteAddress;
     var	curgame;
 
+	doublesb();
    	if (typeof table_id === "undefined")
     	return ;
     console.log("New connection from " + client_ip);
     if ((table = get_table(table_id, tables)) == "not found" && !device_client)
     {
-		var doublesb = setInterval(function() {cfg.conf.small_blind = cfg.conf.small_blind * 2}, 10000);
-		var doublebb = setInterval(function() {cfg.conf.big_blind = cfg.conf.big_blind * 2}, 10000);
     	var		deck = new Array('2c', '3c', '4c', '5c', '6c', '7c', '8c', '9c', 'tc', 'jc', 'qc', 'kc', '1c',
 								'2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', 'ts', 'js', 'qs', 'ks', '1s',
 								'2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', 'td', 'jd', 'qd', 'kd', '1d',
