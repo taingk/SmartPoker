@@ -186,9 +186,10 @@ function restart() {
 	socket.on('your table', function(table, game){
 		aTable = table;
 		aGame = game;
-		tables.push(aTable.id);
+		if (tables[i] != aTable.id)
+			tables.push(aTable.id);
 		console.log(tables);
-		socket.emit('restart', tables[i++]);
+		socket.emit('restart', tables[i]);
 		socket.on('refresh game', function(){
 			console.log('Ca refresh');
 		});

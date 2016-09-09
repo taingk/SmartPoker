@@ -165,6 +165,7 @@ io.on("connection", function(socket)
    		table.game.turn_to = "joiners";
 		socket.on('restart', function(id){
 			console.log('Restart!');
+			console.log(id);
 			io.to(id).emit('refresh game');
 		});
 	}
