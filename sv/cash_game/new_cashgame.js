@@ -200,7 +200,7 @@ function		send_blinds(table, sb, bb)
 	var pb = setInterval(function(){
 		cfg.conf.small_blind = cfg.conf.small_blind * 2;
 	});
-	console.log('pb: ' pb);
+	console.log('pb: '+ pb);
 	io.to(table.id).emit("bankroll modification", table.game.sb_pos, sb.player);
 	io.to(table.id).emit("bankroll modification", table.game.bb_pos, bb.player);
 	io.to(table.id).emit("pot modification", table.game.pot_amount);
