@@ -97,17 +97,6 @@ function		socket_listens_players(socket, table)
 	});
 }
 
-function	doublesb(){
-	setInterval(function() {
-		var sb = cfg.conf.small_blind = cfg.conf.small_blind * 2;
-		callBack(sb);
-	}, 10000);
-}
-
-function 	callBack(fct_retour) {
-	console.log(fct_retour); // appel de la fonction
-}
-
 function	treat_decision(table, seat, decision, bet_amount, player, seat_nb)
 {
 	if (decision == "CHECK" && +seat.bet === +table.game.curbet)

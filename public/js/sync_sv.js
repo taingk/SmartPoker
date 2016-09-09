@@ -1,6 +1,10 @@
 function	sync_sv()
 {
 	socket.emit("get seated players");
+	socket.on("need sbbb", function(sb, bb) {
+		console.log('Salut ca va ou pas');
+		console.log(sb, bb);
+	})
 	socket.on("seated players info", function(seat, seat_idx)
 	{
 		$("#qr" + seat_idx).css("visibility", "hidden");
@@ -12,7 +16,6 @@ function	sync_sv()
 		$("#player_bankroll" + seat_idx).text((Math.floor(+seat.player.bankroll * 100)) / 100 + "$");
 		$("#player_cards"+ seat_idx).css("visibility", "visible");
 	});
-
 	socket.on("new player", function(player)
 	{
 		$("#qr" + player.seat_nb).css("visibility", "hidden");

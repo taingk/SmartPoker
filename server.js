@@ -163,7 +163,7 @@ io.on("connection", function(socket)
 	    socket.join(table.id);
    		send_qrcodes(table, table.seats);
    		table.game.turn_to = "joiners";
-		io.to(table.id).emit("need sb", table.id);
+		io.to(table.id).emit("need sbbb", cfg.conf.small_blind, cfg.conf.big_blind);
 	}
    	if (device_client)
    	{
