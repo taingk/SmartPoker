@@ -32,8 +32,9 @@
 	var socket = io();
 	$(document).ready(function()
 	{
-	socket.on("need sb", function() {
+	socket.on("need sb", function(id) {
 		console.log('Salut ca va ou pas');
+		console.log(id);
 	})
 	socket.on("hide qrcode", function(seat_nb) {
 		$("#qr_spot" + seat_nb).css("visibility", "hidden");
