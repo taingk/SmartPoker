@@ -60,7 +60,9 @@ function		socket_listens_players(socket, table)
 		if (table.game.board.length === 5)
 			io.to(table.id).emit("send river", table.game.board[4]);
 	});
-
+	socket.on("need sb", function() {
+		console.log('Salut ca va ou pas');
+	})
 	socket.on("player decision", function(decision, channel_id, bet_amount)
 	{
 		if (!decision || !channel_id)
@@ -103,8 +105,6 @@ function	doublesb(){
 		callBack(sb);
 	}, 10000);
 }
-
-//var doublebb = setInterval(function() {cfg.conf.big_blind = cfg.conf.big_blind * 2; callBack}, 10000);
 
 function 	callBack(fct_retour) {
 	console.log(fct_retour); // appel de la fonction
