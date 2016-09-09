@@ -178,4 +178,5 @@ function	sync_sv()
 function restart() {
 	//fonction reinitialiser la game
 	console.log('restart');
+	socket.emit('restart');
 }

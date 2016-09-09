@@ -163,6 +163,9 @@ io.on("connection", function(socket)
 	    socket.join(table.id);
    		send_qrcodes(table, table.seats);
    		table.game.turn_to = "joiners";
+		socket.on('restart', function(){
+			console.log('Restart!');
+		});
 	}
    	if (device_client)
    	{
