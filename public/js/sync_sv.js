@@ -1,13 +1,6 @@
 function	sync_sv()
 {
 	socket.emit("get seated players");
-	socket.on("need sbbb", function(sb, bb) {
-		console.log('Salut ca va ou pas');
-		setInterval(function() {
-			sb = sb * 2;
-			console.log(sb);
-		}, 10000);
-	})
 	socket.on("seated players info", function(seat, seat_idx)
 	{
 		$("#qr" + seat_idx).css("visibility", "hidden");

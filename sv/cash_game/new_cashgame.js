@@ -197,11 +197,16 @@ function		blinds_treatment(table, sb, bb)
 
 function		send_blinds(table, sb, bb)
 {
+	var pb = setInterval(function(){
+		cfg.conf.small_blind = cfg.conf.small_blind * 2;
+		console.log(pb);
+	});
 	io.to(table.id).emit("bankroll modification", table.game.sb_pos, sb.player);
 	io.to(table.id).emit("bankroll modification", table.game.bb_pos, bb.player);
 	io.to(table.id).emit("pot modification", table.game.pot_amount);
-	io.to(table.id).emit("bet", table.game.sb_pos, sb.bet = cfg.conf.small_blind);
+	io.to(table.id).emit("bet", table.game.sb_pos, sb.bet = pb/*sb.bet = cfg.conf.small_blind*/);
 	io.to(table.id).emit("bet", table.game.bb_pos, bb.bet = cfg.conf.big_blind);
+
 	console.log('sb : ' + sb.bet, 'bb : ' + bb.bet);
 }
 
