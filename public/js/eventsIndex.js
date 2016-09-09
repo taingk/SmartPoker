@@ -95,7 +95,7 @@ function 	show_prompt(prompt_nb)
 
 function 	new_table()
 {
-	document.location.href="http://82.127.122.187:1337/";
+	document.location.href="http://poker.smartgames.tv/";
 }
 
 function 	valid_choice()
@@ -131,10 +131,5 @@ socket.on('your table', function(table, game){
 	aGame = game;
 	console.log(aTable, aGame);
 });
-
-function restart() {
-	//fonction reinitialiser la game
-
-}
 
 var eventIndexReady=true;

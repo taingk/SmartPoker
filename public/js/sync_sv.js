@@ -174,3 +174,8 @@ function	sync_sv()
 		$("#winner, #card1_1, #card2_1, #card1_2, #card2_2, #card1_3, #card2_3, #card1_4, #card2_4, #card1_5, #card2_5, #card1_6, #card2_6").css("visibility", "hidden");
 	});
 }
+
+function restart() {
+	//fonction reinitialiser la game
+	console.log('restart');
+}
