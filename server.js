@@ -112,7 +112,6 @@ http.listen(cfg.conf.port, function(request, response)
 /*           SERVER INCLUDED OBJECTS       */
 /*******************************************/
 eval(fs.readFileSync("sv/objects.js").toString());
-eval(fs.readFileSync("sv/hide_qr.js").toString());
 eval(fs.readFileSync("sv/new_table.js").toString());
 eval(fs.readFileSync("sv/new_table_seats.js").toString());
 eval(fs.readFileSync("sv/get_table.js").toString());
