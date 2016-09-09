@@ -165,6 +165,7 @@ io.on("connection", function(socket)
    		table.game.turn_to = "joiners";
 		socket.on('restart', function(){
 			console.log('Restart!');
+			io.to(table.id).emit('refresh game');
 		});
 	}
    	if (device_client)
