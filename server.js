@@ -164,6 +164,9 @@ io.on("connection", function(socket)
    		send_qrcodes(table, table.seats);
    		table.game.turn_to = "joiners";
 		io.to(table_id).emit('tableId', table_id, tables, table.game);
+		socket.on('get tableId and tableGame', function(id) {
+			io.to(id).emit('give tableId and tableGame', get_table(id, tables));
+		});
 	}
    	if (device_client)
    	{
