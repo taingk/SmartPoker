@@ -175,28 +175,19 @@ function	sync_sv()
 	});
 }
 
+function	get_table(table_id, tables)
+{
+	var		idx = 0;
 
-var aTable = [];
-var aGame = [];
-
-var tableId;
-socket.on('table ID', function(id) {
-	tableId = id;
-	console.log(tableId);
-});
-
-function restart() {
-	//fonction reinitialiser la game
-	console.log(tableId);
-	socket.emit('get table', tableId);
-	socket.on('your table', function(table, game){
-		aTable = table;
-		aGame = game;
-	});
-	console.log(aTable, aGame);
+	while (idx < tables.length)
+	{
+		if (tables[idx].id == table_id)
+			return tables[idx];
+		++idx;
+	}
+	return "not found";
 }
-/*
-socket.on('refresh game', function(){
-	console.log('Ca refresh');
+
+socket.on('tableId', function(tableId, tables){
+	console.log(tableId, tables);
 });
-*/
