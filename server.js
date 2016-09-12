@@ -215,5 +215,4 @@ io.on("connection", function(socket)
 	send_bets(table); // Currents bets on the table.
 	socket_listens_players(socket, table);
     socket_listens_global_settings(socket, table, table.seats);	// Event handler for major events.
-	restart(table);
 });
