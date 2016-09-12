@@ -57,7 +57,6 @@ function	end_game(table, game, winners, player)
 
 function	reinit(table, game)
 {
-	console.log('reinit '+table);
 	io.to(table.id).emit("win off", 42);
 	for (var idx = 1; idx <= 6; ++idx)
 	{
@@ -94,7 +93,8 @@ function	reinit(table, game)
 	for (idx = 1; idx <= 6; ++idx)
 		if (get_seat(table.seats, idx).state === "busy")
 			table.playing_seats.push(idx);
-	table.game.moment = "waiting";
+	if (table.game.moment != "waiting")
+		table.game.moment = "waiting";
 	if (table.playing_seats.length >= 2 && table.game.moment == "waiting")
 	{
 		console.log("Starting a new game...");

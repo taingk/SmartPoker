@@ -284,9 +284,7 @@ function		stop_high_rollers(table)
 
 function		new_cashgame(socket, table)
 {
-	console.log('1 '+table);
 	init_obj(table);
-	console.log('2 '+table);
 	table.game.moment = "preflop";
 	table.game.round_nb = socket === 42 ? 0 : 1;
 	table.game.pot_amount = 0;
