@@ -167,7 +167,7 @@ io.on("connection", function(socket)
 		io.to(table_id).emit('tableId', table_id, tables, table.game);
 
 		socket.on('get tableId and tableGame', function(id) {
-			io.to(id).emit('give tableId and tableGame', tables);
+			io.to(id).emit('give tableId and tableGame', tables, table.game);
 		});
 
 		socket.on('re init', function(table, game) {

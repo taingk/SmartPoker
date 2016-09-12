@@ -202,16 +202,20 @@ socket.on('tableId', function(tableId, tables, tableGame){
 
 function restart() {
 	socket.emit('get tableId and tableGame', id);
-	socket.on('give tableId and tableGame', function(tables) {
+	socket.on('give tableId and tableGame', function(tables, tableGame) {
 		array = tables;
+		game = tableGame;
 	});
+	console.log(game);
 	push = false;
 }
 function confirm(){
 	push = true;
 	socket.emit('get tableId and tableGame', id);
-	socket.on('give tableId and tableGame', function(tables) {
+	socket.on('give tableId and tableGame', function(tables, tableGame) {
 		array = tables;
+		game = tableGame;
 	});
+	console.log(game);
 	socket.emit('re init', get_table(id, array), game);
 }
