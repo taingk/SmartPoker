@@ -57,6 +57,7 @@ function	end_game(table, game, winners, player)
 
 function	reinit(table, game)
 {
+	console.log('reinit '+table);
 	io.to(table.id).emit("win off", 42);
 	for (var idx = 1; idx <= 6; ++idx)
 	{
