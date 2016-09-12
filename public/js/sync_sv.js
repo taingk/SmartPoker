@@ -175,17 +175,23 @@ function	sync_sv()
 	});
 }
 
-socket.on('table ID', function(id) {
-	console.log(id);
-});
 
 var aTable = [];
 var aGame = [];
 var tables = [];
+var tableId;
+
+socket.on('table ID', function(id) {
+	tableId = id;
+	console.log(tableId);
+});
+
+console.log(tableId);
 
 function restart() {
 	//fonction reinitialiser la game
-	var top = 0;
+	console.log(tableId);
+/*	var top = 0;
 
 	socket.emit('get table');
 	socket.on('your table', function(table, game){
@@ -198,7 +204,7 @@ function restart() {
 		}
 		tables.push(aTable.id);
 	}
-	console.log(tables);
+	console.log(tables);*/
 }
 
 socket.on('refresh game', function(){
