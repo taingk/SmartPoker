@@ -191,12 +191,12 @@ for (i = 0; i < tables.length; i++) {
 	if (tables[i] != aTable.id)
 		tables.push(aTable.id);
 }
+console.log(tables);
 
-function restart() {
+function restart(tables) {
 	//fonction reinitialiser la game
 //	if (tables[i] != aTable.id)
 //	tables.push(aTable.id);
-//	console.log(tables);
 	console.log(tables);
 //	socket.emit('restart', tables[i]);
 }
