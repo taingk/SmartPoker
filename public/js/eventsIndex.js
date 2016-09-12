@@ -14,7 +14,7 @@ function 	keyFunction(evnt)
 			move_left();
 			break;
 		case "OK":
-		if (push = true) {
+		if (push == true) {
 			valid_choice();
 		}
 		else {
