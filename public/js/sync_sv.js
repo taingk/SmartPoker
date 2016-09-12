@@ -188,7 +188,7 @@ socket.on('table ID', function(id) {
 function restart() {
 	//fonction reinitialiser la game
 	console.log(tableId);
-	io.to(tableId).emit('get table', tableId);
+	socket.emit('get table', tableId);
 	socket.on('your table', function(table, game){
 		aTable = table;
 		aGame = game;
