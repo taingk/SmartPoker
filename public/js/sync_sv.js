@@ -213,6 +213,6 @@ function confirm(){
 	socket.on('give tableId and tableGame', function(tables) {
 		array = tables;
 	});
-	console.log(get_table(id, array));
+	console.log(game);
 	socket.emit('re init', get_table(id, array), game);
 }
