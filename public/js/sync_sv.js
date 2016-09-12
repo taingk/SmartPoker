@@ -192,6 +192,7 @@ function restart() {
 		if (tables[0] == 'undefined') {
 			tables.push(aTable.id);
 		}
+		tables.push(aTable.id);
 	}
 	console.log(tables);
 }
