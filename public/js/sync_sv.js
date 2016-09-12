@@ -191,7 +191,6 @@ function restart() {
 		id = aTable.id;
 
 		for (i = 0; i <= tables.length; i++) {
-			if (tables[i] != id)
 			tables.push(id);
 		}
 	});
