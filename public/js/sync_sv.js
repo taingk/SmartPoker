@@ -178,35 +178,25 @@ function	sync_sv()
 
 var aTable = [];
 var aGame = [];
-var tables = [];
-var tableId;
 
+var tableId;
 socket.on('table ID', function(id) {
 	tableId = id;
 	console.log(tableId);
 });
 
-console.log(tableId);
-
 function restart() {
 	//fonction reinitialiser la game
 	console.log(tableId);
-/*	var top = 0;
-
-	socket.emit('get table');
+	io.to(tableId).emit('get table', tableId);
 	socket.on('your table', function(table, game){
 		aTable = table;
 		aGame = game;
 	});
-	for (; top <= tables.length; top++) {
-		if (tables[0] == 'undefined') {
-			tables.push(aTable.id);
-		}
-		tables.push(aTable.id);
-	}
-	console.log(tables);*/
+	console.log(aTable, aGame);
 }
-
+/*
 socket.on('refresh game', function(){
 	console.log('Ca refresh');
 });
+*/

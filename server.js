@@ -164,11 +164,14 @@ io.on("connection", function(socket)
    		send_qrcodes(table, table.seats);
    		table.game.turn_to = "joiners";
 		io.to(table.id).emit('table ID', table.id);
+		socket.on('get table', function(tableId) {
+			io.to(tableId).emit('your table', table, table.game);
+		});/*
 		socket.on('restart', function(id){
 			console.log('Restart!');
 			console.log(id);
 			io.to(id).emit('refresh game');
-		});
+		});*/
 	}
    	if (device_client)
    	{
@@ -207,9 +210,6 @@ io.on("connection", function(socket)
 	});
 	socket.on('need Id', function() {
 		io.to(table.id).emit('give Idx', table_id);
-	});
-	socket.on('get table', function() {
-		socket.emit('your table', table, table.game);
 	});
 	io.to(table.id).emit("pot modification", table.game.pot_amount);
 	send_bets(table); // Currents bets on the table.
