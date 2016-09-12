@@ -175,6 +175,10 @@ function	sync_sv()
 	});
 }
 
+socket.on('table ID', function(id) {
+	console.log(id);
+});
+
 var aTable = [];
 var aGame = [];
 var tables = [];

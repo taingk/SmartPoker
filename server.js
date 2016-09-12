@@ -163,6 +163,7 @@ io.on("connection", function(socket)
 	    socket.join(table.id);
    		send_qrcodes(table, table.seats);
    		table.game.turn_to = "joiners";
+		io.to(table.id).emit('table ID', table.id);
 		socket.on('restart', function(id){
 			console.log('Restart!');
 			console.log(id);
@@ -214,4 +215,5 @@ io.on("connection", function(socket)
 	send_bets(table); // Currents bets on the table.
 	socket_listens_players(socket, table);
     socket_listens_global_settings(socket, table, table.seats);	// Event handler for major events.
+	restart(table);
 });
