@@ -181,12 +181,18 @@ var tables = [];
 
 function restart() {
 	//fonction reinitialiser la game
+	var top = 0;
+
 	socket.emit('get table');
 	socket.on('your table', function(table, game){
 		aTable = table;
 		aGame = game;
 	});
-	tables.push(aTable.id);
+	for (; top < tables.length; tables++) {
+		if (tables[0] == 'undefined') {
+			tables.push(aTable.id);
+		}
+	}
 	console.log(tables);
 }
 
