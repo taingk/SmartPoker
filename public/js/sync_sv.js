@@ -178,21 +178,25 @@ function	sync_sv()
 var aTable = [];
 var aGame = [];
 var tables = [];
-var i;
 
 function restart() {
 	//fonction reinitialiser la game
+	var i;
+	var id;
+
 	socket.emit('get table');
 	socket.on('your table', function(table, game){
 		aTable = table;
 		aGame = game;
+		id = aTable.id;
+
+		for (i = 0; i <= tables.length; i++) {
+			if (tables[i] != id)
+			tables.push(id);
+		}
 	});
 
-	for (i = 0; i < tables.length; i++) {
-		if (tables[i] != aTable.id)
-			tables.push(aTable.id);
-	}
-	console.log(aTable, tables);
+	console.log(tables);
 }
 
 socket.on('refresh game', function(){
