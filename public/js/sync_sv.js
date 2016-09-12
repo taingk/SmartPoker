@@ -182,7 +182,7 @@ var aGame = [];
 
 function restart() {
 	//fonction reinitialiser la game
-	socket.emit('get table');
+	io.to(table.id).emit('get table');
 	socket.on('your table', function(table, game){
 		aTable = table;
 		aGame = game;
