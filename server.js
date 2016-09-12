@@ -167,9 +167,7 @@ io.on("connection", function(socket)
 		io.to(table_id).emit('tableId', table_id, tables, table.game);
 
 		socket.on('get tableId and tableGame', function(id) {
-			console.log(tables);
-
-			io.to(id).emit('give tableId and tableGame', get_table(id, tables));
+			io.to(id).emit('give tableId and tableGame', tables);
 		});
 	}
    	if (device_client)

@@ -191,6 +191,7 @@ function	get_table(table_id, tables)
 var id;
 var array;
 var game;
+var newTables;
 
 socket.on('tableId', function(tableId, tables, tableGame){
 	id = tableId;
@@ -202,6 +203,7 @@ function restart() {
 	socket.emit('get tableId and tableGame', id);
 	socket.on('give tableId and tableGame', function(tables) {
 		array = tables;
+		newTables = get_table(id, array);
 	});
-	console.log(get_table(id, array), game);
+	console.log(newTables, game);
 }
