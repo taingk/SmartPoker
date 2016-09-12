@@ -201,11 +201,11 @@ socket.on('tableId', function(tableId, tables, tableGame){
 });
 
 function restart() {
-	push = false;
 	socket.emit('get tableId and tableGame', id);
 	socket.on('give tableId and tableGame', function(tables) {
 		array = tables;
 	});
+	push = false;
 }
 function confirm(){
 	push = true;
@@ -213,5 +213,6 @@ function confirm(){
 	socket.on('give tableId and tableGame', function(tables) {
 		array = tables;
 	});
+	console.log(get_table(id, array), game);
 	socket.emit('re init', get_table(id, array), game);
 }
