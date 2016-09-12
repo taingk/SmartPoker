@@ -189,9 +189,8 @@ function restart() {
 		aTable = table;
 		aGame = game;
 		id = aTable.id;
-		tables.push(id);
 	});
-
+	tables.push(id);
 	console.log(tables);
 }
 
