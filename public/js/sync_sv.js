@@ -204,6 +204,5 @@ function restart() {
 	socket.on('give tableId and tableGame', function(tables) {
 		array = tables;
 	});
-	console.log(get_table(id, array), game);
-	//socket.emit('re init', newTables, game);
+	socket.emit('re init', get_table(id, array), game);
 }
