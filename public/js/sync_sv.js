@@ -181,16 +181,12 @@ var tables = [];
 
 function restart() {
 	//fonction reinitialiser la game
-	var i;
-	var id;
-
 	socket.emit('get table');
 	socket.on('your table', function(table, game){
 		aTable = table;
 		aGame = game;
-		id = aTable.id;
 	});
-	tables.push(id);
+	tables.push(aTable.id);
 	console.log(tables);
 }
 
