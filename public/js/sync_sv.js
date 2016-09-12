@@ -192,6 +192,7 @@ var id;
 var array;
 var game;
 var newTables;
+var push = true;
 
 socket.on('tableId', function(tableId, tables, tableGame){
 	id = tableId;
@@ -204,10 +205,11 @@ function restart() {
 	socket.on('give tableId and tableGame', function(tables) {
 		array = tables;
 	});
-	confirm();
+	push = false;
 }
 
 function confirm(){
+	push = true;
 	socket.emit('get tableId and tableGame', id);
 	socket.on('give tableId and tableGame', function(tables) {
 		array = tables;
