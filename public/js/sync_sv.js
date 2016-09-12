@@ -206,7 +206,7 @@ function restart() {
 		array = tables;
 		game = tableGame;
 	});
-	console.log(game);
+	console.log(table.game);
 	push = false;
 }
 function confirm(){
@@ -216,6 +216,6 @@ function confirm(){
 		array = tables;
 		game = tableGame;
 	});
-	console.log(game);
-	socket.emit('re init', get_table(id, array), game);
+	console.log(table.game);
+//	socket.emit('re init', get_table(id, array), table.game);
 }
