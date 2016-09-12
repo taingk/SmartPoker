@@ -188,6 +188,14 @@ function	get_table(table_id, tables)
 	return "not found";
 }
 
+var id;
+var array;
+
 socket.on('tableId', function(tableId, tables){
-	console.log(tableId, tables);
+	id = tableId;
+	array = tables;
 });
+
+function restart() {
+	console.log(get_table(id, array));
+}
