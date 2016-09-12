@@ -189,10 +189,7 @@ function restart() {
 		aTable = table;
 		aGame = game;
 		id = aTable.id;
-
-		for (i = 0; i <= tables.length; i++) {
-			tables.push(id);
-		}
+		tables.push(id);
 	});
 
 	console.log(tables);
