@@ -197,7 +197,6 @@ socket.on('tableId', function(tableId, tables, tableGame){
 	array = tables;
 	game = tableGame;
 });
-console.log(get_table(id, array), game);
 
 function restart() {
 	socket.emit('get tableId and tableGame', id);
