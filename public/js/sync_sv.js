@@ -205,5 +205,5 @@ function restart() {
 		array = tables;
 		newTables = get_table(id, array);
 	});
-	console.log(newTables, game);
+	reinit(newTables, game);
 }
