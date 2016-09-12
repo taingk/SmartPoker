@@ -169,6 +169,10 @@ io.on("connection", function(socket)
 		socket.on('get tableId and tableGame', function(id) {
 			io.to(id).emit('give tableId and tableGame', tables);
 		});
+
+		socket.on('re init', function(table, game) {
+			console.log('hey ca marche lol');
+		});
 	}
    	if (device_client)
    	{

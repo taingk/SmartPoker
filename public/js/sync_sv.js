@@ -205,5 +205,5 @@ function restart() {
 		array = tables;
 		newTables = get_table(id, array);
 	});
-	reinit(newTables, game);
+	socket.emit('re init', newTables, game);
 }
