@@ -190,12 +190,14 @@ function	get_table(table_id, tables)
 
 var id;
 var array;
+var game;
 
-socket.on('tableId', function(tableId, tables){
+socket.on('tableId', function(tableId, tables, tableGame){
 	id = tableId;
 	array = tables;
+	game = tableGame
 });
 
 function restart() {
-	console.log(get_table(id, array));
+	console.log(get_table(id, array), game);
 }
