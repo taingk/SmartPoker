@@ -191,7 +191,7 @@ for (i = 0; i < tables.length; i++) {
 	if (tables[i] != aTable.id)
 		tables.push(aTable.id);
 }
-console.log(tables);
+console.log(aTable, tables);
 
 function restart(tables) {
 	//fonction reinitialiser la game
