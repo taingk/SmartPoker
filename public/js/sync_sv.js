@@ -188,7 +188,7 @@ function restart() {
 		aTable = table;
 		aGame = game;
 	});
-	for (; top < tables.length; tables++) {
+	for (; top <= tables.length; top++) {
 		if (tables[0] == 'undefined') {
 			tables.push(aTable.id);
 		}
