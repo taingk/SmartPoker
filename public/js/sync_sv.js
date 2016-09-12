@@ -179,26 +179,20 @@ var aTable = [];
 var aGame = [];
 var tables = [];
 var i;
-var id;
 
-socket.emit('get table');
-socket.on('your table', function(table, game){
-	aTable = table;
-	aGame = game;
-});
-
-for (i = 0; i < tables.length; i++) {
-	if (tables[i] != aTable.id)
-		tables.push(aTable.id);
-}
-console.log(aTable, tables);
-
-function restart(tables) {
+function restart() {
 	//fonction reinitialiser la game
-//	if (tables[i] != aTable.id)
-//	tables.push(aTable.id);
-	console.log(tables);
-//	socket.emit('restart', tables[i]);
+	socket.emit('get table');
+	socket.on('your table', function(table, game){
+		aTable = table;
+		aGame = game;
+	});
+
+	for (i = 0; i < tables.length; i++) {
+		if (tables[i] != aTable.id)
+			tables.push(aTable.id);
+	}
+	console.log(aTable, tables);
 }
 
 socket.on('refresh game', function(){

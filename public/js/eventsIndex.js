@@ -32,7 +32,7 @@ function 	keyFunction(evnt)
 			backToPortal();
 			break;
 		case 5:
-			restart(tables);
+			restart();
 			break;
 		case "RED":
 			new_table();
