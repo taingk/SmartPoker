@@ -57,7 +57,6 @@ function	end_game(table, game, winners, player)
 
 function	reinit(table, game)
 {
-	console.log('reinit');
 	io.to(table.id).emit("win off", 42);
 	for (var idx = 1; idx <= 6; ++idx)
 	{
@@ -90,7 +89,6 @@ function	reinit(table, game)
 	for (var i = 1; i < 7; i++) {
 		io.to(get_private_id(table.private_ids, i)).emit("show buttons", "visible");
 	}
-	console.log('1');
 	/* ADD NEW PLAYERS TO PLAYING SEATS ARRAY */
 	for (idx = 1; idx <= 6; ++idx)
 		if (get_seat(table.seats, idx).state === "busy")
@@ -101,8 +99,6 @@ function	reinit(table, game)
 		console.log("Starting a new game...");
 		for (var i = 0; i < table.playing_seats.length; i++)
 				get_seat(table.seats, table.playing_seats[i]).state = "playing";
-		console.log('3');
 		new_cashgame(42, table);
 	}
-	console.log('end reinit');
 }
