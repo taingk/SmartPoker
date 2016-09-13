@@ -158,7 +158,7 @@ function	adjust_bets_values(table)
 function	switch_next_player(table, decision)
 {
 	var 	player;
-	var		curseat = get_seat(table.seats, seat_nb);
+	var		curseat = get_seat(table.seats, table.game.highlights_pos);
 
 	if (table.game.highlights_pos == "none")
 		return ;
@@ -241,7 +241,7 @@ function	next_moment(table, game, decision)
 	remove_last_actions(table, 3);
 	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 	var 	player;
-	var		curseat = get_seat(table.seats, seat_nb);
+	var		curseat = get_seat(table.seats, table.game.highlights_pos);
 	if (curseat.player.bankroll) {
 	//if (table.game.curbet == "0" || table.game.curbet <= +curseat.bet)
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
