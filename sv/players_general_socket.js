@@ -172,12 +172,14 @@ function	switch_next_player(table, decision)
 	adjust_bets_values(table);
 	if (curseat.player.bankroll) {
 		if (table.game.curbet == "0" /*|| table.game.curbet <= +curseat.bet*/) {
+			console.log('1')
 			send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 			send_option(table, table.game.highlights_pos, "second choice", "call",/*
 			((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */cfg.conf.big_blind);
 			send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 			}
 		else {
+			console.log('2')
 			send_option(table, table.game.highlights_pos, "first choice", "call",/*
 			((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */table.game.curbet);
 			send_option(table, table.game.highlights_pos, "second choice", "raise",/*
@@ -187,11 +189,13 @@ function	switch_next_player(table, decision)
 	}
 	else {
 		if (table.game.curbet == "0") {
+			console.log('3')
 			send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 			send_option(table, table.game.highlights_pos, "second choice", "null", -1);
 			send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 		}
 		else {
+			console.log('4')
 			send_option(table, table.game.highlights_pos, "first choice", "call", 0);
 			send_option(table, table.game.highlights_pos, "second choice", "null", -1);
 		}
