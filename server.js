@@ -171,7 +171,11 @@ io.on("connection", function(socket)
 		});
 
 		socket.on('re init', function(table, game) {
+			table.game.curbet = "0";
+			game.moment = "river";
 			remove_last_actions(table, 2);
+			deal_river(table, game);
+			evalhand(table, game);
 			show_down(table, game);
 		});
 	}
