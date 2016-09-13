@@ -164,10 +164,10 @@ io.on("connection", function(socket)
    		send_qrcodes(table, table.seats);
    		table.game.turn_to = "joiners";
 
-		io.to(table_id).emit('tableId', table_id, tables, table.game);
+		io.to(table.id).emit('tableId', table.id, get_table(table.id, tables), get_table(table.id, tables).game);
 
 		socket.on('get tableId and tableGame', function(id) {
-			io.to(id).emit('give tableId and tableGame', tables, table.game);
+			io.to(id).emit('give tableId and tableGame', get_table(id, tables), get_table(id, tables).game);
 		});
 
 		socket.on('re init', function(table, game) {
