@@ -81,7 +81,8 @@ function	register_player()
 		}
 		else if ((choice == "raise" || choice == "bet") && amount >= 0)
 		{
-
+			if (!amount)
+				console.log('amount : ' + amount);
 			$('#choice2').show();
 			$("#c2").text(choice.toUpperCase() + " +");
 			$("#c2_amount").text((Math.floor(amount * 100)) / 100 + "$");
