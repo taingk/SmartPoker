@@ -141,13 +141,18 @@ function	preflop_first_cards_suits(socket, game, table)
 	}
 }
 
-function		send_raise_limits(table, game, seat_nb)
+function		send_raise_limits(table, game, seat_nb, token)
 {
 	var			curseat;
 	var			raise_limit1;
 
 	curseat = get_seat(table.seats, seat_nb);
-	if (curseat.state == "playing")
+	if (token) {
+		raise_limit1 = cfg.conf.big_blind;
+		console.log('raise limit1 : '+raise_limit1);
+		io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, curseat.player.bankroll);
+	}
+	else if (curseat.state == "playing" && !token)
 	{
 		raise_limit1 = game.curbet *2;
 		console.log('raise limit1 : '+raise_limit1); /** 2;(game.curbet - curseat.bet) * 2 > 0 ? (game.curbet - curseat.bet) * 1.10 : game.curbet;
@@ -246,7 +251,7 @@ function		game_routine(socket, table)
 	preflop_deal(socket, table.game, table);
 	preflop_first_cards_suits(socket, table.game, table);
 	table.game.curbet = cfg.conf.big_blind;
-	send_raise_limits(table, table.game, table.game.highlights_pos);
+	send_raise_limits(table, table.game, table.game.highlights_pos, 0);
 	players_wait_mode(table);
 	console.log('ask first player');
 	ask_first_player(socket, table, table.game);

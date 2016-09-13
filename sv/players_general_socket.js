@@ -166,7 +166,7 @@ function	switch_next_player(table, decision)
 	remove_last_actions(table, 3);
 	table.game.highlights_pos = get_next_player(table, table.game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
-	send_raise_limits(table, table.game, table.game.highlights_pos);
+	send_raise_limits(table, table.game, table.game.highlights_pos, 0);
 	curseat = get_seat(table.seats, table.game.highlights_pos);
 	adjust_bets_values(table);
 	if (table.game.curbet == "0" /*|| table.game.curbet <= +curseat.bet*/) {
@@ -223,7 +223,7 @@ function	next_moment(table, game, decision)
 	table.game.highlights_pos = get_first_to_talk(table, game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
 	remove_last_actions(table, 3);
-	send_raise_limits(table, table.game, table.game.highlights_pos);
+	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 	var curseat = get_seat(table.seats, table.game.highlights_pos);
 	//if (table.game.curbet == "0" || table.game.curbet <= +curseat.bet)
 	console.log('next moment');
