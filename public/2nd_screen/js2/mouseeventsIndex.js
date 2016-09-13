@@ -64,7 +64,7 @@ function	register_player()
 		$("#hide_cards").css("visibility", "visible");
 		if (choice == "call" && amount > 0)
 		{
-			$("#c1").text("CALL ");
+			$("#c1").text("CALL");
 			$("#c1_amount").text((Math.floor(+amount * 100)) / 100 + "$");
 		}
 		else if (choice == "check")
@@ -78,6 +78,11 @@ function	register_player()
 		if (choice == "null" && amount < 0)
 		{
 			$('#choice2').hide();
+		}
+		else if (choice == "call" && amount > 0)
+		{
+			$("#c1").text("CALL");
+			$("#c1_amount").text((Math.floor(+amount * 100)) / 100 + "$");
 		}
 		else if ((choice == "raise" || choice == "bet") && amount >= 0)
 		{

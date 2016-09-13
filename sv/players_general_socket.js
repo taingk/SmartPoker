@@ -224,10 +224,10 @@ function	next_moment(table, game, decision)
 	//if (table.game.curbet == "0" || table.game.curbet <= +curseat.bet)
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 	//else
-	//	send_option(table, table.game.highlights_pos, "first choice", "call",/*
+		send_option(table, table.game.highlights_pos, "second choice", "call",/*
 	//		((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) :*/ table.game.curbet);
-	send_option(table, table.game.highlights_pos, "second choice", "raise",/*
-			((table.game.curbet - curseat.bet) * 2 > 0) ? (table.game.curbet - curseat.bet) * 1.10 : */table.game.curbet*2);
+	/*send_option(table, table.game.highlights_pos, "second choice", "raise",/*
+			((table.game.curbet - curseat.bet) * 2 > 0) ? (table.game.curbet - curseat.bet) * 1.10 : *//*table.game.curbet*2);*/
 	send_option(table, table.game.highlights_pos, "third choice", "fold");
 }
 
