@@ -173,9 +173,11 @@ io.on("connection", function(socket)
 		socket.on('re init', function(table, game) {
 			table.game.curbet = "0";
 			game.moment = "river";
+			console.log('remove last actions');
 			remove_last_actions(table, 2);
+			console.log('deal rive');
 			deal_river(table, game);
-			evalhand(table, game);
+			console.log('show down');
 			show_down(table, game);
 		});
 	}
