@@ -57,7 +57,6 @@ function	end_game(table, game, winners, player)
 
 function	reinit(table, game)
 {
-	console.log(table, game);
 	io.to(table.id).emit("win off", 42);
 	for (var idx = 1; idx <= 6; ++idx)
 	{
@@ -87,7 +86,6 @@ function	reinit(table, game)
 							'2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', 'td', 'jd', 'qd', 'kd', '1d',
 							 '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', 'th', 'jh', 'qh', 'kh', '1h');
 	console.log("***END***");
-	console.log(table, game);
 	for (var i = 1; i < 7; i++) {
 		io.to(get_private_id(table.private_ids, i)).emit("show buttons", "visible");
 	}

@@ -226,6 +226,7 @@ function		game_routine(socket, table)
 	var			sb; // small blind.
 	var			bb;	// big blind.
 
+	console.log('game routine');
 	table.game.d_pos = find_dealer(table, table.game);
 	table.game.sb_pos = find_sb(table, table.game);
 	table.game.bb_pos = find_bb(table, table.game);
@@ -242,6 +243,7 @@ function		game_routine(socket, table)
 	blinds_treatment(table, sb, bb); 				   // Take blinds (server side).
 	send_blinds(table, sb, bb); 					   // Send blinds to clients.
 	/* Preflop */
+	console.log('preflop');
 	preflop_deal(socket, table.game, table);
 	preflop_first_cards_suits(socket, table.game, table);
 	table.game.curbet = cfg.conf.big_blind;
@@ -249,6 +251,7 @@ function		game_routine(socket, table)
 	players_wait_mode(table);
 	console.log('ask first player');
 	ask_first_player(socket, table, table.game);
+	console.log('so ?');
 }
 
 function		init_obj(table)
