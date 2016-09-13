@@ -161,21 +161,18 @@ function		send_option(table, seat_nb, option, choice, amount)
 	var			player;
 	var			curseat = get_seat(table.seats, seat_nb);
 
-	console.log('send option ');
 	if (curseat && curseat.player.bankroll === "ALL IN" && amount > curseat.player.bankroll)
 		amount = curseat.player.bankroll;
 	if (curseat.state == "playing")
 	{
-		console.log('playing ?');
 		if (choice === "fold") // As it's the last option, client should be ready.
 		{
 			io.to(get_private_id(table.private_ids, seat_nb)).emit("your turn");
 		}
 		player = get_seat(table.seats, seat_nb).player;
+		console.log(player);
 		io.to(get_private_id(table.private_ids, seat_nb)).emit(option, choice, amount);
-		console.log('emit');
 	}
-	console.log('fin send option');
 
 }
 
