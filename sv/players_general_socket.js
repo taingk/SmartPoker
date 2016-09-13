@@ -170,6 +170,7 @@ function	switch_next_player(table, decision)
 	send_raise_limits(table, table.game, table.game.highlights_pos, 0);
 	//curseat = get_seat(table.seats, table.game.highlights_pos);
 	adjust_bets_values(table);
+	console.log(curseat.player);
 	if (curseat.player.bankroll) {
 		if (table.game.curbet == "0" /*|| table.game.curbet <= +curseat.bet*/) {
 			console.log('1')
@@ -196,7 +197,7 @@ function	switch_next_player(table, decision)
 		}
 		else {
 			console.log('4')
-			send_option(table, table.game.highlights_pos, "first choice", "call", table.game.curbet);
+			send_option(table, table.game.highlights_pos, "first choice", "call", curseat.player.bankroll);
 			send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet*2);
 		}
 		send_option(table, table.game.highlights_pos, "third choice", "fold");
