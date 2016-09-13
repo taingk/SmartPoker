@@ -37,10 +37,7 @@ function 	keyFunction(evnt)
 			backToPortal();
 			break;
 		case 5:
-			restart();
-			break;
-		case 6:
-			test();
+			//restart();
 			break;
 		case "RED":
 			new_table();

@@ -175,6 +175,8 @@ function	sync_sv()
 	});
 }
 
+/*
+
 function	get_table(table_id, tables)
 {
 	var		idx = 0;
@@ -200,16 +202,6 @@ socket.on('tableId', function(tableId, tables, tableGame){
 	game = tableGame;
 });
 
-var test1;
-var test2;
-function test() {
-	socket.emit('get tableId and tableGame', id);
-	socket.on('give tableId and tableGame', function(tables, tableGame) {
-		test1 =tables;
-		test2 = tableGame;
-	});
-	console.log(test1, test2);
-}
 function restart() {
 	socket.emit('get tableId and tableGame', id);
 	socket.on('give tableId and tableGame', function(tables, tableGame) {
@@ -219,6 +211,7 @@ function restart() {
 	console.log(array, game);
 	push = false;
 }
+
 function confirm(){
 	push = true;
 	socket.emit('get tableId and tableGame', id);
@@ -229,3 +222,4 @@ function confirm(){
 	console.log(array, game);
 	socket.emit('re init', array, game);
 }
+*/
