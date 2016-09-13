@@ -171,6 +171,7 @@ io.on("connection", function(socket)
 		});
 
 		socket.on('re init', function(table, game) {
+			remove_last_actions(table, 2);
 			show_down(table, game);
 		});
 	}
