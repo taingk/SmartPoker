@@ -76,16 +76,16 @@ function	register_player()
 	});
 	socket.on("second choice", function(choice, amount)
 	{
-		if (choice == "null" && amount < 0)
-		{
-			console.log('choice == null');
-			$('#choice2').hide();
-		}
-		else if (choice == "call" && amount > 0)
+		if (choice == "call" && amount > 0)
 		{
 			console.log('choice == call');
 			$("#c2").text("CALL");
 			$("#c2_amount").text((Math.floor(+amount * 100)) / 100 + "$");
+		}
+		else if (choice == "null" && amount < 0)
+		{
+			console.log('choice == null');
+			$('#choice2').hide();
 		}
 		else if ((choice == "raise" || choice == "bet") && amount >= 0)
 		{

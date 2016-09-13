@@ -222,6 +222,7 @@ function	next_moment(table, game, decision)
 	send_raise_limits(table, table.game, table.game.highlights_pos);
 	var curseat = get_seat(table.seats, table.game.highlights_pos);
 	//if (table.game.curbet == "0" || table.game.curbet <= +curseat.bet)
+	console.log('next moment');
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 	//else
 		send_option(table, table.game.highlights_pos, "second choice", "call",/*
