@@ -173,6 +173,7 @@ function	switch_next_player(table, decision)
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 		send_option(table, table.game.highlights_pos, "second choice", "call",/*
 		((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */cfg.conf.big_blind);
+		send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 		}
 	else {
 		send_option(table, table.game.highlights_pos, "first choice", "call",/*
