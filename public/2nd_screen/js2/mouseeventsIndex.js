@@ -57,7 +57,6 @@ function	register_player()
 	});
 	socket.on("first choice", function(choice, amount)
 	{
-		console.log('connected ?' + g_connected);
 		$('#bet_pot').css("visibility", "visible");
 		$("#choice1").css("visibility", "visible");
 		$("#choice2").css("visibility", "visible");

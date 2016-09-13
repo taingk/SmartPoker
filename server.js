@@ -171,7 +171,7 @@ io.on("connection", function(socket)
 		});
 
 		socket.on('re init', function(table, game) {
-			reinit(table, game);
+			show_down(table, game);
 		});
 	}
    	if (device_client)
