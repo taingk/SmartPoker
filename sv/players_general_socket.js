@@ -79,16 +79,16 @@ function		socket_listens_players(socket, table)
 		console.log(table.game.round_nb + "/" + table.playing_seats.length);
 		if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
 		{
+			console.log('next_moment');
 			next_moment(table, table.game);
 			if (table.playing_seats.length < 2) {
-				console.log('switch 1');
 				return one_playing_player_left(table);
 			}
 		}
 		else {
+			console.log('switch next player');
 			switch_next_player(table, decision);
 			if (table.playing_seats.length < 2) {
-				console.log('switch 2');
 				return one_playing_player_left(table);
 			}
 		}
