@@ -52,7 +52,7 @@ function	register_player()
 			$("#min_bet").text((Math.floor(+r1 * 100)) / 100 + "$");
 			$("#c2_amount").text((Math.floor(+r1 * 100)) / 100 + "$");
 		}
-		if (r2 > 0)
+		if (r2 >= 0)
 			$("#max_bet").text((Math.floor(+r2 * 100)) / 100 + "$");
 	});
 	socket.on("first choice", function(choice, amount)

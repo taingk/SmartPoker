@@ -157,7 +157,8 @@ function	adjust_bets_values(table)
 
 function	switch_next_player(table, decision)
 {
-	var		curseat;
+	var 	player;
+	var		curseat = get_seat(table.seats, seat_nb);
 
 	if (table.game.highlights_pos == "none")
 		return ;
@@ -167,21 +168,35 @@ function	switch_next_player(table, decision)
 	table.game.highlights_pos = get_next_player(table, table.game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
 	send_raise_limits(table, table.game, table.game.highlights_pos, 0);
-	curseat = get_seat(table.seats, table.game.highlights_pos);
+	//curseat = get_seat(table.seats, table.game.highlights_pos);
 	adjust_bets_values(table);
-	if (table.game.curbet == "0" /*|| table.game.curbet <= +curseat.bet*/) {
-		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
-		send_option(table, table.game.highlights_pos, "second choice", "call",/*
-		((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */cfg.conf.big_blind);
-		send_raise_limits(table, table.game, table.game.highlights_pos, 1);
+	if (curseat.player.bankroll) {
+		if (table.game.curbet == "0" /*|| table.game.curbet <= +curseat.bet*/) {
+			send_option(table, table.game.highlights_pos, "first choice", "check", 0);
+			send_option(table, table.game.highlights_pos, "second choice", "call",/*
+			((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */cfg.conf.big_blind);
+			send_raise_limits(table, table.game, table.game.highlights_pos, 1);
+			}
+		else {
+			send_option(table, table.game.highlights_pos, "first choice", "call",/*
+			((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */table.game.curbet);
+			send_option(table, table.game.highlights_pos, "second choice", "raise",/*
+			((table.game.curbet - curseat.bet) * 2 > 0) ? (table.game.curbet - curseat.bet) * 1.10 : */table.game.curbet*2);
 		}
-	else {
-		send_option(table, table.game.highlights_pos, "first choice", "call",/*
-		((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */table.game.curbet);
-		send_option(table, table.game.highlights_pos, "second choice", "raise",/*
-		((table.game.curbet - curseat.bet) * 2 > 0) ? (table.game.curbet - curseat.bet) * 1.10 : */table.game.curbet*2);
+		send_option(table, table.game.highlights_pos, "third choice", "fold");
 	}
-	send_option(table, table.game.highlights_pos, "third choice", "fold");
+	else {
+		if (table.game.curbet == "0") {
+			send_option(table, table.game.highlights_pos, "first choice", "check", 0);
+			send_option(table, table.game.highlights_pos, "second choice", "null", -1);
+			send_raise_limits(table, table.game, table.game.highlights_pos, 1);
+		}
+		else {
+			send_option(table, table.game.highlights_pos, "first choice", "call", 0);
+			send_option(table, table.game.highlights_pos, "second choice", "null", -1);
+		}
+		send_option(table, table.game.highlights_pos, "third choice", "fold");
+	}
 }
 
 function	next_moment(table, game, decision)
@@ -225,9 +240,10 @@ function	next_moment(table, game, decision)
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
 	remove_last_actions(table, 3);
 	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
-	var curseat = get_seat(table.seats, table.game.highlights_pos);
+	var 	player;
+	var		curseat = get_seat(table.seats, seat_nb);
+	if (curseat.player.bankroll) {
 	//if (table.game.curbet == "0" || table.game.curbet <= +curseat.bet)
-	console.log('next moment');
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 	//else
 		send_option(table, table.game.highlights_pos, "second choice", "call",/*
@@ -235,6 +251,12 @@ function	next_moment(table, game, decision)
 	/*send_option(table, table.game.highlights_pos, "second choice", "raise",/*
 			((table.game.curbet - curseat.bet) * 2 > 0) ? (table.game.curbet - curseat.bet) * 1.10 : *//*table.game.curbet*2);*/
 	send_option(table, table.game.highlights_pos, "third choice", "fold");
+	}
+	else {
+		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
+		send_option(table, table.game.highlights_pos, "second choice", "null", -1);
+		send_option(table, table.game.highlights_pos, "third choice", "fold");
+	}
 }
 
 function	one_playing_player_left(table)

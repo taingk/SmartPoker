@@ -147,27 +147,29 @@ function		send_raise_limits(table, game, seat_nb, token)
 	var			raise_limit1;
 
 	curseat = get_seat(table.seats, seat_nb);
-	if (token) {
-		console.log('send raise limits 1');
-		raise_limit1 = cfg.conf.big_blind;
-		console.log('raise limit1 : '+raise_limit1);
-		console.log('curseat player bankroll ' + curseat.player.bankroll);
-		io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, curseat.player.bankroll);
-	}
-	else if (!token)
-	{
-		console.log('send raise limits 2');
-		raise_limit1 = game.curbet *2;
-		 /*(game.curbet - curseat.bet) * 2 > 0 ? (game.curbet - curseat.bet) * 1.10 : game.curbet;
-		raise_limit1 = raise_limit1 > curseat.player.bankroll ? curseat.player.bankroll : raise_limit1;*/
-		console.log('raise limit1 : '+raise_limit1);
-		console.log('curseat player bankroll ' + curseat.player.bankroll);
-		if (curseat.player.bankroll < raise_limit1) {
-			io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, raise_limit1);
-			console.log('salut jsuis la');
-		}
-		else
+	if (curseat.player.bankroll) {
+		if (token) {
+			raise_limit1 = cfg.conf.big_blind;
+			console.log('raise limit1 : '+raise_limit1);
+			console.log('curseat player bankroll ' + curseat.player.bankroll);
 			io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, curseat.player.bankroll);
+		}
+		else if (!token)
+		{
+			raise_limit1 = game.curbet *2;
+			 /*(game.curbet - curseat.bet) * 2 > 0 ? (game.curbet - curseat.bet) * 1.10 : game.curbet;
+			raise_limit1 = raise_limit1 > curseat.player.bankroll ? curseat.player.bankroll : raise_limit1;*/
+			console.log('raise limit1 : '+raise_limit1);
+			console.log('curseat player bankroll ' + curseat.player.bankroll);
+			if (curseat.player.bankroll < raise_limit1) {
+				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, raise_limit1);
+			}
+			else
+				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, curseat.player.bankroll);
+		}
+	}
+	else {
+		io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", 0, 0);
 	}
 }
 
