@@ -205,7 +205,7 @@ function	switch_next_player(table, decision)
 		}
 		else {
 			console.log('4');
-			send_option(table, table.game.highlights_pos, "first choice", "call", get_seat(table.seats, table.game.highlights_pos).player.bankroll);
+			send_option(table, table.game.highlights_pos, "first choice", "call", 0);
 			send_option(table, table.game.highlights_pos, "second choice", "null", -1);
 		}
 		send_option(table, table.game.highlights_pos, "third choice", "fold");
