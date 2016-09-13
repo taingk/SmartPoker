@@ -246,7 +246,7 @@ function	next_moment(table, game, decision)
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
 	remove_last_actions(table, 3);
 	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
-	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll.player.bankroll) {
+	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 	//if (table.game.curbet == "0" || table.game.curbet <= +curseat.bet)
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 	//else
