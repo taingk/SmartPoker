@@ -26,14 +26,11 @@ body
 
 #historique {
 	position:absolute;
-	top: 400px;
-	left: 72px;
+	top: 410px;
+	left: 82px;
 	height: 200px;
 	width: 220px;
 	color: #EFB756;
-	background-color: white;
-	border: 10px solid #E3C230;
-	border-radius: 20px;
 }
 
 p {
