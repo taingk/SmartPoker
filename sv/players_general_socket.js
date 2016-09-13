@@ -169,13 +169,17 @@ function	switch_next_player(table, decision)
 	send_raise_limits(table, table.game, table.game.highlights_pos);
 	curseat = get_seat(table.seats, table.game.highlights_pos);
 	adjust_bets_values(table);
-	if (table.game.curbet == "0" /*|| table.game.curbet <= +curseat.bet*/)
+	if (table.game.curbet == "0" /*|| table.game.curbet <= +curseat.bet*/) {
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
-	else
+		send_option(table, table.game.highlights_pos, "second choice", "call",/*
+		((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */cfg.conf.big_blind);
+		}
+	else {
 		send_option(table, table.game.highlights_pos, "first choice", "call",/*
-			((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */table.game.curbet);
-	send_option(table, table.game.highlights_pos, "second choice", "raise",/*
-			((table.game.curbet - curseat.bet) * 2 > 0) ? (table.game.curbet - curseat.bet) * 1.10 : */table.game.curbet*2);
+		((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) : */table.game.curbet);
+		send_option(table, table.game.highlights_pos, "second choice", "raise",/*
+		((table.game.curbet - curseat.bet) * 2 > 0) ? (table.game.curbet - curseat.bet) * 1.10 : */table.game.curbet*2);
+	}
 	send_option(table, table.game.highlights_pos, "third choice", "fold");
 }
 
@@ -226,7 +230,7 @@ function	next_moment(table, game, decision)
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 	//else
 		send_option(table, table.game.highlights_pos, "second choice", "call",/*
-	//		((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) :*/ table.game.curbet);
+	//		((table.game.curbet - curseat.bet) > 0) ? (table.game.curbet - curseat.bet) :*/ cfg.conf.big_blind);
 	/*send_option(table, table.game.highlights_pos, "second choice", "raise",/*
 			((table.game.curbet - curseat.bet) * 2 > 0) ? (table.game.curbet - curseat.bet) * 1.10 : *//*table.game.curbet*2);*/
 	send_option(table, table.game.highlights_pos, "third choice", "fold");
