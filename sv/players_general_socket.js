@@ -158,7 +158,6 @@ function	adjust_bets_values(table)
 function	switch_next_player(table, decision)
 {
 	var 	player;
-	var		curseat = get_seat(table.seats, table.game.highlights_pos);
 
 	if (table.game.highlights_pos == "none")
 		return ;
@@ -170,8 +169,8 @@ function	switch_next_player(table, decision)
 	send_raise_limits(table, table.game, table.game.highlights_pos, 0);
 	//curseat = get_seat(table.seats, table.game.highlights_pos);
 	adjust_bets_values(table);
-	console.log('avant finally '+curseat.player.bankroll);
-	if (curseat.player.bankroll) {
+	console.log(get_seat(table.seats, table.game.highlights_pos).player.bankroll);
+	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		if (table.game.curbet == "0" /*|| table.game.curbet <= +curseat.bet*/) {
 			console.log('1')
 			send_option(table, table.game.highlights_pos, "first choice", "check", 0);
@@ -197,9 +196,8 @@ function	switch_next_player(table, decision)
 		}
 		else {
 			console.log('4');
-			console.log('FINALLY ? = '+get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 			send_option(table, table.game.highlights_pos, "first choice", "call", get_seat(table.seats, table.game.highlights_pos).player.bankroll);
-			send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet*2);
+			send_option(table, table.game.highlights_pos, "second choice", "null", -1);
 		}
 		send_option(table, table.game.highlights_pos, "third choice", "fold");
 	}
@@ -207,6 +205,8 @@ function	switch_next_player(table, decision)
 
 function	next_moment(table, game, decision)
 {
+	var 	player;
+
 	if (game.moment == "preflop")
 	{
 		table.game.curbet = "0";
@@ -246,9 +246,7 @@ function	next_moment(table, game, decision)
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
 	remove_last_actions(table, 3);
 	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
-	var 	player;
-	var		curseat = get_seat(table.seats, table.game.highlights_pos);
-	if (curseat.player.bankroll) {
+	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll.player.bankroll) {
 	//if (table.game.curbet == "0" || table.game.curbet <= +curseat.bet)
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 	//else
