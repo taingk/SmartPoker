@@ -98,6 +98,6 @@ function	reinit(table, game)
 		console.log("Starting a new game...");
 		for (var i = 0; i < table.playing_seats.length; i++)
 				get_seat(table.seats, table.playing_seats[i]).state = "playing";
-		new_cashgame(42, table);
+		new_cashgame(1, table);
 	}
 }
