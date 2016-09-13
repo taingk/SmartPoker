@@ -75,7 +75,8 @@ function	register_player()
 	});
 	socket.on("second choice", function(choice, amount)
 	{
-		if (choice == "call" && amount > 0)
+		console.log('choice = '  +choice);
+		if (choice == "call" && amount >= 0)
 		{
 			$('#choice2').show();
 			$("#c2").text("CALL");
