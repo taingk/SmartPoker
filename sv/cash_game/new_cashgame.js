@@ -156,14 +156,16 @@ function		send_raise_limits(table, game, seat_nb, token)
 	}
 	else if (!token)
 	{
-		console.log('send raise limits 1');
+		console.log('send raise limits 2');
 		raise_limit1 = game.curbet *2;
 		 /*(game.curbet - curseat.bet) * 2 > 0 ? (game.curbet - curseat.bet) * 1.10 : game.curbet;
 		raise_limit1 = raise_limit1 > curseat.player.bankroll ? curseat.player.bankroll : raise_limit1;*/
 		console.log('raise limit1 : '+raise_limit1);
 		console.log('curseat player bankroll ' + curseat.player.bankroll);
-		if (curseat.player.bankroll < raise_limit1)
+		if (curseat.player.bankroll < raise_limit1) {
 			io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, raise_limit1);
+			console.log('salut jsuis la');
+		}
 		else
 			io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, curseat.player.bankroll);
 	}
