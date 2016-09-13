@@ -69,7 +69,6 @@ function	register_player()
 		}
 		else if (choice == "check")
 		{
-			console.log('choice == check');
 			$("#c1").text("CHECK");
 			$("#c1_amount").text('');
 		}
@@ -78,13 +77,12 @@ function	register_player()
 	{
 		if (choice == "call" && amount > 0)
 		{
-			console.log('choice == call');
+			$('#choice2').show();
 			$("#c2").text("CALL");
 			$("#c2_amount").text((Math.floor(+amount * 100)) / 100 + "$");
 		}
 		else if (choice == "null" && amount < 0)
 		{
-			console.log('choice == null');
 			$('#choice2').hide();
 		}
 		else if ((choice == "raise" || choice == "bet") && amount >= 0)
