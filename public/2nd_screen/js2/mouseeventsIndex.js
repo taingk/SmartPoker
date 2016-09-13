@@ -3,7 +3,6 @@ var			g_connected = 0;
 
 function	register_player()
 {
-	console.log('connected ?' + g_connected);
 	g_nickname = $("#nick_zone").val();
 	if (!g_connected)
 		socket.emit("is valid nickname", g_nickname, seat_nb);
@@ -58,6 +57,7 @@ function	register_player()
 	});
 	socket.on("first choice", function(choice, amount)
 	{
+		console.log('connected ?' + g_connected);
 		$('#bet_pot').css("visibility", "visible");
 		$("#choice1").css("visibility", "visible");
 		$("#choice2").css("visibility", "visible");
