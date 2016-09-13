@@ -157,8 +157,6 @@ function		send_raise_limits(table, game, seat_nb, token)
 		else if (!token)
 		{
 			raise_limit1 = game.curbet *2;
-			 /*(game.curbet - curseat.bet) * 2 > 0 ? (game.curbet - curseat.bet) * 1.10 : game.curbet;
-			raise_limit1 = raise_limit1 > curseat.player.bankroll ? curseat.player.bankroll : raise_limit1;*/
 			console.log('raise limit1 : '+raise_limit1);
 			console.log('curseat player bankroll ' + curseat.player.bankroll);
 			if (curseat.player.bankroll < raise_limit1) {
