@@ -161,17 +161,22 @@ function		send_option(table, seat_nb, option, choice, amount)
 	var			player;
 	var			curseat = get_seat(table.seats, seat_nb);
 
+	console.log('send option ');
 	if (curseat && curseat.player.bankroll === "ALL IN" && amount > curseat.player.bankroll)
 		amount = curseat.player.bankroll;
 	if (curseat.state == "playing")
 	{
+		console.log('playing ?');
 		if (choice === "fold") // As it's the last option, client should be ready.
 		{
 			io.to(get_private_id(table.private_ids, seat_nb)).emit("your turn");
 		}
 		player = get_seat(table.seats, seat_nb).player;
 		io.to(get_private_id(table.private_ids, seat_nb)).emit(option, choice, amount);
+		console.log('emit');
 	}
+	console.log('fin send option');
+
 }
 
 function		send_emplacements(table)
@@ -226,7 +231,6 @@ function		game_routine(socket, table)
 	var			sb; // small blind.
 	var			bb;	// big blind.
 
-	console.log('game routine');
 	table.game.d_pos = find_dealer(table, table.game);
 	table.game.sb_pos = find_sb(table, table.game);
 	table.game.bb_pos = find_bb(table, table.game);
@@ -243,7 +247,6 @@ function		game_routine(socket, table)
 	blinds_treatment(table, sb, bb); 				   // Take blinds (server side).
 	send_blinds(table, sb, bb); 					   // Send blinds to clients.
 	/* Preflop */
-	console.log('preflop');
 	preflop_deal(socket, table.game, table);
 	preflop_first_cards_suits(socket, table.game, table);
 	table.game.curbet = cfg.conf.big_blind;
@@ -251,7 +254,6 @@ function		game_routine(socket, table)
 	players_wait_mode(table);
 	console.log('ask first player');
 	ask_first_player(socket, table, table.game);
-	console.log('so ?');
 }
 
 function		init_obj(table)
