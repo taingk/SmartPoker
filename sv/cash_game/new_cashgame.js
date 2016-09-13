@@ -170,7 +170,6 @@ function		send_option(table, seat_nb, option, choice, amount)
 			io.to(get_private_id(table.private_ids, seat_nb)).emit("your turn");
 		}
 		player = get_seat(table.seats, seat_nb).player;
-		console.log(player);
 		io.to(get_private_id(table.private_ids, seat_nb)).emit(option, choice, amount);
 	}
 

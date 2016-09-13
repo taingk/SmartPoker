@@ -3,6 +3,7 @@ var			g_connected = 0;
 
 function	register_player()
 {
+	console.log('connected ?' + g_connected);
 	g_nickname = $("#nick_zone").val();
 	if (!g_connected)
 		socket.emit("is valid nickname", g_nickname, seat_nb);
