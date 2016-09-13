@@ -81,8 +81,8 @@ function	register_player()
 		}
 		else if (choice == "call" && amount > 0)
 		{
-			$("#c1").text("CALL");
-			$("#c1_amount").text((Math.floor(+amount * 100)) / 100 + "$");
+			$("#c2").text("CALL");
+			$("#c2_amount").text((Math.floor(+amount * 100)) / 100 + "$");
 		}
 		else if ((choice == "raise" || choice == "bet") && amount >= 0)
 		{
