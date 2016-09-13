@@ -39,6 +39,9 @@ function 	keyFunction(evnt)
 		case 5:
 			restart();
 			break;
+		case 6:
+			test();
+			break;
 		case "RED":
 			new_table();
 			break;
