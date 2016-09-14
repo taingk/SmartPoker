@@ -95,7 +95,8 @@ function	sync_sv()
 		var text = "<p>"+nick + " " + decision+"</p>";
 
 		$("#last_action" + seat_nb).text(decision);
-		$("#histoContent").text(text);
+		$("#histoContent").empty();
+		$("#histoContent").append(text);
 	});
 	socket.on("fold", function(seat_nb)
 	{
