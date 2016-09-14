@@ -147,7 +147,7 @@ function		send_raise_limits(table, game, seat_nb, token)
 	var			raise_limit1;
 
 	curseat = get_seat(table.seats, seat_nb);
-	if (curseat.player.bankroll) {
+	if (curseat.player.bankroll != 0) {
 		if (token) {
 			raise_limit1 = cfg.conf.big_blind;
 			console.log('raise limit1 : '+raise_limit1);
