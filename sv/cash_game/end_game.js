@@ -41,6 +41,9 @@ function	end_game(table, game, winners, player)
 	}
 	if (winners == 42)
 	{
+		for (var i = 1; i < 7; i++) {
+			io.to(get_private_id(table.private_ids, i)).emit("cancel buttons", "hidden");
+		}
 		io.to(table.id).emit("winner", player.seat_nb, 'disconnected');
 		for (idx = 1; idx <= 6; ++idx)
 		{
