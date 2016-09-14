@@ -94,7 +94,7 @@ function	sync_sv()
 		amount == 0 ? amount = "" : amount = " " + amount + "$";
 		var nick = $("#player_name" + seat_nb).text();
 		var str = decision.split(" ");
-		var text = "<p>"+nick + " " + str[0] amount +"</p>";
+		var text = "<p>"+nick + " " + str[0] + amount +"</p>";
 
 		$("#last_action" + seat_nb).text(str[0]);
 		$("#histoContent").empty();
