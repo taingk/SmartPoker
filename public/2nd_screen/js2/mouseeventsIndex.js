@@ -134,9 +134,9 @@ function	choice1_chose()
 		socket.emit("player decision", "CALL", channel + seat_nb.toString(), $("#c1_amount").text());
 }
 
-function	choice2_chose(cdeux)
+function	choice2_chose()
 {
-	socket.emit("player decision", cdeux, channel + seat_nb.toString(), $("#c2_amount").text());
+	socket.emit("player decision", $('#c2').text(), channel + seat_nb.toString(), $("#c2_amount").text());
 }
 
 function	choice3_chose()
@@ -245,7 +245,7 @@ function	mouse_handler_device()
 {
 	$("#play").click(register_player);
 	$("#choice1").click(choice1_chose);
-	$("#choice2").click(choice2_chose($('#c2').text()));
+	$("#choice2").click(choice2_chose);
 	$("#choice3").click(choice3_chose);
 	$("#hide_cards").click(hide_cards);
 	$('#pot1').click(pot1_chosen);
