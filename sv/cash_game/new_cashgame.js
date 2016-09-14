@@ -149,7 +149,7 @@ function		send_raise_limits(table, game, seat_nb, token)
 	if (get_seat(table.seats, seat_nb).player.bankroll) {
 		if (token) {
 			raise_limit1 = cfg.conf.big_blind;
-			io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, get_seat(table.seats, seat_nb).player.bankroll.player.bankroll);
+			io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, get_seat(table.seats, seat_nb).player.bankroll);
 		}
 		else
 		{
@@ -158,7 +158,7 @@ function		send_raise_limits(table, game, seat_nb, token)
 				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, raise_limit1);
 			}
 			else
-				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, get_seat(table.seats, seat_nb).player.bankroll.player.bankroll);
+				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, get_seat(table.seats, seat_nb).player.bankroll);
 		}
 	}
 	else {
