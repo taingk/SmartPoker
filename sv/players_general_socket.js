@@ -164,9 +164,9 @@ function	switch_next_player(table)
 	remove_last_actions(table, 10);
 	table.game.highlights_pos = get_next_player(table, table.game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
+	console.log('switch player ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 	send_raise_limits(table, table.game, table.game.highlights_pos, 0);
 	adjust_bets_values(table);
-	console.log('switch player ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		if (table.game.curbet == "0") {
 			console.log('current bet 0')
@@ -252,9 +252,9 @@ function	next_moment(table, game)
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
 	table.game.highlights_pos = get_first_to_talk(table, game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
-	remove_last_actions(table, 10);
 	console.log('next moment ' +curseat.player.bankroll);
 	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
+	remove_last_actions(table, 10);
 	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 		if (get_seat(table.seats, table.game.highlights_pos).player.bankroll < cfg.conf.big_blind)
