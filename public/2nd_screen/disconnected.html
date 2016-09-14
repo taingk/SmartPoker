@@ -21,11 +21,16 @@
 	        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	    	})();
     	</script> -->
-
+		<style>
+		a:link{
+			color:white;
+		}
+		</style>
 	</head>
 	<body><div id='container'>
 		<p id='zone' style="position: absolute;top: 35%;height: 10%;width: 100%;color: white;font-size: 5em;text-align: center;">Game over !<br> You have been disconnected.<br><a href="javascript:window.location.reload();">Play again.</a></p>
 		<script>
+		console.log(window.location.href, window.location.href(-1));
 		window.addEventListener("orientationchange", function() {
 			// Announce the new orientation number
 			if (window.orientation == 0)
