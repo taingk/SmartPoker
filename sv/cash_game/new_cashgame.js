@@ -147,20 +147,20 @@ function		send_raise_limits(table, game, seat_nb, token)
 	var			player;
 	var			raise_limit1;
 
-	curseat = get_seat(table.seats, seat_nb);
 	console.log('Log 2!');
+	curseat = get_seat(table.seats, seat_nb);
 	if (curseat.player.bankroll) {
 		if (token) {
 			raise_limit1 = cfg.conf.big_blind;
 			console.log('raise limit1 : '+raise_limit1);
-			console.log('curseat player bankroll ' + curseat.player.bankroll);
+			console.log('curseat player bankroll 1 ' + curseat.player.bankroll);
 			io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, curseat.player.bankroll);
 		}
 		else
 		{
 			raise_limit1 = game.curbet *2;
 			console.log('raise limit1 : '+raise_limit1);
-			console.log('curseat player bankroll ' + curseat.player.bankroll);
+			console.log('curseat player bankroll 0 ' + curseat.player.bankroll);
 			if (curseat.player.bankroll < raise_limit1) {
 				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, raise_limit1);
 			}
