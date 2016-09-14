@@ -94,6 +94,7 @@ function	sync_sv()
 		var nick = $("#player_name" + seat_nb).text();
 		var text = "<p>"+nick + " " + decision+"</p>";
 
+		decision == "RAISE +" ? decision.substring(-2);
 		$("#last_action" + seat_nb).text(decision);
 		$("#histoContent").empty();
 		$("#histoContent").append(text);
