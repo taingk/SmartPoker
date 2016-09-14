@@ -61,7 +61,7 @@ function		socket_listens_players(socket, table)
 			io.to(table.id).emit("send river", table.game.board[4]);
 	});
 
-	socket.on("player decision", function(decision, channel_id, bet_amount)
+	socket.on("player decision", function(decision, channel_id, bet_amount, rc)
 	{
 		if (!decision || !channel_id)
 			return ;
@@ -74,7 +74,7 @@ function		socket_listens_players(socket, table)
 			bet_amount = (Math.round(+bet_amount * 100)) / 100;
 		}
 		console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
-		treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb);
+		treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
 		io.to(table.id).emit("last action", decision, seat_nb);
 		console.log(table.game.round_nb + "/" + table.playing_seats.length);
 		if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
@@ -96,11 +96,11 @@ function		socket_listens_players(socket, table)
 	});
 }
 
-function	treat_decision(table, seat, decision, bet_amount, player, seat_nb)
+function	treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc)
 {
 	if (decision == "CHECK" && +seat.bet === +table.game.curbet)
 		return (1);
-	else if (decision == "CALL")
+	else if (decision == "CALL" && rc == 0)
 	{
 		player.bankroll -= (+table.game.curbet - +seat.bet) > 0 ? (+table.game.curbet - +seat.bet) : +table.game.curbet;
 		if (player.bankroll < 0)
