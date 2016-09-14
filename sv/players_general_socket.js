@@ -147,7 +147,7 @@ function switch_next_player(table) {
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
-	console.log(table.game.curbet, game.curbet);
+	console.log(table);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
