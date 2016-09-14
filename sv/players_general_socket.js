@@ -80,7 +80,7 @@ function		socket_listens_players(socket, table)
 		if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
 		{
 			console.log('next_moment');
-			next_moment(table, table.game, get_seat(table.seats, seat_nb).player);
+			next_moment(table, table.game);
 			if (table.playing_seats.length < 2) {
 				return one_playing_player_left(table);
 			}
@@ -210,7 +210,7 @@ function	switch_next_player(table)
 	}
 }
 
-function	next_moment(table, game, player)
+function	next_moment(table, game)
 {
 	if (game.moment == "preflop")
 	{
@@ -252,9 +252,9 @@ function	next_moment(table, game, player)
 	remove_last_actions(table, 3);
 	console.log('Log 1!');
 	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
-	if (/*get_seat(table.seats, table.game.highlights_pos).*/player.bankroll) {
+	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
-		if (/*get_seat(table.seats, table.game.highlights_pos).*/player.bankroll < cfg.conf.big_blind)
+		if (get_seat(table.seats, table.game.highlights_pos).player.bankroll < cfg.conf.big_blind)
 			send_option(table, table.game.highlights_pos, "second choice", "null", -1);
 		else
 			send_option(table, table.game.highlights_pos, "second choice", "call", cfg.conf.big_blind);
