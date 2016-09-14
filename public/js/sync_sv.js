@@ -92,8 +92,8 @@ function	sync_sv()
 	socket.on("last action", function(decision, seat_nb)
 	{
 		var nick = $("#player_name" + seat_nb).text();
-		var text = "<p>"+nick + " " + decision+"</p>";
 		var str = decision.split(" ");
+		var text = "<p>"+nick + " " + str[0] +"</p>";
 
 		$("#last_action" + seat_nb).text(str[0]);
 		$("#histoContent").empty();
