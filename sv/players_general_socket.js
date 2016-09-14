@@ -83,10 +83,13 @@ function socket_listens_players(socket, table) {
 }
 
 function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) {
-	if ((rc == 0) && (decision == "CALL" || decision == "RAISE"))
+	if (decision == "FOLD")
+		decision = "FOLD";
+	else if (rc == "undefined")
         decision = "CALL";
-    else
+    else if (rc == 1)
         decision = "RAISE";
+
 	console.log(rc, decision);
     if (decision == "CHECK" && +seat.bet === +table.game.curbet)
         return (1);
