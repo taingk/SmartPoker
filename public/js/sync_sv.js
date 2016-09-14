@@ -92,9 +92,10 @@ function	sync_sv()
 	socket.on("last action", function(decision, seat_nb)
 	{
 		var nick = $("#player_name" + seat_nb).text();
+		var text = "<p>"+nick + " " + decision+"</p>";
 
 		$("#last_action" + seat_nb).text(decision);
-		$("#histoContent").text("<p>"+nick + " " + decision+"</p>");
+		$("#histoContent").text(text);
 	});
 	socket.on("fold", function(seat_nb)
 	{
