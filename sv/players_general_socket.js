@@ -132,6 +132,7 @@ function	treat_decision(table, seat, decision, bet_amount, player, seat_nb)
 	}
 	else if (decision == "FOLD")
 	{
+		console.log(table);
 		remove_from_playing_seats(table.playing_seats, seat_nb);
 		seat.state = "busy";
 		io.to(table.id).emit("fold", seat_nb);
@@ -166,9 +167,9 @@ function	switch_next_player(table, decision)
 	remove_last_actions(table, 3);
 	table.game.highlights_pos = get_next_player(table, table.game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
-	//send_raise_limits(table, table.game, table.game.highlights_pos, 0);
-	console.log('Log 3!');
+	send_raise_limits(table, table.game, table.game.highlights_pos, 0);
 	adjust_bets_values(table);
+	console.log(get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		if (table.game.curbet == "0") {
 			console.log('current bet 0')
@@ -255,7 +256,7 @@ function	next_moment(table, game, decision)
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
 	remove_last_actions(table, 3);
 	console.log('Log 1!');
-	//send_raise_limits(table, table.game, table.game.highlights_pos, 1);
+	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 		if (get_seat(table.seats, table.game.highlights_pos).player.bankroll < cfg.conf.big_blind)
