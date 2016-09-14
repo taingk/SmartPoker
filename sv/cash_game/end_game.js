@@ -8,6 +8,7 @@ function	end_timer(table, game)
 		{
 			if (!cpt)
 			{
+				remove_last_actions(table);
 				reinit(table, game);
 				clearInterval(timer);
 			}
