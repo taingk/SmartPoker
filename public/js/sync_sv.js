@@ -94,7 +94,7 @@ function	sync_sv()
 		var nick = $("#player_name" + seat_nb).text();
 
 		$("#last_action" + seat_nb).text(decision);
-		$("#histoContent").text(nick + " " + decision);
+		$("#histoContent").text("<p>"+nick + " " + decision+"</p>");
 	});
 	socket.on("fold", function(seat_nb)
 	{
