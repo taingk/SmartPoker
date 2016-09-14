@@ -120,8 +120,8 @@ function	sync_sv()
 	});
 	socket.on("remove last actions", function()
 	{
-/*		for (var idx = 1; idx <= 6; ++idx)
-			$("#last_action" + idx).remove();*/
+		for (var idx = 1; idx <= 6; ++idx)
+			$("#last_action" + idx).remove();
 	});
 	socket.on("remove board", function()
 	{
