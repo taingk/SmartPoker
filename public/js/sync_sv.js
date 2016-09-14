@@ -89,11 +89,12 @@ function	sync_sv()
 		}
 	});
 
-	socket.on("last action", function(decision, seat_nb)
+	socket.on("last action", function(decision, seat_nb, amount)
 	{
+		amount == 0 ? amount = "" : amount = " " + amount + "$";
 		var nick = $("#player_name" + seat_nb).text();
 		var str = decision.split(" ");
-		var text = "<p>"+nick + " " + str[0] +"</p>";
+		var text = "<p>"+nick + " " + str[0] amount +"</p>";
 
 		$("#last_action" + seat_nb).text(str[0]);
 		$("#histoContent").empty();

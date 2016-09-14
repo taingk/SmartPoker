@@ -75,7 +75,7 @@ function		socket_listens_players(socket, table)
 		}
 		console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
 		treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
-		io.to(table.id).emit("last action", decision, seat_nb);
+		io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
 		console.log(table.game.round_nb + "/" + table.playing_seats.length);
 		if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
 		{
