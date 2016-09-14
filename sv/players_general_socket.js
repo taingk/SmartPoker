@@ -132,8 +132,8 @@ function	treat_decision(table, seat, decision, bet_amount, player, seat_nb)
 	}
 	else if (decision == "FOLD")
 	{
-		console.log(table);
 		remove_from_playing_seats(table.playing_seats, seat_nb);
+		console.log(table);
 		seat.state = "busy";
 		io.to(table.id).emit("fold", seat_nb);
 		return (1);
