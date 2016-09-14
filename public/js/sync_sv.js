@@ -126,9 +126,9 @@ function	sync_sv()
 		$("#b5").css("visibility", "visible");
 	});
 	socket.on("remove last actions", function()
-	{/*
+	{
 		for (var idx = 1; idx <= 6; ++idx)
-			$("#last_action" + idx).remove();*/
+			$("#last_action" + idx).remove();
 	});
 	socket.on("remove board", function()
 	{
