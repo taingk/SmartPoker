@@ -145,7 +145,6 @@ function		send_raise_limits(table, game, seat_nb, token)
 {
 	var			curseat;
 	var			player;
-	var			bankroll;
 	var			raise_limit1;
 
 	console.log('Log 2!');

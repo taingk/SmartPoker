@@ -161,7 +161,7 @@ function	switch_next_player(table)
 		return ;
 	io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-	remove_last_actions(table, 3);
+	remove_last_actions(table, 10);
 	table.game.highlights_pos = get_next_player(table, table.game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
 	send_raise_limits(table, table.game, table.game.highlights_pos, 0);
@@ -212,12 +212,14 @@ function	switch_next_player(table)
 
 function	next_moment(table, game)
 {
+	var player;
+	
 	if (game.moment == "preflop")
 	{
 		table.game.curbet = "0";
 		game.moment = "flop";
 		deal_flop(table, game);
-		remove_last_actions(table, 2);	// Remove on the UI, on the seat, the last action.
+		remove_last_actions(table, 10);	// Remove on the UI, on the seat, the last action.
 		evalhand(table, game); // Evaluate the current hand of all the players playing.
 	}
 	else if (game.moment == "flop")
@@ -225,14 +227,14 @@ function	next_moment(table, game)
 		table.game.curbet = "0";
 		game.moment = "turn";
 		deal_turn(table, game);
-		remove_last_actions(table, 2);
+		remove_last_actions(table, 10);
 		evalhand(table, game);
 	}
 	else if (game.moment == "turn")
 	{
 		table.game.curbet = "0";
 		game.moment = "river";
-		remove_last_actions(table, 2);
+		remove_last_actions(table, 10);
 		deal_river(table, game);
 		evalhand(table, game);
 	}
@@ -249,8 +251,9 @@ function	next_moment(table, game)
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
 	table.game.highlights_pos = get_first_to_talk(table, game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
-	remove_last_actions(table, 3);
+	remove_last_actions(table, 10);
 	console.log('Log 1!');
+	console.log(player.bankroll);
 	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
