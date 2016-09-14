@@ -89,8 +89,6 @@ function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) 
         decision = "CALL";
     else if (rc == 1)
         decision = "RAISE";
-
-	console.log(rc, decision);
     if (decision == "CHECK" && +seat.bet === +table.game.curbet)
         return (1);
     else if (decision == "CALL") {
