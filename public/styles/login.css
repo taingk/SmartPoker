@@ -60,17 +60,17 @@ html {
         top: 70%;
         left: 5%;
         width: 90%;
-        height: 8%;
+        height: 10%;
         border-radius: 5px;
         z-index: 42;
     }
     #play {
         position: absolute;
         font: 4em/1.2 "Roboto-bold";
-        top: 80%;
+        top: 82%;
         left: 5%;
         width: 90%;
-        height: 8%;
+        height: 10%;
         border: 0px solid #ddd;
         border-radius: 5px;
         z-index: 42;
@@ -470,7 +470,7 @@ html {
     #c1, #c2, #c3, #c1_amount, #c2_amount, #hidenshow, #playtxt {
         position: relative;
         color: #FFFFFF;
-        font: 2em "Roboto-bold";
+        font: 1.5em "Roboto-bold";
         margin: auto;
     }
     #bet_pot {
