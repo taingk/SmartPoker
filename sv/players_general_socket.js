@@ -87,6 +87,7 @@ function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) 
         decision = "CALL";
     else
         decision = "RAISE";
+	console.log(rc);
     if (decision == "CHECK" && +seat.bet === +table.game.curbet)
         return (1);
     else if (decision == "CALL") {
@@ -147,7 +148,6 @@ function switch_next_player(table) {
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
-	console.log(table);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
