@@ -164,25 +164,21 @@ function	switch_next_player(table)
 	remove_last_actions(table, 10);
 	table.game.highlights_pos = get_next_player(table, table.game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
-	console.log('switch player ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 	send_raise_limits(table, table.game, table.game.highlights_pos, 0);
 	adjust_bets_values(table);
 	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		if (table.game.curbet == "0") {
-			console.log('current bet 0')
 			send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 			send_option(table, table.game.highlights_pos, "second choice", "call", cfg.conf.big_blind);
 			send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 		}
 		else {
-			console.log('current bet pas 0, il faut call ou raise')
 			if (table.game.curbet > get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 				console.log('current bet plus grand que bankroll joueur');
 				send_option(table, table.game.highlights_pos, "first choice", "call", get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 				send_option(table, table.game.highlights_pos, "second choice", "null",	-1);
 			}
 			else {
-				console.log('bankroll joueur plus grand que current bet');
 				send_option(table, table.game.highlights_pos, "first choice", "call", table.game.curbet);
 				if (table.game.curbet*2 > get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 					send_option(table, table.game.highlights_pos, "second choice", "null", -1);
@@ -196,13 +192,11 @@ function	switch_next_player(table)
 	}
 	else {
 		if (table.game.curbet == "0") {
-			console.log('3')
 			send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 			send_option(table, table.game.highlights_pos, "second choice", "null", -1);
 			send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 		}
 		else {
-			console.log('4');
 			send_option(table, table.game.highlights_pos, "first choice", "call", 0);
 			send_option(table, table.game.highlights_pos, "second choice", "null", -1);
 		}
@@ -252,9 +246,8 @@ function	next_moment(table, game)
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
 	table.game.highlights_pos = get_first_to_talk(table, game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
-	console.log('next moment ' +curseat.player.bankroll);
-	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 	remove_last_actions(table, 10);
+	send_raise_limits(table, table.game, table.game.highlights_pos, 1);
 	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
 		if (get_seat(table.seats, table.game.highlights_pos).player.bankroll < cfg.conf.big_blind)

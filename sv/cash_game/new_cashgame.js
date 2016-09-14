@@ -143,30 +143,22 @@ function	preflop_first_cards_suits(socket, game, table)
 
 function		send_raise_limits(table, game, seat_nb, token)
 {
-	var			curseat;
 	var			player;
 	var			raise_limit1;
 
-	console.log('raise limits!');
-	curseat = get_seat(table.seats, seat_nb);
-	console.log(curseat);
 	if (get_seat(table.seats, seat_nb).player.bankroll) {
 		if (token) {
 			raise_limit1 = cfg.conf.big_blind;
-			console.log('raise limit1 : '+raise_limit1);
-			console.log('curseat player bankroll 1 ' + curseat.player.bankroll);
-			io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, curseat.player.bankroll);
+			io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, get_seat(table.seats, seat_nb).player.bankroll.player.bankroll);
 		}
 		else
 		{
 			raise_limit1 = game.curbet *2;
-			console.log('raise limit1 : '+raise_limit1);
-			console.log('curseat player bankroll 0 ' + curseat.player.bankroll);
 			if (curseat.player.bankroll < raise_limit1) {
 				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, raise_limit1);
 			}
 			else
-				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, curseat.player.bankroll);
+				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, get_seat(table.seats, seat_nb).player.bankroll.player.bankroll);
 		}
 	}
 	else {
