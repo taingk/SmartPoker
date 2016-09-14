@@ -154,7 +154,7 @@ function		send_raise_limits(table, game, seat_nb, token)
 		else
 		{
 			raise_limit1 = game.curbet *2;
-			if (curseat.player.bankroll < raise_limit1) {
+			if (get_seat(table.seats, seat_nb).player.bankroll < raise_limit1) {
 				io.to(get_private_id(table.private_ids, seat_nb)).emit("raise limits", raise_limit1, raise_limit1);
 			}
 			else

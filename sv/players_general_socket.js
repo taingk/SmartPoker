@@ -157,6 +157,8 @@ function	adjust_bets_values(table)
 
 function	switch_next_player(table)
 {
+	var player;
+
 	if (table.game.highlights_pos == "none")
 		return ;
 	io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
@@ -207,7 +209,6 @@ function	switch_next_player(table)
 function	next_moment(table, game)
 {
 	var player;
-	var curseat = get_seat(table.seats, table.game.highlights_pos);
 
 	if (game.moment == "preflop")
 	{
