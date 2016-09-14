@@ -83,7 +83,7 @@ function socket_listens_players(socket, table) {
 }
 
 function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) {
-	if ((rc == 0) && (decision == "CALL" || decision "RAISE"))
+	if ((rc == 0) && (decision == "CALL" || decision == "RAISE"))
         decision = "CALL";
     else
         decision = "RAISE";
