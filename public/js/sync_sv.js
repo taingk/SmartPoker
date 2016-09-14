@@ -95,8 +95,7 @@ function	sync_sv()
 		var text = "<p>"+nick + " " + decision+"</p>";
 		var str = decision.split(" ");
 
-		console.log(str, str[0]);
-		$("#last_action" + seat_nb).text(decision);
+		$("#last_action" + seat_nb).text(str[0]);
 		$("#histoContent").empty();
 		$("#histoContent").append(text);
 	});
