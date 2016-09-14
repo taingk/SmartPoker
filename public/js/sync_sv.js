@@ -91,7 +91,10 @@ function	sync_sv()
 
 	socket.on("last action", function(decision, seat_nb)
 	{
+		var nick = $("#player_name" + seat_nb).text();
+
 		$("#last_action" + seat_nb).text(decision);
+		$("#histoContent").text(nick + " " + decision);
 	});
 	socket.on("fold", function(seat_nb)
 	{
@@ -119,9 +122,9 @@ function	sync_sv()
 		$("#b5").css("visibility", "visible");
 	});
 	socket.on("remove last actions", function()
-	{
+	{/*
 		for (var idx = 1; idx <= 6; ++idx)
-			$("#last_action" + idx).remove();
+			$("#last_action" + idx).remove();*/
 	});
 	socket.on("remove board", function()
 	{
