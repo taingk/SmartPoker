@@ -168,7 +168,6 @@ function	switch_next_player(table, decision)
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
 	send_raise_limits(table, table.game, table.game.highlights_pos, 0, get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 	adjust_bets_values(table);
-	console.log(get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		if (table.game.curbet == "0") {
 			console.log('current bet 0')
@@ -254,6 +253,7 @@ function	next_moment(table, game, decision)
 	table.game.highlights_pos = get_first_to_talk(table, game);
 	io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
 	remove_last_actions(table, 3);
+	console.log('log avant bug ' +get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 	send_raise_limits(table, table.game, table.game.highlights_pos, 1, get_seat(table.seats, table.game.highlights_pos).player.bankroll);
 	if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
 		send_option(table, table.game.highlights_pos, "first choice", "check", 0);
