@@ -245,7 +245,7 @@ function	mouse_handler_device()
 {
 	$("#play").click(register_player);
 	$("#choice1").click(choice1_chose);
-	$("#choice2").click(choice2_chose, $('#c2').text());
+	$("#choice2").click(choice2_chose($('#c2').text()));
 	$("#choice3").click(choice3_chose);
 	$("#hide_cards").click(hide_cards);
 	$('#pot1').click(pot1_chosen);
