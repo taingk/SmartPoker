@@ -195,16 +195,6 @@ function	sync_sv()
 	});
 }
 
-function 	new_table()
-{
-	socket.on("start game", function(id) {
-		console.log('caca ', id);
-	});
-	//document.location.href="http://poker.smartgames.tv/";
-}
-
-/*
-
 function	get_table(table_id, tables)
 {
 	var		idx = 0;
@@ -212,12 +202,29 @@ function	get_table(table_id, tables)
 	while (idx < tables.length)
 	{
 		if (tables[idx].id == table_id)
-			return tables[idx];
+		return tables[idx];
 		++idx;
 	}
 	return "not found";
 }
 
+socket.on("start game", function(id) {
+	emit(id);
+});
+
+function	emit(id)
+{
+	console.log('caca ' + id);
+}
+
+function 	new_table()
+{
+	document.location.href="http://poker.smartgames.tv/";
+}
+
+
+
+/*
 var id;
 var array;
 var game;
