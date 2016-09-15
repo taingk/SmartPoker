@@ -1,8 +1,9 @@
+var nb_player;
+
 function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
-	var nb_player;
     table = get_table(table.id, tables);
 
 	socket.on("nb player", function(nb) {
@@ -36,7 +37,7 @@ function socket_listens_players(socket, table) {
                 return;
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
-			if (nb_player == "null")
+			if (nb_player == "udnefined")
 				nb_player = 2;
 			console.log('second '+ nb_player);
             if (table.playing_seats.length >= nb_player && table.game.moment == "waiting") {
