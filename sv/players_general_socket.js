@@ -37,7 +37,7 @@ function socket_listens_players(socket, table) {
                 return;
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
-			if (nb_player == "udnefined")
+			if (nb_player == "undefined" || nb_player <= 1 || nb_player >= 7 || isNaN(nb_player) == true)
 				nb_player = 2;
 			console.log('second '+ nb_player);
             if (table.playing_seats.length >= nb_player && table.game.moment == "waiting") {
