@@ -208,9 +208,8 @@ function	get_table(table_id, tables)
 	return "not found";
 }
 
-socket.on("start game", function(tableX, socket) {
-	console.log(tableX);
-	socket.emit("cashgame!", tableX, socket);
+socket.on("start game", function(socket, tableX) {
+	socket.emit("cashgame!", socket, tableX);
 });
 
 function 	new_table()
