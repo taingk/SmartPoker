@@ -100,7 +100,7 @@ function 	show_prompt(prompt_nb)
 
 function 	new_table()
 {
-	document.location.href="http://poker.smartgames.tv/";
+	socket.emit("press red");//document.location.href="http://poker.smartgames.tv/";
 }
 
 function 	valid_choice()

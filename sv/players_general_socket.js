@@ -36,13 +36,10 @@ function socket_listens_players(socket, table) {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-				var timer = setInterval(function(){
-					push = false;
-					console.log('set interval');
-					new_cashgame(socket, table)
-				}, 60000);
-				if (!push)
-					clearInterval(timer);
+					socket.on("press red", function() {
+						console.log('call');
+						new_cashgame(socket, table);
+					});
             }
             return;
         }
