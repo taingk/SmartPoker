@@ -4,6 +4,7 @@ function socket_listens_players(socket, table) {
     var channel; // Channel involved.
     var lock = false;
 	var tableId = get_table(table.id, tables);
+	table = get_table(table.id, tables);
 
     socket.on("is valid nickname", function(nickname, seat_idx) {
             curseat = get_seat(table.seats, seat_idx);
