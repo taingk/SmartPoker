@@ -37,6 +37,10 @@ function socket_listens_players(socket, table) {
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
 
+			socket.on("Idx for chrono", function(idx) {
+				console.log('idx for chrono'+idx);
+			});
+
 			var tableId = table.id;
 
 				if (table.playing_seats.length > 2)
