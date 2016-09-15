@@ -38,6 +38,7 @@ function socket_listens_players(socket, table) {
 
 					io.to(table.id).emit("start game", table);
 					socket.on("cashgame!", function(tableX) {
+						console.log(tableX);
 						new_cashgame(socket, tableX);
 					})
             }

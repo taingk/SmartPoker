@@ -209,6 +209,7 @@ function	get_table(table_id, tables)
 }
 
 socket.on("start game", function(tableX) {
+	console.log(tableX);
 	socket.emit("cashgame!", tableX);
 });
 
