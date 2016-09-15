@@ -31,21 +31,22 @@ function socket_listens_players(socket, table) {
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
 
-            for (var idx = 1; idx <= 6; ++idx)
-                if (get_seat(table.seats, idx).state === "busy")
+            for (var idx = 1; idx <= 6; ++idx) {
+                if (get_seat(table.seats, idx).state === "busy") {
                     table.playing_seats.push(idx);
+					console.log('idx = ' + idx);
+				}
+			}
 
-            console.log('set time out 0');
+/*					if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
+						console.log("Starting a new game...");
+						for (var i = 0; i < table.playing_seats.length; i++)
+						get_seat(table.seats, table.playing_seats[i]).state = "playing";
+						new_cashgame(socket, table);
+					}
             setTimeout(function() {
-                console.log('set time out 10');
-                if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
-                    console.log("Starting a new game...");
-                    for (var i = 0; i < table.playing_seats.length; i++)
-                        get_seat(table.seats, table.playing_seats[i]).state = "playing";
-                    new_cashgame(socket, table);
-                }
             }, 10000);
-            return;
+*/            return;
         }
     });
     socket.on("get seated players", function() {
