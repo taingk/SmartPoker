@@ -36,11 +36,10 @@ function socket_listens_players(socket, table) {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-                chrono(socket, tableId);
+                new_cashgame(socket, tableId);
             }
             return;
         }
-
     });
 
     socket.on("get seated players", function() {

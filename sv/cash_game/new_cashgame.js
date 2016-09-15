@@ -271,13 +271,12 @@ function chrono(socket, tableId) {
         io.to(tableId.id).emit("chrono", 45, "The game will begin ...");
         var timer = setInterval(function() {
             lock = true;
-            new_cashgame(socket, table);
-            clearInterval(timer);
+            new_cashgame(socket, tableId);
             io.to(tableId.id).emit("chrono off");
             console.log('lock est true : ' + lock);
+			clearInterval(timer);
         }, 45000);
     }
-
 }
 
 function new_cashgame(socket, table) {
