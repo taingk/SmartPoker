@@ -48,7 +48,7 @@ function socket_listens_players(socket, table) {
                         io.to(tableId.id).emit("chrono", 45, "The game will begin ...");
                             var timer = setInterval(function() {
                                 lock = true;
-                                new_cashgame(socket, table);
+                                new_cashgame(socket, tableId);
                                 clearInterval(timer);
                                 io.to(tableId.id).emit("chrono off");
                                 console.log(tableId.id + ' lock est true : ' + lock);
