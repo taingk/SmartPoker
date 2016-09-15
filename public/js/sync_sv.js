@@ -195,6 +195,14 @@ function	sync_sv()
 	});
 }
 
+function 	new_table()
+{
+	socket.on("start game", function(id) {
+		console.log('caca ', id);
+	});
+	//document.location.href="http://poker.smartgames.tv/";
+}
+
 /*
 
 function	get_table(table_id, tables)

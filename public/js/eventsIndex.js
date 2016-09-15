@@ -93,10 +93,7 @@ function 	show_prompt(prompt_nb)
 	$('#prompt' + prompt_nb).css("visibility", attribute);
 }
 
-function 	new_table()
-{
-	document.location.href="http://poker.smartgames.tv/";
-}
+
 
 function 	valid_choice()
 {

@@ -1,8 +1,8 @@
 function end_timer(table, game) {
     var cpt;
     var timer;
-    var board;
-/*    var lock = true;
+/*	var board;
+ 	var lock = true;
 
     board = setInterval(function() {
         io.to(table.id).emit("remove board");

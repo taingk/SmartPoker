@@ -2,7 +2,6 @@ function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
-    var tableId = get_table(table.id, tables);
     table = get_table(table.id, tables);
 
     socket.on("is valid nickname", function(nickname, seat_idx) {
@@ -36,7 +35,10 @@ function socket_listens_players(socket, table) {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-                new_cashgame(socket, tableId);
+					io.to(table.id).emit("start game", table.id);
+					socket.on("cashgame!", function() {
+						new_cashgame(socket, table);
+					})
             }
             return;
         }
