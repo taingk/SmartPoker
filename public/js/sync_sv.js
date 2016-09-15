@@ -2,7 +2,7 @@ function	sync_sv()
 {
 	socket.emit("get seated players");
 	socket.on("chrono", function(i, str){
-		$("#chrono").html(str +'<br><span id="sec">'+i+'</span> sec remaining to add more players');
+		$("#chrono").html(str +'<br><span id="sec">'+i+'</span> sec remaining<br>to add more players');
 		var chrono = setInterval(function() {
 			i--;
 			$("#sec").html(i);
