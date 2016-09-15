@@ -33,7 +33,7 @@
 	<script>
 		var socket = io();
 		$(document).ready(function() {
-			var nb = alert('Hello, how many players ?');
+			var nb = prompt('Hello, how many players ?');
 			socket.emit('nb player', nb);
 			socket.on("hide qrcode", function(seat_nb) {
 				$("#qr_spot" + seat_nb).css("visibility", "hidden");
