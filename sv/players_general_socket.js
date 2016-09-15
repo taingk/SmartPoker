@@ -39,7 +39,7 @@ function socket_listens_players(socket, table) {
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
                 new_cashgame(socket, table);
             }*/
-            return;
+            //return;
         }
     });
     socket.on("get seated players", function() {
