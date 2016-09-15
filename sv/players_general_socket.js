@@ -3,6 +3,7 @@ function socket_listens_players(socket, table) {
     var curseat; // Current seat.
     var channel; // Channel involved.
     var lock = false;
+	var tableId = get_table(table.id, tables);
 
     socket.on("is valid nickname", function(nickname, seat_idx) {
             curseat = get_seat(table.seats, seat_idx);
@@ -31,26 +32,25 @@ function socket_listens_players(socket, table) {
                     return;
                 if (table.game.moment === "waiting")
                     table.playing_seats.push(seat_idx);
-                console.log(get_table(table.id, tables));
                 if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
                     console.log("Starting a new game...");
                     for (var i = 0; i < table.playing_seats.length; i++)
                         get_seat(table.seats, table.playing_seats[i]).state = "playing";
                     if (table.playing_seats.length > 2)
                         lock = true;
-                    console.log(table.id + ' lock est false, true si + 2 ' + lock);
+                    console.log(tableId + ' lock est false, true si + 2 ' + lock);
                     if (lock) {
-                        console.log(table.id + ' lock est true : ' + lock);
+                        console.log(tableId + ' lock est true : ' + lock);
                         clearInterval(timer);
                     } else {
-                        console.log(table.id + ' lock est false :' + lock);
-                        io.to(table.id).emit("chrono", 45, "The game will begin ...");
+                        console.log(tableId + ' lock est false :' + lock);
+                        io.to(tableId).emit("chrono", 45, "The game will begin ...");
                             var timer = setInterval(function() {
                                 lock = true;
                                 new_cashgame(socket, table);
                                 clearInterval(timer);
-                                io.to(table.id).emit("chrono off");
-                                console.log(table.id + ' lock est true : ' + lock);
+                                io.to(tableId).emit("chrono off");
+                                console.log(tableId + ' lock est true : ' + lock);
                             }, 45000);
                         }
                     }
