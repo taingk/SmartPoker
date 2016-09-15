@@ -14,7 +14,10 @@ function 	keyFunction(evnt)
 			move_left();
 			break;
 		case "OK":
+		if (push == true)
 			valid_choice();
+		else
+			confirm();
 			break;
 		case "BACK":
 			back_func();
@@ -32,7 +35,7 @@ function 	keyFunction(evnt)
 			backToPortal();
 			break;
 		case 5:
-			//restart();
+			restart();
 			break;
 		case "RED":
 			new_table();
