@@ -5,7 +5,7 @@ function	sync_sv()
 	socket.on("chrono", function(){
 		var chrono = setInterval(function() {
 			i++;
-			$("#chrono").html(i);
+			$("#sec").html(i);
 			if (i == 30) {
 				clearInterval(chrono);
 				i = 0;
