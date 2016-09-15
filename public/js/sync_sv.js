@@ -1,14 +1,14 @@
 function	sync_sv()
 {
-	var i = 0
+	var i = 31;
 	socket.emit("get seated players");
 	socket.on("chrono", function(){
 		var chrono = setInterval(function() {
-			i++;
+			i--;
 			$("#sec").html(i);
-			if (i == 30) {
+			if (i == 0) {
 				clearInterval(chrono);
-				i = 0;
+				i = 31;
 			}
 		}, 1000);
 	});

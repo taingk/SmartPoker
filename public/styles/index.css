@@ -22,14 +22,15 @@ body
 	src: url('polices/Roboto-Thin.ttf');
 	font-family: 'Roboto-bold';
 	src: url('polices/Roboto-Bold.ttf');
-}
+}j
 
 #chrono {
 	position: absolute;
-	top: 280px;
+	top: 290px;
 	left: 605px;
 	font-size: 1.5em;
 	text-align: center;
+	color: #006F60;
 }
 
 #historique {
