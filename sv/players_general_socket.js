@@ -31,21 +31,15 @@ function socket_listens_players(socket, table) {
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
 
-            for (var idx = 1; idx <= 6; ++idx)
-                if (get_seat(table.seats, idx).state === "busy") {
-                    table.playing_seats.push(idx);
-					console.log('idx = ' + idx);
-				}
+			console.log('waiting guys');
 
-/*					if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
-						console.log("Starting a new game...");
-						for (var i = 0; i < table.playing_seats.length; i++)
-						get_seat(table.seats, table.playing_seats[i]).state = "playing";
-						new_cashgame(socket, table);
-					}
-            setTimeout(function() {
-            }, 10000);
-*/            return;
+/*            if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
+                console.log("Starting a new game...");
+                for (var i = 0; i < table.playing_seats.length; i++)
+                    get_seat(table.seats, table.playing_seats[i]).state = "playing";
+                new_cashgame(socket, table);
+            }*/
+            return;
         }
     });
     socket.on("get seated players", function() {
@@ -92,9 +86,9 @@ function socket_listens_players(socket, table) {
 }
 
 function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) {
-    if (decision == "FOLD")
-        decision = "FOLD";
-    else if (rc == "undefined")
+	if (decision == "FOLD")
+		decision = "FOLD";
+	else if (rc == "undefined")
         decision = "CALL";
     else if (rc == 1)
         decision = "RAISE";
@@ -172,9 +166,7 @@ function switch_next_player(table) {
                 if (table.game.curbet * 2 > get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
                     send_option(table, table.game.highlights_pos, "second choice", "null", -1);
                 } else {
-                    /*table.game.curbet == 20 ? */
-                    send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet * 2)
-                        /*:
+                    /*table.game.curbet == 20 ? */send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet * 2) /*:
 					send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet = table.game.curbet + (table.game.curbet - ));*/
                 }
             }
