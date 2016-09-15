@@ -2,8 +2,10 @@ function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
+	var push
 
     socket.on("is valid nickname", function(nickname, seat_idx) {
+		push = true;
         curseat = get_seat(table.seats, seat_idx);
         channel = get_private_id(table.private_ids, seat_idx);
         if (!nickname || check_blanks(nickname) || nickname.length < 2 || nickname.length > 8) {
@@ -37,7 +39,13 @@ function socket_listens_players(socket, table) {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-				setTimeout(new_cashgame(socket, table), 20000);
+				var timer = setInterval(function(){
+					push = false;
+					console.log('set interval');
+					new_cashgame(socket, table)
+				}, 20000);
+				if (!push)
+					clearInterval(timer);
             }
             return;
         }
