@@ -49,6 +49,11 @@ function 	keyFunction(evnt)
 		}
 }
 
+function 	new_table()
+{
+	document.location.href="http://poker.smartgames.tv/";
+}
+
 // Doesn't work on Samsung TVs
 function backToPortal()
 {
