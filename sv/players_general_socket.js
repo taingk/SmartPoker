@@ -31,12 +31,11 @@ function socket_listens_players(socket, table) {
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
 
-            for (var idx = 1; idx <= 6; ++idx) {
+            for (var idx = 1; idx <= 6; ++idx)
                 if (get_seat(table.seats, idx).state === "busy") {
                     table.playing_seats.push(idx);
 					console.log('idx = ' + idx);
 				}
-			}
 
 /*					if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
 						console.log("Starting a new game...");
