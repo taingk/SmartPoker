@@ -6,26 +6,16 @@ function end_timer(table, game) {
 
     board = setInterval(function() {
         io.to(table.id).emit("remove board");
-        console.log('remove board');
-        if (clearInterval(board)) {
-            io.to(table.id).emit("chrono", 10, "The game is restarting ...");
-            cpt = 10;
-            timer = setInterval(function() {
-                if (!cpt) {
-                    io.to(table.id).emit("chrono off");
-                    remove_last_actions(table);
-                    reinit(table, game);
-                    clearInterval(timer);
-                }
-                if (cpt > 0) {
-                    --cpt;
-					console.log(cpt);
-				}
-            }, 1000);
-        }
+        console.log('board removed');
+		io.to(table.id).emit("chrono", 10, "The game is restarting ...");
+        clearInterval(board)
     }, 10000);
-
-
+    timer = setInterval(function() {
+        io.to(table.id).emit("chrono off");
+        remove_last_actions(table);
+        reinit(table, game);
+        clearInterval(timer);
+    }, 20000);
 }
 
 function end_game(table, game, winners, player) {
