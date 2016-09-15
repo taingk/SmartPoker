@@ -5,7 +5,7 @@ function	sync_sv()
 	socket.on("chrono", function(){
 		var chrono = setInterval(function() {
 			i--;
-			$("#sec").html(i);
+			$("#chrono").html('The game will begin ...<br><span id="sec">'+i+'</span> sec to add more players');
 			if (i == 0) {
 				clearInterval(chrono);
 				i = 31;
