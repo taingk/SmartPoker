@@ -1,11 +1,11 @@
+var push = true;
+
 function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
-	var push
 
     socket.on("is valid nickname", function(nickname, seat_idx) {
-		push = true;
         curseat = get_seat(table.seats, seat_idx);
         channel = get_private_id(table.private_ids, seat_idx);
         if (!nickname || check_blanks(nickname) || nickname.length < 2 || nickname.length > 8) {
@@ -36,10 +36,17 @@ function socket_listens_players(socket, table) {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-					socket.on("press red", function() {
-						console.log('call');
-						new_cashgame(socket, table);
-					});
+            	if (push) {
+                    var timer = setInterval(function() {
+                        push = false;
+						for (var k= 45; k>0; k++)
+							console.log('k:'+k);
+                        console.log('set interval');
+                        new_cashgame(socket, table);
+                    }, 45000);
+                    if (!push)
+                        clearInterval(timer);
+                }
             }
             return;
         }
@@ -88,9 +95,9 @@ function socket_listens_players(socket, table) {
 }
 
 function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) {
-	if (decision == "FOLD")
-		decision = "FOLD";
-	else if (rc == "undefined")
+    if (decision == "FOLD")
+        decision = "FOLD";
+    else if (rc == "undefined")
         decision = "CALL";
     else if (rc == 1)
         decision = "RAISE";
@@ -168,7 +175,9 @@ function switch_next_player(table) {
                 if (table.game.curbet * 2 > get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
                     send_option(table, table.game.highlights_pos, "second choice", "null", -1);
                 } else {
-                    /*table.game.curbet == 20 ? */send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet * 2) /*:
+                    /*table.game.curbet == 20 ? */
+                    send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet * 2)
+                        /*:
 					send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet = table.game.curbet + (table.game.curbet - ));*/
                 }
             }

@@ -14,12 +14,7 @@ function 	keyFunction(evnt)
 			move_left();
 			break;
 		case "OK":
-		if (push == true) {
 			valid_choice();
-		}
-		else {
-			confirm();
-		}
 			break;
 		case "BACK":
 			back_func();
@@ -100,7 +95,7 @@ function 	show_prompt(prompt_nb)
 
 function 	new_table()
 {
-	socket.emit("press red");//document.location.href="http://poker.smartgames.tv/";
+	document.location.href="http://poker.smartgames.tv/";
 }
 
 function 	valid_choice()
