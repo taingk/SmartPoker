@@ -35,17 +35,15 @@ function socket_listens_players(socket, table) {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-
 					io.to(table.id).emit("start game", table);
-					socket.on("cashgame!", function(tableX) {
-						console.log('TABLE X LA '+tableX);
-						new_cashgame(socket, tableX);
-					})
             }
             return;
         }
     });
-
+	socket.on("cashgame!", function(tableX) {
+		console.log('TABLE X LA '+tableX);
+		new_cashgame(socket, tableX);
+	})
     socket.on("get seated players", function() {
         send_seats_infos(table);
     });
