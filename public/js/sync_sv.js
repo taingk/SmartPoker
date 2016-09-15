@@ -1,6 +1,15 @@
 function	sync_sv()
 {
+	var i = 0
 	socket.emit("get seated players");
+	socket.on("chrono", function(){
+		var chrono = setInterval(function() {
+			i++;
+			$("body").append(i);
+			if (i == 30)
+				clearInterval(chrono);
+		}, 1000);
+	});
 	socket.on("seated players info", function(seat, seat_idx)
 	{
 		$("#qr" + seat_idx).css("visibility", "hidden");

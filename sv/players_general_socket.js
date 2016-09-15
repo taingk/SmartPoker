@@ -41,19 +41,20 @@ function socket_listens_players(socket, table) {
 
 				if (table.playing_seats.length > 2)
 					lock = true;
-				console.log('lock est false :'+lock);
+				console.log('lock est false, true si + 2 '+lock);
 				if (lock) {
 					console.log('lock est true : '+lock);
 					clearInterval(timer);
 				}
 				else {
 					console.log('lock est false :'+lock);
+					io.to(table.id).emit("chrono");
 					var timer = setInterval(function(){
 						lock = true;
 						new_cashgame(socket, table);
 						clearInterval(timer);
 						console.log('lock est true : '+lock);
-					}, 45000);
+					}, 30000);
 				}
             }
             return;
