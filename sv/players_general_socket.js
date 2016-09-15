@@ -53,7 +53,7 @@ function socket_listens_players(socket, table) {
 						clearInterval(timer);
 						io.to(table.id).emit("chrono off");
 						console.log('lock est true : '+lock);
-					}, 30000);
+					}, 45000);
 				}
             }
             return;
