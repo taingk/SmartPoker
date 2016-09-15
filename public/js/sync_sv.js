@@ -5,13 +5,15 @@ function	sync_sv()
 	socket.on("chrono", function(){
 		var chrono = setInterval(function() {
 			i++;
-			$("body").html(i);
-			if (i == 30)
+			$("#chrono").html(i);
+			if (i == 30) {
 				clearInterval(chrono);
+				i = 0;
+			}
 		}, 1000);
 	});
 	socket.on("chrono off", function(){
-		console.log("off ton chrono la");
+		$("#chrono").empty();
 	});
 	socket.on("seated players info", function(seat, seat_idx)
 	{
