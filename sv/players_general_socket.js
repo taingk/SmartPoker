@@ -31,15 +31,15 @@ function socket_listens_players(socket, table) {
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
 
-			console.log('waiting guys');
+				console.log('salut');
 
             if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-                new_cashgame(socket, table);
+//                new_cashgame(socket, table);
             }
-            return;
+//            return;
         }
     });
     socket.on("get seated players", function() {
