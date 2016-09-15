@@ -171,9 +171,8 @@ io.on("connection", function(socket)
 		});
 
 		socket.on('re init', function(table, game) {
-			new_cashgame(socket, game);
+			new_cashgame(socket, table);
 		});
-
 	}
    	if (device_client)
    	{

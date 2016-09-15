@@ -2,20 +2,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//HbbTV//1.1.1//EN" "http://www.hbbtv.org/dtd/hbbTV-1.1.1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>
-		<meta name="author" content="Aimeric SEGUIN">
-		<title>Poker</title>
-		<!-- [LIBRARY] -->
-		<script type="text/javascript" src="lib/jquery.js"></script>
-		<script type="text/javascript" src="lib/ngine.js"></script>
-		<!-- <script type="text/javascript" src="lib/keyhandler.js"></script> -->
-		<!-- [CSS] -->
-		<link rel="stylesheet" href="styles/index.css" type="text/css" />
-		<!-- [SOCKET] -->
-		<script src="../node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
-		<!-- [QR Codes] -->
-		<script type="text/javascript" src="qr/qrcode.min.js"></script>
-		<!-- [Google Analytics]
+
+<head>
+	<meta name="author" content="Aimeric SEGUIN">
+	<title>Poker</title>
+	<!-- [LIBRARY] -->
+	<script type="text/javascript" src="lib/jquery.js"></script>
+	<script type="text/javascript" src="lib/ngine.js"></script>
+	<!-- <script type="text/javascript" src="lib/keyhandler.js"></script> -->
+	<!-- [CSS] -->
+	<link rel="stylesheet" href="styles/index.css" type="text/css" />
+	<!-- [SOCKET] -->
+	<script src="../node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+	<!-- [QR Codes] -->
+	<script type="text/javascript" src="qr/qrcode.min.js"></script>
+	<!-- [Google Analytics]
 		<script type="text/javascript">
 	    	var _gaq = _gaq || [];
 	        _gaq.push(['_setAccount', 'UA-16498833-6']);
@@ -26,52 +27,51 @@
 	        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	    	})();
     	</script> -->
-	</head>
-	<body onload="init()";>
+</head>
+
+<body onload="init()" ;>
 	<script>
-	var socket = io();
-	$(document).ready(function()
-	{
-	socket.on("hide qrcode", function(seat_nb) {
-		$("#qr_spot" + seat_nb).css("visibility", "hidden");
-		$("#scan_msg" + seat_nb).css("visibility", "hidden");
-		$("#player_cards"+ seat_nb).css("visibility", "visible");
-		$("#player_name" + seat_nb).css("visibility", "visible");
-		$("#player_name" + seat_nb).text("Waiting...");
-	});
-	socket.on("re qrcode", function(seat_nb)
-	{
-		$("#qr_spot" + seat_nb).css("visibility", "visible");
-		$("#scan_msg" + seat_nb).css("visibility", "visible");
-		$("#player_name" + seat_nb).css("visibility", "hidden");
-		$("#player_name" + seat_nb).text('');
-		$("#player_bankroll" + seat_nb).css("visibility", "hidden");
-		$("#player_cards"+ seat_nb).css("visibility", "hidden");
-	});
-	socket.on("qrcode", function(seat_idx, seat_id)
-		{
-			var qrcode = new QRCode("qr" + seat_idx, {
-				    									text: "http://poker.smartgames.tv/",
-				    									width: 115,
-				    			 						height: 115,
-													});
-			qrcode.makeCode("http://poker.smartgames.tv/seat-" + seat_idx + seat_id);
-			$("qr_spot" + seat_idx).remove();
-			$("#qr" + seat_idx).attr("id", "qr_spot" + seat_idx);
-			$("#qr" + seat_idx).attr("src", qrcode);
+		var socket = io();
+		$(document).ready(function() {
+			var nb = alert('Hello, how many players ?');
+			socket.emit('nb player', nb);
+			socket.on("hide qrcode", function(seat_nb) {
+				$("#qr_spot" + seat_nb).css("visibility", "hidden");
+				$("#scan_msg" + seat_nb).css("visibility", "hidden");
+				$("#player_cards" + seat_nb).css("visibility", "visible");
+				$("#player_name" + seat_nb).css("visibility", "visible");
+				$("#player_name" + seat_nb).text("Waiting...");
+			});
+			socket.on("re qrcode", function(seat_nb) {
+				$("#qr_spot" + seat_nb).css("visibility", "visible");
+				$("#scan_msg" + seat_nb).css("visibility", "visible");
+				$("#player_name" + seat_nb).css("visibility", "hidden");
+				$("#player_name" + seat_nb).text('');
+				$("#player_bankroll" + seat_nb).css("visibility", "hidden");
+				$("#player_cards" + seat_nb).css("visibility", "hidden");
+			});
+			socket.on("qrcode", function(seat_idx, seat_id) {
+				var qrcode = new QRCode("qr" + seat_idx, {
+					text: "http://poker.smartgames.tv/",
+					width: 115,
+					height: 115,
+				});
+				qrcode.makeCode("http://poker.smartgames.tv/seat-" + seat_idx + seat_id);
+				$("qr_spot" + seat_idx).remove();
+				$("#qr" + seat_idx).attr("id", "qr_spot" + seat_idx);
+				$("#qr" + seat_idx).attr("src", qrcode);
+			});
+			socket.on("qrcode OK", function() {
+				$("#container").remove();
+			});
+			sync_sv();
 		});
-	socket.on("qrcode OK", function()
-	{
-		$("#container").remove();
-	});
-	sync_sv();
-	});
 	</script>
 	<div id="container"><span class="loading">Loading table...</span></div>
 	<div id="chrono">
 	</div>
 	<div id="seat1">
-		<div id = "qr1"></div>
+		<div id="qr1"></div>
 		<span id="player_name1"></span>
 		<img id="player_cards1" src="img/avatar.png" alt="" />
 		<img id="card1_1" src="" alt="" />
@@ -80,10 +80,12 @@
 		<span id="last_action1"></span>
 		<img id="btn1" src="" alt="" />
 	</div>
-	<div id ="player_bet1"><center><span id="bet_val1"></span></center></div>
+	<div id="player_bet1">
+		<center><span id="bet_val1"></span></center>
+	</div>
 	<span id="player_bankroll1"></span>
 	<div id="seat2">
-		<div id = "qr2"></div>
+		<div id="qr2"></div>
 		<span id="player_name2"></span>
 		<img id="player_cards2" src="img/avatar.png" alt="" />
 		<img id="card1_2" src="" alt="" />
@@ -92,55 +94,65 @@
 		<span id="last_action2"></span>
 		<img id="btn2" src="" alt="" />
 	</div>
-	<div id ="player_bet2"><center><span id="bet_val2"></span></center></div>
+	<div id="player_bet2">
+		<center><span id="bet_val2"></span></center>
+	</div>
 	<span id="player_bankroll2"></span>
 	<div id="seat3">
-			<div id = "qr3"></div>
-			<span id="player_name3"></span>
-			<img id="player_cards3" src="img/avatar.png" alt="" />
-			<img id="card1_3" src="" alt="" />
-			<img id="card2_3" src="" alt="" />
-			<span id="scan_msg3">Flash me<br/>to sit</span>
-			<span id="last_action3"></span>
-			<img id="btn3" src="" alt="" />
+		<div id="qr3"></div>
+		<span id="player_name3"></span>
+		<img id="player_cards3" src="img/avatar.png" alt="" />
+		<img id="card1_3" src="" alt="" />
+		<img id="card2_3" src="" alt="" />
+		<span id="scan_msg3">Flash me<br/>to sit</span>
+		<span id="last_action3"></span>
+		<img id="btn3" src="" alt="" />
 	</div>
-	<div id ="player_bet3"><center><span id="bet_val3"></span></center></div>
+	<div id="player_bet3">
+		<center><span id="bet_val3"></span></center>
+	</div>
 	<span id="player_bankroll3"></span>
 	<div id="seat4">
-			<div id = "qr4"></div>
-			<span id="player_name4"></span>
-			<img id="player_cards4" src="img/avatar.png" alt="" />
-			<img id="card1_4" src="" alt="" />
-			<img id="card2_4" src="" alt="" />
-			<span id="scan_msg4">Flash me<br/>to sit</span>
-			<span id="last_action4"></span>
-			<img id="btn4" src="" />
+		<div id="qr4"></div>
+		<span id="player_name4"></span>
+		<img id="player_cards4" src="img/avatar.png" alt="" />
+		<img id="card1_4" src="" alt="" />
+		<img id="card2_4" src="" alt="" />
+		<span id="scan_msg4">Flash me<br/>to sit</span>
+		<span id="last_action4"></span>
+		<img id="btn4" src="" />
 	</div>
-	<div id ="player_bet4"><center><span id="bet_val4"></span></center></div>
+	<div id="player_bet4">
+		<center><span id="bet_val4"></span></center>
+	</div>
 	<span id="player_bankroll4"></span>
 	<div id="seat5">
-			<div id = "qr5"></div>
-			<span id="player_name5"></span>
-			<img id="player_cards5" src="img/avatar.png" alt="" />
-			<img id="card1_5" src="" alt="" />
-			<img id="card2_5" src="" alt="" />
-			<span id="scan_msg5">Flash me<br/>to sit</span>
-			<span id="last_action5"></span>
-			<img id="btn5" src="" alt="" />
+		<div id="qr5"></div>
+		<span id="player_name5"></span>
+		<img id="player_cards5" src="img/avatar.png" alt="" />
+		<img id="card1_5" src="" alt="" />
+		<img id="card2_5" src="" alt="" />
+		<span id="scan_msg5">Flash me<br/>to sit</span>
+		<span id="last_action5"></span>
+		<img id="btn5" src="" alt="" />
 	</div>
-	<div id ="player_bet5"><center><span id="bet_val5"></span></center></div>
+	<div id="player_bet5">
+		<center><span id="bet_val5"></span></center>
+	</div>
 	<span id="player_bankroll5"></span>
 	<div id="seat6">
-			<div id = "qr6"></div>
-			<span id="player_name6"></span>
-			<img id="player_cards6" src="img/avatar.png" alt="" />
-			<img id="card1_6" src="" alt="" />
-			<img id="card2_6" src="" alt="" />
-			<span id="scan_msg6">Flash me<br/>to sit</span>
-			<span id="last_action6"></span>
-			<img id="btn6" src="" alt="" />
+		<div id="qr6"></div>
+		<span id="player_name6"></span>
+		<img id="player_cards6" src="img/avatar.png" alt="" />
+		<img id="card1_6" src="" alt="" />
+		<img id="card2_6" src="" alt="" />
+		<span id="scan_msg6">Flash me<br/>to sit</span>
+		<span id="last_action6"></span>
+		<img id="btn6" src="" alt="" />
 	</div>
-	<div id ="player_bet6"><center><span id="bet_val6"></span></center></div>
+	<div id="player_bet6">
+		<center><span id="bet_val6"></span></center>
+	</div>
 	<span id="player_bankroll6"></span>
 	<div id="pot_div">
 		<center><span id="pot">0$</span></center>
@@ -185,6 +197,7 @@
 	<script type="text/javascript" src="js/sync_sv.js"></script>
 	<script type="text/javascript" src="js/eventsIndex.js"></script>
 	<script type="text/javascript" src="js/mouseeventsIndex.js"></script>
- 	</body>
+</body>
+
 </html>
- <!-- Copyright © 2014 Ngine Networks - All Rights Reserved. -->
+<!-- Copyright © 2014 Ngine Networks - All Rights Reserved. -->

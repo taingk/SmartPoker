@@ -2,8 +2,13 @@ function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
+	var nb_player;
     table = get_table(table.id, tables);
 
+	socket.on("nb player", function(nb) {
+		nb_player = nb;
+		console.log('first '+ nb_player);
+	})
     socket.on("is valid nickname", function(nickname, seat_idx) {
         curseat = get_seat(table.seats, seat_idx);
         channel = get_private_id(table.private_ids, seat_idx);
@@ -31,7 +36,10 @@ function socket_listens_players(socket, table) {
                 return;
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
-            if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
+			if (nb_player == "undefined")
+				nb_player = 2;
+			console.log('second '+ nb_player);
+            if (table.playing_seats.length >= nb_player && table.game.moment == "waiting") {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
