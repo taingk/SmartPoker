@@ -257,7 +257,7 @@ function stop_high_rollers(table) {
     }
 }
 
-function chrono(socket, table) {
+function chrono(socket, tableId) {
 	var lock = false;
 
     if (table.playing_seats.length > 2)
