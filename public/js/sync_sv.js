@@ -1,15 +1,13 @@
 function	sync_sv()
 {
-	var i = 31;
 	socket.emit("get seated players");
-	socket.on("chrono", function(){
-		$("#chrono").html('The game will begin ...<br><span id="sec"></span> sec to add more players');
+	socket.on("chrono", function(i, str){
+		$("#chrono").html(str +'<br><span id="sec">'+i+'</span> sec remaining to add more players');
 		var chrono = setInterval(function() {
 			i--;
 			$("#sec").html(i);
 			if (i == 0) {
 				clearInterval(chrono);
-				i = 31;
 			}
 		}, 1000);
 	});

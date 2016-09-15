@@ -32,8 +32,6 @@ function socket_listens_players(socket, table) {
                 return;
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
-
-
             if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
@@ -48,7 +46,7 @@ function socket_listens_players(socket, table) {
 				}
 				else {
 					console.log('lock est false :'+lock);
-					io.to(table.id).emit("chrono");
+					io.to(table.id).emit("chrono", 31, "The game will begin ...");
 					var timer = setInterval(function(){
 						lock = true;
 						new_cashgame(socket, table);

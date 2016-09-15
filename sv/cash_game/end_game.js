@@ -3,11 +3,13 @@ function	end_timer(table, game)
 	var 	cpt;
 	var		timer;
 
+	io.to(table.id).emit("chrono", 11, "The game is restarting ...");
 	cpt = 10;
 	timer = setInterval(function()
 		{
 			if (!cpt)
 			{
+				io.to(table.id).emit("chrono off");
 				remove_last_actions(table);
 				reinit(table, game);
 				clearInterval(timer);
