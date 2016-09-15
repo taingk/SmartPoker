@@ -1,4 +1,4 @@
-var push = true;
+var lock = false;
 
 function socket_listens_players(socket, table) {
     var player; // Current player.
@@ -32,22 +32,24 @@ function socket_listens_players(socket, table) {
                 return;
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
+
+
             if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-					console.log(push);
-            	if (push) {
-					push = false;
-					console.log(push);
-                    var timer = setInterval(function() {
-						console.log('timer'+push);
-                        console.log('set interval');
-                        new_cashgame(socket, table);
-                    }, 45000);
-                    if (!push)
-                        clearInterval(timer);
-                }
+
+				console.log('lock est false :'+lock);
+				if (lock) {
+					console.log('lock est true : '+lock);
+					clearInterval(timer);
+				}
+				else {
+					console.log('lock est false :'+lock);
+					var timer = setInterval(function(){new_cashgame(socket, table); lock = true;}, 45000);
+					clearInterval(timer);
+					console.log('lock est true : '+lock);
+				}
             }
             return;
         }
