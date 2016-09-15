@@ -37,22 +37,24 @@ function socket_listens_players(socket, table) {
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
 
+			var tableId = table.id;
+
 				if (table.playing_seats.length > 2)
 					lock = true;
-				console.log('lock est false, true si + 2 '+lock);
+				console.log(tableId +' lock est false, true si + 2 '+lock);
 				if (lock) {
-					console.log('lock est true : '+lock);
+					console.log(tableId +' lock est true : '+lock);
 					clearInterval(timer);
 				}
 				else {
-					console.log('lock est false :'+lock);
-					io.to(table.id).emit("chrono", 45, "The game will begin ...");
+					console.log(tableId +' lock est false :'+lock);
+					io.to(tableId).emit("chrono", 45, "The game will begin ...");
 					var timer = setInterval(function(){
 						lock = true;
 						new_cashgame(socket, table);
 						clearInterval(timer);
-						io.to(table.id).emit("chrono off");
-						console.log('lock est true : '+lock);
+						io.to(tableId).emit("chrono off");
+						console.log(tableId + ' lock est true : '+lock);
 					}, 45000);
 				}
             }
