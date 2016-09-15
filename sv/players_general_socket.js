@@ -46,9 +46,12 @@ function socket_listens_players(socket, table) {
 				}
 				else {
 					console.log('lock est false :'+lock);
-					var timer = setInterval(function(){new_cashgame(socket, table); lock = true;}, 45000);
-					clearInterval(timer);
-					console.log('lock est true : '+lock);
+					var timer = setInterval(function(){
+						lock = true;
+						new_cashgame(socket, table);
+						clearInterval(timer);
+						console.log('lock est true : '+lock);
+					}, 45000);
 				}
             }
             return;
