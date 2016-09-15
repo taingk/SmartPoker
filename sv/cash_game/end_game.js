@@ -5,13 +5,13 @@ function end_timer(table, game) {
  	var lock = true;
 
     board = setInterval(function() {
-        io.to(table.id).emit("remove board");
         console.log('board removed');
 		io.to(table.id).emit("chrono", 10, "The game is restarting ...");
         clearInterval(board)
     }, 10000);*/
     timer = setInterval(function() {
         //io.to(table.id).emit("chrono off");
+		io.to(table.id).emit("remove board");
         remove_last_actions(table);
         reinit(table, game);
         clearInterval(timer);
