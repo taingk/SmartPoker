@@ -209,7 +209,7 @@ function	get_table(table_id, tables)
 }
 
 
-/*
+
 var id;
 var array;
 var game;
@@ -242,4 +242,3 @@ function confirm(){
 	console.log(array, game);
 	socket.emit('re init', array, game);
 }
-*/

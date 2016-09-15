@@ -163,7 +163,7 @@ io.on("connection", function(socket)
 	    socket.join(table.id);
    		send_qrcodes(table, table.seats);
    		table.game.turn_to = "joiners";
-/*
+
 		io.to(table.id).emit('tableId', table.id, get_table(table.id, tables), get_table(table.id, tables).game);
 
 		socket.on('get tableId and tableGame', function(id) {
@@ -171,9 +171,9 @@ io.on("connection", function(socket)
 		});
 
 		socket.on('re init', function(table, game) {
-			show_down(table, game);
+			new_cashgame(socket, table);
 		});
-*/
+
 	}
    	if (device_client)
    	{
