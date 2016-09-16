@@ -82,12 +82,8 @@ function socket_listens_players(socket, table) {
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
 
-		table.game.d_pos = find_dealer(table, table.game);
-	    table.game.sb_pos = find_sb(table, table.game);
-	    table.game.bb_pos = find_bb(table, table.game);
 		if (table.playing_seats.length == 2)
-	        table.game.highlights_pos = table.game.d_pos;
-
+	        table.game.highlights_pos = seat_nb;
 			console.log('pos '+ table.game.highlights_pos+ ' seat '+ seat_nb);
         if (seat_nb != table.game.highlights_pos)
             return;
