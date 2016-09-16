@@ -25,6 +25,7 @@ function	evalhand(table, game)
 			r = texas.evaluate(hand);
 			//console.log(hand);
 			//console.log("SEAT" + idx + "->" + r.name);
+			console.log(r.name.slice(0));
 			player.rank_name = r.name.slice(0);
 			player.rank_value = r.value;
 			//console.log("Value: " + r.value);
