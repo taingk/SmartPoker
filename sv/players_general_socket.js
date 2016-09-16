@@ -4,7 +4,7 @@ function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
-    table = get_table(table.id, tables);
+    //table = get_table(table.id, tables);
 
 	/*socket.on("nb player", function(nb) {
 		nb_player = nb;
