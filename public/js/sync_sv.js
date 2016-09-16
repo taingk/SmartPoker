@@ -225,6 +225,5 @@ function confirm() {
         game = tableGame;
     });
     console.log(array, game);
-    socket.emit("highlights", game.highlights_pos, "off");
     socket.emit('re init', array, game);
 }
