@@ -172,6 +172,7 @@ function adjust_bets_values(table) {
 function switch_next_player(table) {
     var player;
 
+	evalhand(table, table.game);
     if (table.game.highlights_pos == "none")
         return;
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
@@ -218,8 +219,6 @@ function switch_next_player(table) {
 function next_moment(table, game) {
     var player;
 
-	evalhand(table, game);
-	console.log(to_preflop);
 	if (to_preflop) {
 		table.game.moment = "preflop";
 		to_preflop = 0;
