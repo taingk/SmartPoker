@@ -218,10 +218,10 @@ function switch_next_player(table) {
 function next_moment(table, game) {
     var player;
 
+	evalhand(table, game);
 	console.log(to_preflop);
 	if (to_preflop) {
 		table.game.moment = "preflop";
-		evalhand(table, game);
 		to_preflop = 0;
 	}
     if (table.game.moment == "preflop") {
