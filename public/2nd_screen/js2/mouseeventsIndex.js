@@ -57,6 +57,7 @@ function	register_player()
 	});
 	socket.on("first choice", function(choice, amount)
 	{
+		console.log('first choice : ' + choice);
 		$('#bet_pot').css("visibility", "visible");
 		$("#choice1").css("visibility", "visible");
 		$("#choice2").css("visibility", "visible");
@@ -243,6 +244,7 @@ function allin_chosen() {
 
 function	mouse_handler_device()
 {
+	$("body").click(console.log('Clic!'));
 	$("#play").click(register_player);
 	$("#choice1").click(choice1_chose);
 	$("#choice2").click(choice2_chose);
