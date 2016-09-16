@@ -218,7 +218,6 @@ function game_routine(socket, table) {
     blinds_treatment(table, sb, bb); // Take blinds (server side).
     send_blinds(table, sb, bb); // Send blinds to clients.
     /* Preflop */
-	console.log('je passe par la salut');
     preflop_deal(socket, table.game, table);
     preflop_first_cards_suits(socket, table.game, table);
     table.game.curbet = cfg.conf.big_blind;
