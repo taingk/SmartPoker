@@ -56,6 +56,7 @@ function	show_down(table, game)
 	{
 		if (table.playing_seats.indexOf(idx) != -1)
 		{
+			console.log('emit show down');
 			player = get_seat(table.seats, idx).player;
 			io.to(table.id).emit("show down", player.card1, player.card2, idx);
 		}
