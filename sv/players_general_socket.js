@@ -82,10 +82,10 @@ function socket_listens_players(socket, table) {
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
 
-		if (table.playing_seats.length == 2)
+/*		if (table.playing_seats.length == 2)
 	        table.game.highlights_pos = seat_nb;
 			console.log('pos '+ table.game.highlights_pos+ ' seat '+ seat_nb);
-        if (seat_nb != table.game.highlights_pos)
+*/        if (seat_nb != table.game.highlights_pos)
             return;
         if (bet_amount && bet_amount[bet_amount.length - 1] == "$") {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);
