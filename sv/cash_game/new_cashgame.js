@@ -289,5 +289,6 @@ function new_cashgame(socket, table) {
     fisher_shuffle(table.game.deck);
     stop_high_rollers(table);
     console.log("Round nb: " + table.game.round_nb);
+	console.log('1 '+table.id);
     return game_routine(socket, table);
 }
