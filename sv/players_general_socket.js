@@ -1,4 +1,4 @@
-//var nb_player;
+var to_preflop = 0;
 
 function socket_listens_players(socket, table) {
     var player; // Current player.
@@ -76,7 +76,10 @@ function socket_listens_players(socket, table) {
         if (table.game.board.length === 5)
             io.to(table.id).emit("send river", table.game.board[4]);
     });
-
+	socket.on("to preflop", function(init){
+		console.log('from socket '+to_preflop);
+		to_preflop = init;
+	});
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
         if (!decision || !channel_id)
             return;
@@ -216,6 +219,11 @@ function switch_next_player(table) {
 function next_moment(table, game) {
     var player;
 
+	console.log(to_preflop);
+	if (to_preflop) {
+		table.game.moment = "preflop";
+		to_preflop = 0;
+	}
     if (table.game.moment == "preflop") {
         table.game.curbet = "0";
         table.game.moment = "flop";

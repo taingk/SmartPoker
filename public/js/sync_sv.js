@@ -1,3 +1,9 @@
+var id;
+var array;
+var game;
+var newTables;
+var push = true;
+
 function sync_sv() {
     socket.emit("get seated players");
     socket.on("chrono", function(i, str) {
@@ -193,14 +199,6 @@ function get_table(table_id, tables) {
     return "not found";
 }
 
-
-
-var id;
-var array;
-var game;
-var newTables;
-var push = true;
-
 socket.on('tableId', function(tableId, tables, tableGame) {
     id = tableId;
     array = tables;
@@ -225,5 +223,6 @@ function confirm() {
         game = tableGame;
     });
     console.log(array, game);
+	socket.emit("to preflop", init);
     socket.emit('re init', array, game);
 }
