@@ -223,6 +223,6 @@ function confirm() {
         game = tableGame;
     });
     console.log(array, game);
-	socket.emit("to preflop", init);
+	socket.emit("to preflop", 1);
     socket.emit('re init', array, game);
 }

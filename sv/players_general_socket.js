@@ -77,7 +77,6 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("send river", table.game.board[4]);
     });
 	socket.on("to preflop", function(init){
-		console.log('from socket '+to_preflop);
 		to_preflop = init;
 	});
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
