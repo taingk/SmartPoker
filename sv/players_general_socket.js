@@ -82,13 +82,15 @@ function socket_listens_players(socket, table) {
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
 
-		console.log('seat '+ seat_nb);
-		console.log('HL pos '+ table.game.highlights_pos);
-		console.log('d pos '+ table.game.d_pos);
+		table.game.d_pos = find_dealer(table, table.game);
+	    table.game.sb_pos = find_sb(table, table.game);
+	    table.game.bb_pos = find_bb(table, table.game);
+		if (table.playing_seats.length == 2)
+	        table.game.highlights_pos = table.game.d_pos;
 
+			console.log('pos '+ table.game.highlights_pos+ ' seat '+ seat_nb);
         if (seat_nb != table.game.highlights_pos)
             return;
-		console.log('4');
         if (bet_amount && bet_amount[bet_amount.length - 1] == "$") {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
