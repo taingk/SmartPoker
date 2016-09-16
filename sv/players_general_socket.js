@@ -226,12 +226,16 @@ function next_moment(table, game) {
         table.game.curbet = "0";
         table.game.moment = "flop";
         deal_flop(table, game);
-        evalhand(table, game); // Evaluate the current hand of all the players playing.
+		if (evalhand(table, game)) {
+			console.log("PreFlop eval hand");
+		} // Evaluate the current hand of all the players playing.
     } else if (table.game.moment == "flop") {
         table.game.curbet = "0";
         table.game.moment = "turn";
         deal_turn(table, game);
-        evalhand(table, game);
+        if (evalhand(table, game)) {
+			console.log("Flop eval hand");
+		}
     } else if (table.game.moment == "turn") {
         table.game.curbet = "0";
 		table.game.moment = "river";
