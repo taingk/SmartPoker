@@ -56,10 +56,10 @@ function	show_down(table, game)
 	{
 //		if (table.playing_seats.indexOf(idx) != -1)
 //		{
-			console.log('EMIT show down' + idx);
 			player = get_seat(table.seats, idx).player;
 			io.to(table.id).emit("show down", player.card1, player.card2, idx);
 //		}
 	}
+	console.log(winners);
 	return end_game(table, game, winners, player);
 }
