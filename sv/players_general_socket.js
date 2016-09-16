@@ -227,6 +227,7 @@ function next_moment(table, game) {
         deal_turn(table, game);
         evalhand(table, game);
     } else if (game.moment == "turn") {
+		console.log('He salut turn/river');
         table.game.curbet = "0";
         game.moment = "river";
         deal_river(table, game);
