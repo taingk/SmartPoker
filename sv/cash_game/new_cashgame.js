@@ -73,8 +73,8 @@ function get_first_to_talk(table, game) {
     if (table.playing_seats.length < 2)
         return 0;
     if (table.playing_seats.length == 2) {
-		console.log(game.highlights_pos, game.d_pos);
         game.highlights_pos = game.d_pos;
+		console.log(game.highlights_pos, game.d_pos);
         return game.d_pos;
     }
     while (table.playing_seats.indexOf(pos) == -1) {
