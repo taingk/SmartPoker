@@ -78,12 +78,17 @@ function socket_listens_players(socket, table) {
     });
 
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
-		console.log('2 '+ decision, channel_id, bet_amount);
-        if (!decision || !channel_id)
+        if (!decision || !channel_id) {
+			console.log('1');
             return;
+		}
+		console.log('2');
         var seat_nb = +channel_id[channel_id.length - 1];
-        if (seat_nb != table.game.highlights_pos)
+        if (seat_nb != table.game.highlights_pos) {
+			console.log('3');
             return;
+		}
+		console.log('4');
         if (bet_amount && bet_amount[bet_amount.length - 1] == "$") {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);
             bet_amount = (Math.round(+bet_amount * 100)) / 100;

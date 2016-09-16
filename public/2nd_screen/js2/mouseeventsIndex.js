@@ -129,10 +129,8 @@ function	choice1_chose()
 {
 	if ($("#c1").text() == "CHECK")
 		socket.emit("player decision", "CHECK", channel + seat_nb.toString(), 0);
-	else {
-		console.log('1 ' +channel + seat_nb.toString(), $("#c1_amount").text());
+	else
 		socket.emit("player decision", "CALL", channel + seat_nb.toString(), $("#c1_amount").text());
-	}
 }
 
 function	choice2_chose()
