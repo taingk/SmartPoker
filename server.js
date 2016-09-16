@@ -171,6 +171,7 @@ io.on("connection", function(socket) {
 			var player;
             for (idx = 1; idx <= 6; ++idx) {
                 player = get_seat(table.seats, idx).player;
+				evalhand(table, game, player)
                 console.log(player);
                 io.to(table.id).emit("show down", player.card1, player.card2, idx);
             }

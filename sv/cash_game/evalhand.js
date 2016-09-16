@@ -1,9 +1,10 @@
-function	evalhand(table, game)
+function	evalhand(table, game, player)
 {
 	var		r;
 	var		hand; // Example: Array("2s", "4d", "6h", "8c", "Tc");
 	var		idx = 1;
-	var		player;
+	if (!player)
+		var		player;
 	var		j;
 
 	while (idx <= 6)
