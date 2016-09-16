@@ -81,13 +81,13 @@ function socket_listens_players(socket, table) {
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
-		table.game.highlights_pos = table.game.d_pos;
-		console.log('seat nb : '+seat_nb);
-		console.log('pos : '+table.game.highlights_pos);
-        if (seat_nb != table.game.highlights_pos) {
-			console.log('je return');
+
+		console.log('seat '+ seat_nb);
+		console.log('HL pos '+ table.game.highlights_pos);
+		console.log('d pos '+ table.game.d_pos);
+
+        if (seat_nb != table.game.highlights_pos)
             return;
-		}
 		console.log('4');
         if (bet_amount && bet_amount[bet_amount.length - 1] == "$") {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);

@@ -69,12 +69,10 @@ function get_next_player(table, game) {
 function get_first_to_talk(table, game) {
     var pos = game.bb_pos + 1;
 
-
     if (table.playing_seats.length < 2)
         return 0;
     if (table.playing_seats.length == 2) {
         game.highlights_pos = game.d_pos;
-		console.log(game.highlights_pos, game.d_pos);
         return game.d_pos;
     }
     while (table.playing_seats.indexOf(pos) == -1) {
@@ -207,18 +205,13 @@ function game_routine(socket, table) {
     var sb; // small blind.
     var bb; // big blind.
 
-	console.log(table.game.d_pos);
     table.game.d_pos = find_dealer(table, table.game);
-	console.log(table.game.d_pos);
     table.game.sb_pos = find_sb(table, table.game);
     table.game.bb_pos = find_bb(table, table.game);
-    /*
+	get_first_to_talk(table, table.game);
     console.log("Dealer is at seat " + table.game.d_pos);
     console.log("Small blind is at seat " + table.game.sb_pos);
     console.log("Big blind is at seat " + table.game.bb_pos);
-    */
-
-    get_first_to_talk(table, table.game);
     send_emplacements(table); // Send buttons emplacements.
     sb = get_seat(table.seats, table.game.sb_pos);
     bb = get_seat(table.seats, table.game.bb_pos);
