@@ -257,29 +257,6 @@ function stop_high_rollers(table) {
     }
 }
 
-function chrono(socket, tableId) {
-	var lock = false;
-
-	tableId = get_seat(tableId.id, tables);
-    if (tableId.playing_seats.length > 2)
-        lock = true;
-    console.log('lock est false, true si + 2 ' + lock);
-    if (lock) {
-        console.log('lock est true : ' + lock);
-        clearInterval(timer);
-    } else {
-        console.log('lock est false :' + lock);
-        io.to(tableId.id).emit("chrono", 45, "The game will begin ...");
-        var timer = setInterval(function() {
-            lock = true;
-            new_cashgame(socket, tableId);
-            io.to(tableId.id).emit("chrono off");
-            console.log('lock est true : ' + lock);
-			clearInterval(timer);
-        }, 45000);
-    }
-}
-
 function new_cashgame(socket, table) {
     init_obj(table);
     table.game.moment = "preflop";

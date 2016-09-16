@@ -4,12 +4,13 @@ function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
+    var lock = false;
     //table = get_table(table.id, tables);
 
-	/*socket.on("nb player", function(nb) {
-		nb_player = nb;
-		console.log('first '+ nb_player);
-	})*/
+    /*socket.on("nb player", function(nb) {
+    	nb_player = nb;
+    	console.log('first '+ nb_player);
+    })*/
     socket.on("is valid nickname", function(nickname, seat_idx) {
         curseat = get_seat(table.seats, seat_idx);
         channel = get_private_id(table.private_ids, seat_idx);
@@ -41,12 +42,30 @@ function socket_listens_players(socket, table) {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-				chrono(socket, table);
+			// Chrono  45 secs
+                if (table.playing_seats.length > 2)
+                    lock = true;
+                console.log('lock est false, true si + 2 ' + lock);
+                if (lock) {
+                    console.log('lock est true : ' + lock);
+                    clearInterval(timer);
+                } else {
+                    console.log('lock est false :' + lock);
+                    io.to(table.id).emit("chrono", 45, "The game will begin ...");
+                    var timer = setInterval(function() {
+                        lock = true;
+                        new_cashgame(socket, table);
+                        io.to(table.id).emit("chrono off");
+                        console.log('lock est true : ' + lock);
+                        clearInterval(timer);
+                    }, 45000);
+                }
+			// !Chrono 45 secs
             }
             return;
         }
     });
-	socket.on("get seated players", function() {
+    socket.on("get seated players", function() {
         send_seats_infos(table);
     });
     socket.on("get board", function() {
