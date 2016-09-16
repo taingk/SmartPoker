@@ -25,7 +25,7 @@ function	evalhand(table, game)
 			r = texas.evaluate(hand);
 			//console.log(hand);
 			//console.log("SEAT" + idx + "->" + r.name);
-			player.rank_name = r.name.slice(0);
+			player.rank_name = r.name;
 			player.rank_value = r.value;
 			//console.log("Value: " + r.value);
 			io.to(get_private_id(table.private_ids, idx)).emit("first suit", r.name);

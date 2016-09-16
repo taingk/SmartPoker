@@ -172,8 +172,7 @@ function adjust_bets_values(table) {
 function switch_next_player(table) {
     var player;
 
-	evalhand(table, table.game);
-    if (table.game.highlights_pos == "none")
+	if (table.game.highlights_pos == "none")
         return;
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
