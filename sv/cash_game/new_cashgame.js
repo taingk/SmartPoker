@@ -207,7 +207,9 @@ function game_routine(socket, table) {
     var sb; // small blind.
     var bb; // big blind.
 
+	console.log(table.game.d_pos);
     table.game.d_pos = find_dealer(table, table.game);
+	console.log(table.game.d_pos);
     table.game.sb_pos = find_sb(table, table.game);
     table.game.bb_pos = find_bb(table, table.game);
     /*
