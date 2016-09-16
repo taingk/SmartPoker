@@ -174,8 +174,8 @@ io.on("connection", function(socket)
 /*			table.game.curbet = "0";
 			table.game.moment = "waiting";
 			deal_all(table, game);
-			evalhand(table, game);
-*/			table.game.pot_amount = 0;
+*/			evalhand(table, game);
+			table.game.pot_amount = 0;
 			io.to(table.id).emit("pot modification", table.game.pot_amount);
 			for (idx = 1; idx <= 6; ++idx) {
 				io.to(table.id).emit("highlights", idx, "off");
