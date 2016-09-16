@@ -78,6 +78,7 @@ function socket_listens_players(socket, table) {
     });
 
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
+		console.log('2 '+ decision, channel_id, bet_amount);
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];

@@ -57,7 +57,6 @@ function	register_player()
 	});
 	socket.on("first choice", function(choice, amount)
 	{
-		console.log('first choice : ' + choice, amount);
 		$('#bet_pot').css("visibility", "visible");
 		$("#choice1").css("visibility", "visible");
 		$("#choice2").css("visibility", "visible");
@@ -130,8 +129,10 @@ function	choice1_chose()
 {
 	if ($("#c1").text() == "CHECK")
 		socket.emit("player decision", "CHECK", channel + seat_nb.toString(), 0);
-	else
+	else {
+		console.log('1 ' +channel + seat_nb.toString(), $("#c1_amount").text());
 		socket.emit("player decision", "CALL", channel + seat_nb.toString(), $("#c1_amount").text());
+	}
 }
 
 function	choice2_chose()
@@ -243,7 +244,6 @@ function allin_chosen() {
 
 function	mouse_handler_device()
 {
-	$("body").click(console.log('Clic!'));
 	$("#play").click(register_player);
 	$("#choice1").click(choice1_chose);
 	$("#choice2").click(choice2_chose);
