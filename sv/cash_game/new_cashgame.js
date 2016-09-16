@@ -257,6 +257,7 @@ function stop_high_rollers(table) {
 function new_cashgame(socket, table) {
     init_obj(table);
     table.game.moment = "preflop";
+	log(table.game.moment, game.moment);
     table.game.round_nb = socket === 42 ? 0 : 1;
     table.game.pot_amount = 0;
     table.game.curbet = 0;
