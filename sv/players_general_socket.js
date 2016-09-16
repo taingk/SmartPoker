@@ -78,14 +78,14 @@ function socket_listens_players(socket, table) {
     });
 
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
-        if (!decision || !channel_id) {
-			console.log('1');
+        if (!decision || !channel_id)
             return;
-		}
-		console.log('2');
         var seat_nb = +channel_id[channel_id.length - 1];
+		console.log(channel_id);
+		console.log(seat_nb);
+		console.log(table.game.highlights_pos);
         if (seat_nb != table.game.highlights_pos) {
-			console.log('3');
+			console.log('je return');
             return;
 		}
 		console.log('4');
