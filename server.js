@@ -172,10 +172,7 @@ io.on("connection", function(socket)
 
 		socket.on('re init', function(table, game) {
 			table.game.curbet = "0";
-			table.reinit = 1;
-			console.log('reinit '+table.reinit);
-			game.moment = "waiting";
-			console.log('river '+game.moment);
+			table.game.moment = "waiting";
 			deal_all(table, game);
 			evalhand(table, game);
 			show_down(table, game);

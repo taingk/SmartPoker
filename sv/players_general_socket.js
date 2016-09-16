@@ -216,27 +216,24 @@ function switch_next_player(table) {
 function next_moment(table, game) {
     var player;
 
-	console.log('reinit '+table.reinit);
-	console.log(game.moment, table.game.moment);
-    if (game.moment == "preflop") {
+    if (table.game.moment == "preflop") {
         table.game.curbet = "0";
-        game.moment = "flop";
+        table.game.moment = "flop";
         deal_flop(table, game);
         evalhand(table, game); // Evaluate the current hand of all the players playing.
-    } else if (game.moment == "flop") {
+    } else if (table.game.moment == "flop") {
         table.game.curbet = "0";
-        game.moment = "turn";
+        table.game.moment = "turn";
         deal_turn(table, game);
         evalhand(table, game);
-    } else if (game.moment == "turn") {
-		console.log('He salut turn/river');
+    } else if (table.game.moment == "turn") {
         table.game.curbet = "0";
-        game.moment = "river";
+		table.game.moment = "river";
         deal_river(table, game);
         evalhand(table, game);
-    } else if (game.moment == "river")
+    } else if (table.game.moment == "river")
         return show_down(table, game);
-    game.round_nb = 0;
+    table.game.round_nb = 0;
     table.game.curbet = "0";
     for (var idx = 1; idx <= 6; ++idx) {
         get_seat(table.seats, idx).bet = 0;

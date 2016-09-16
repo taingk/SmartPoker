@@ -18,7 +18,6 @@ function	Table(id, players_nb, state, nicknames, start_bankroll, seats, game, pl
 	this.game = game; // Game OBJ
 	this.playing_seats = playing_seats; // Array representing seats "inside a game".
 	this.private_ids = private_ids; // Array of seats channel for socket.
-	this.reinit = reinit; // if init game 1 else 0
 }
 
 /*******************************************/
