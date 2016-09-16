@@ -81,7 +81,6 @@ function socket_listens_players(socket, table) {
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
-		console.log(channel_id);
 		console.log(seat_nb);
 		console.log(table.game.highlights_pos);
         if (seat_nb != table.game.highlights_pos) {
