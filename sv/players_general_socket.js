@@ -216,6 +216,7 @@ function switch_next_player(table) {
 function next_moment(table, game) {
     var player;
 
+	console.log('reinit '+table.reinit);
 	console.log(game.moment, table.game.moment);
     if (game.moment == "preflop") {
         table.game.curbet = "0";
