@@ -146,6 +146,7 @@ function send_option(table, seat_nb, option, choice, amount) {
     var player;
     var curseat = get_seat(table.seats, seat_nb);
 
+	console.log('curseat '+curseat);
     if (curseat && curseat.player.bankroll === "ALL IN" && amount > curseat.player.bankroll)
         amount = curseat.player.bankroll;
     if (curseat.state == "playing") {
@@ -154,6 +155,7 @@ function send_option(table, seat_nb, option, choice, amount) {
             io.to(get_private_id(table.private_ids, seat_nb)).emit("your turn");
         }
         player = get_seat(table.seats, seat_nb).player;
+		console.log('player '+player);
         io.to(get_private_id(table.private_ids, seat_nb)).emit(option, choice, amount);
     }
 
@@ -188,8 +190,9 @@ function send_blinds(table, sb, bb) {
     console.log('sb : ' + sb.bet, 'bb : ' + bb.bet);
 }
 
-function ask_first_player(socket, player, game) {
+function ask_first_player(socket, table, game) {
     //starts_timer(table, player.nickname);
+	console.log('pos' + game.highlights_pos);
     send_option(table, game.highlights_pos, "first choice", "call", /*game.highlights_pos === game.sb_pos ? game.curbet / 2 :*/ game.curbet);
     send_option(table, game.highlights_pos, "second choice", "null", -1 /*game.highlights_pos === game.sb_pos ? game.curbet * 2 / 2 : game.curbet */ );
     send_option(table, game.highlights_pos, "third choice", "fold");
@@ -289,6 +292,5 @@ function new_cashgame(socket, table) {
     fisher_shuffle(table.game.deck);
     stop_high_rollers(table);
     console.log("Round nb: " + table.game.round_nb);
-	console.log('1 '+table.id);
     return game_routine(socket, table);
 }
