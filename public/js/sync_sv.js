@@ -241,5 +241,10 @@ function confirm(){
 		game = tableGame;
 	});
 	console.log(array, game);
-	socket.emit('re init', array, game);
+	if (array.playing_seats.length >= 2) {
+		console.log("Starting a new game...");
+		for (var i = 0; i < array.playing_seats.length; i++)
+			get_seat(array.seats, array.playing_seats[i]).state = "playing";
+			socket.emit('re init', array, game);
+	}
 }
