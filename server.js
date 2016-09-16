@@ -171,11 +171,11 @@ io.on("connection", function(socket)
 		});
 
 		socket.on('re init', function(table, game) {
-			table.game.curbet = "0";
+/*			table.game.curbet = "0";
 			table.game.moment = "waiting";
 			deal_all(table, game);
 			evalhand(table, game);
-			show_down(table, game);
+*/			reinit(table, game);
 		});
 	}
    	if (device_client)
