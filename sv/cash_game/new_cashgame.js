@@ -246,7 +246,7 @@ function stop_high_rollers(table) {
         seat = get_seat(table.seats, idx)
         /*if (seat.player.bankroll >= 9999)
             seat.player.bankroll = 9000;*/
-        else if (seat.player.bankroll <= 0)
+        if (seat.player.bankroll <= 0)
             seat.player.bankroll = +cfg.start_bankroll;
         io.to(table.id).emit("bankroll modification", idx, seat.player);
         /* send cards to player (should not be here) */
