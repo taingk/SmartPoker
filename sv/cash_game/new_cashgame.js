@@ -218,6 +218,7 @@ function game_routine(socket, table) {
     blinds_treatment(table, sb, bb); // Take blinds (server side).
     send_blinds(table, sb, bb); // Send blinds to clients.
     /* Preflop */
+	console.log('preflop '+table.game.moment);
     preflop_deal(socket, table.game, table);
     preflop_first_cards_suits(socket, table.game, table);
     table.game.curbet = cfg.conf.big_blind;
@@ -256,8 +257,9 @@ function stop_high_rollers(table) {
 
 function new_cashgame(socket, table) {
     init_obj(table);
+	console.log('?? '+table.game.moment);
     table.game.moment = "preflop";
-	console.log(table.game.moment, game.moment);
+	console.log('preflop '+table.game.moment);
     table.game.round_nb = socket === 42 ? 0 : 1;
     table.game.pot_amount = 0;
     table.game.curbet = 0;
