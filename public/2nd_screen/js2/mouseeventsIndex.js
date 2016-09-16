@@ -57,7 +57,7 @@ function	register_player()
 	});
 	socket.on("first choice", function(choice, amount)
 	{
-		console.log('first choice : ' + choice);
+		console.log('first choice : ' + choice, amount);
 		$('#bet_pot').css("visibility", "visible");
 		$("#choice1").css("visibility", "visible");
 		$("#choice2").css("visibility", "visible");
@@ -76,7 +76,6 @@ function	register_player()
 	});
 	socket.on("second choice", function(choice, amount)
 	{
-		console.log('choice = '  +choice);
 		if (choice == "call" && amount >= 0)
 		{
 			$('#choice2').show();
