@@ -195,7 +195,7 @@ function	sync_sv()
 	});
 }
 
-/*
+
 function	get_table(table_id, tables)
 {
 	var		idx = 0;
@@ -243,4 +243,3 @@ function confirm(){
 	console.log(array, game);
 	socket.emit('re init', array, game);
 }
-*/
