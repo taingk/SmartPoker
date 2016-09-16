@@ -37,14 +37,11 @@ function socket_listens_players(socket, table) {
                 return;
             if (table.game.moment === "waiting")
                 table.playing_seats.push(seat_idx);
-			/*if (nb_player == "undefined" || nb_player <= 1 || nb_player >= 7 || isNaN(nb_player) == true)
-				nb_player = 2;
-			console.log('second '+ nb_player);*/
             if (table.playing_seats.length >= 2 && table.game.moment == "waiting") {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-					new_cashgame(socket, table);
+					chrono(socket, table);
             }
             return;
         }
