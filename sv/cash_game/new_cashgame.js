@@ -261,7 +261,7 @@ function chrono(socket, tableId) {
 	var lock = false;
 
 	tableId = get_seat(tableId.id, tables);
-    if (table.playing_seats.length > 2)
+    if (tableId.playing_seats.length > 2)
         lock = true;
     console.log('lock est false, true si + 2 ' + lock);
     if (lock) {
