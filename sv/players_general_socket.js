@@ -43,8 +43,6 @@ function socket_listens_players(socket, table) {
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
 			// Chrono  45 secs
-                if (table.playing_seats.length > 1 && lock == false)
-                    lock = true;
                 console.log('lock est false, true si + 2 ' + lock);
                 if (lock) {
                     console.log('lock est true : ' + lock);
@@ -59,6 +57,8 @@ function socket_listens_players(socket, table) {
                         console.log('lock est true : ' + lock);
                         clearInterval(timer);
                     }, 45000);
+					if (table.playing_seats.length > 1)
+					lock = true;
                 }
 			// !Chrono 45 secs
             }
