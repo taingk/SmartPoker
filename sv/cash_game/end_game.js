@@ -86,7 +86,7 @@ function reinit(table, game) {
     for (idx = 1; idx <= 6; ++idx)
         if (get_seat(table.seats, idx).state === "busy")
             table.playing_seats.push(idx);
-    if (table.playing_seats.length >= 2 && table.game.moment == "waiting end game") {
+    if (table.playing_seats.length >= 2) {
         console.log("Starting a new game...");
         for (var i = 0; i < table.playing_seats.length; i++)
             get_seat(table.seats, table.playing_seats[i]).state = "playing";

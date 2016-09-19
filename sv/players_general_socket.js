@@ -36,16 +36,12 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("new player", player);
             if (table.playing_seats.indexOf(seat_idx) != -1)
                 return;
-            /*            if (table.game.moment == "waiting" || table.game.moment == "waiting end game")
-                            table.playing_seats.push(seat_idx);
-            */
             if (table.game.moment == "waiting")
                 table.playing_seats.push(seat_idx);
-            if (table.playing_seats.length >= 1 && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
-                for (var i = 0; i < table.playing_seats.length; i++)
-                    get_seat(table.seats, table.playing_seats[i]).state = "playing";
-                if (table.game.moment == "waiting end game")
-                    new_cashgame(socket, table);
+            for (var i = 0; i < table.playing_seats.length; i++) {
+                get_seat(table.seats, table.playing_seats[i]).state = "playing";
+            }
+            if (table.playing_seats.length >= 1 && table.game.moment == "waiting") {
                 if (table.playing_seats.length > 1)
                     return;
                 tryChrono(socket, table);
