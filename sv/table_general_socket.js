@@ -101,7 +101,7 @@ function		socket_listens_global_settings(socket, table, private_channel)
 				io.to(table.id).emit("kick player", player_seat_idx);
 				if (table.players_nb > 0)
 					--table.players_nb;
-				if (table.playing_seats.length == 1) {
+				if (table.playing_seats.length == 1 && table.game.moment != "waiting") {
 					console.log('one player left');
 					return one_playing_player_left(table);
 				}
