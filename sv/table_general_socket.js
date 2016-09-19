@@ -90,6 +90,7 @@ function		socket_listens_global_settings(socket, table, private_channel)
 			player_seat_idx = get_player_seat_by_nickname(table.seats, socket_nickname);
 			if (player_seat_idx)
 			{
+				switch_next_player(table);
 				remove_from_seat_array(table, socket_nickname/*get_seat(table.seats, table.game.highlights_pos)*/);
 				console.log("table playing seats " + table.playing_seats);
 				remove_from_playing_seats(table.playing_seats, player_seat_idx);
@@ -103,15 +104,6 @@ function		socket_listens_global_settings(socket, table, private_channel)
 				if (table.playing_seats.length == 1) {
 					console.log('one player left');
 					return one_playing_player_left(table);
-				}
-				else if (table.playing_seats.length > 1) {
-					if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
-						console.log('next_moment');
-						next_moment(table, table.game);
-					} else {
-						console.log('switch next player');
-						switch_next_player(table);
-					}
 				}
 			}
 			socket.leave(private_channel);
