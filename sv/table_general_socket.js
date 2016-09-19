@@ -92,7 +92,6 @@ function		socket_listens_global_settings(socket, table, private_channel)
 			{
 				switch_next_player(table);
 				remove_from_seat_array(table, socket_nickname/*get_seat(table.seats, table.game.highlights_pos)*/);
-				console.log(socket_nickname, player_seat_idx);
 				console.log("table playing seats " + table.playing_seats);
 				get_seat(table.seats, table.playing_seats).state = "busy";
 				remove_from_playing_seats(table.playing_seats, player_seat_idx);
