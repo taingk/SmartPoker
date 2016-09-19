@@ -1,19 +1,17 @@
-function	evalhand(table, game, player)
+function	evalhand(table, game)
 {
 	var		r;
 	var		hand; // Example: Array("2s", "4d", "6h", "8c", "Tc");
 	var		idx = 1;
-//	if (!player)
-//		var		player;
+	var		player;
 	var		j;
 
 	while (idx <= 6)
 	{
 		if (get_seat(table.seats, idx).state == "playing")
 		{
-//			player = get_seat(table.seats, idx).player;
+			player = get_seat(table.seats, idx).player;
 			hand = game.board.slice(0);
-			console.log(hand);
 			hand.push(player.card1);
 			hand.push(player.card2);
 			for (j = 0; j < hand.length; ++j)
