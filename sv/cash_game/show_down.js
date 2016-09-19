@@ -52,14 +52,14 @@ function	show_down(table, game)
 			io.to(table.id).emit("bankroll modification", winners[idx].seat_nb, winners[idx]);
 		}
 	}
-	/*for (idx = 1; idx <= 6; ++idx)
+	for (idx = 1; idx <= 6; ++idx)
 	{
-//		if (table.playing_seats.indexOf(idx) != -1)
-//		{
+		if (table.playing_seats.indexOf(idx) != -1)
+		{
 			player = get_seat(table.seats, idx).player;
 			console.log(player);
 			io.to(table.id).emit("show down", player.card1, player.card2, idx);
-//		}
-	}*/
+		}
+	}
 	return end_game(table, game, winners, player);
 }
