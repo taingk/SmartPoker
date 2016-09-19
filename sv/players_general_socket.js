@@ -1,5 +1,6 @@
 var to_preflop = 0;
 var push = false;
+var lock = false;
 
 function socket_listens_players(socket, table) {
     var player; // Current player.
@@ -37,7 +38,7 @@ function socket_listens_players(socket, table) {
             if (table.playing_seats.indexOf(seat_idx) != -1)
                 return;
 				console.log('first '+table.playing_seats.length);
-			if (table.playing_seats.length == 1)
+			if (table.playing_seats.length == 1 && lock)
                 tryChrono(socket, table);
             if (table.game.moment == "waiting")
                 table.playing_seats.push(seat_idx);
@@ -48,7 +49,8 @@ function socket_listens_players(socket, table) {
                 if (table.playing_seats.length > 1)
                     return;
 				console.log('third '+table.playing_seats.length);
-                tryChrono(socket, table);
+				if (!lock)
+                	tryChrono(socket, table);
             }
             return;
         }
@@ -116,6 +118,7 @@ function tryChrono(socket, table) {
         if (table.playing_seats.length > 1) {
             console.log("Starting a new game...");
             new_cashgame(socket, table);
+			lock = true;
         } else
             tryChrono(socket, table);
     }, 45000);
