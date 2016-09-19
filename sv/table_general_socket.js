@@ -104,6 +104,15 @@ function		socket_listens_global_settings(socket, table, private_channel)
 					console.log('one player left');
 					return one_playing_player_left(table);
 				}
+				else if (table.playing_seats.length > 1) {
+					if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
+						console.log('next_moment');
+						next_moment(table, table.game);
+					} else {
+						console.log('switch next player');
+						switch_next_player(table);
+					}
+				}
 			}
 			socket.leave(private_channel);
 			socket.disconnect();
