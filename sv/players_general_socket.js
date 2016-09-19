@@ -44,6 +44,7 @@ function socket_listens_players(socket, table) {
 /*            if (table.playing_seats.length >= 1 && lock)
                 new_cashgame(socket, table);
             else {*/
+			console.log(table.playing_seats.length);
                 if (table.playing_seats.length >= 1 && table.game.moment == "waiting") {
                     if (table.playing_seats.length > 1) {
                         return;
