@@ -39,6 +39,8 @@ function socket_listens_players(socket, table) {
                 return;
             if (table.playing_seats.length == 1)
                 lock = false;
+			else if (table.playing_seats.length == 0)
+				lock = true;
             if (table.game.moment == "waiting")
                 table.playing_seats.push(seat_idx);
             for (var i = 0; i < table.playing_seats.length; i++)

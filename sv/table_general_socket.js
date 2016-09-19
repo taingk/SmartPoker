@@ -89,7 +89,7 @@ function		socket_listens_global_settings(socket, table, private_channel)
 		{
 			console.log(table.game.moment);
 			player_seat_idx = get_player_seat_by_nickname(table.seats, socket_nickname);
-			if (player_seat_idx && table.game.moment == "waiting") {
+			if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
 				remove_from_seat_array(table, socket_nickname);
 				console.log("table playing seats " + table.playing_seats);
 				remove_from_playing_seats(table.playing_seats, player_seat_idx);
