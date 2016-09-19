@@ -42,7 +42,12 @@ function socket_listens_players(socket, table) {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-			// Chrono  45 secs
+                // Chrono  45 secs
+                if (table.playing_seats.length == 1) {
+                    lock = false;
+					io.to(table.id).emit("chrono off");
+					clearInterval(timer);
+            	}
                 console.log('lock est false, true si + 2 ' + lock);
                 if (lock) {
                     console.log('lock est true : ' + lock);
@@ -57,10 +62,8 @@ function socket_listens_players(socket, table) {
                         console.log('lock est true : ' + lock);
                         clearInterval(timer);
                     }, 45000);
-					if (table.playing_seats.length > 1)
-					lock = true;
                 }
-			// !Chrono 45 secs
+                // !Chrono 45 secs
             }
             return;
         }
@@ -76,16 +79,16 @@ function socket_listens_players(socket, table) {
         if (table.game.board.length === 5)
             io.to(table.id).emit("send river", table.game.board[4]);
     });
-	socket.on("to preflop", function(init){
-		to_preflop = init;
-	});
+    socket.on("to preflop", function(init) {
+        to_preflop = init;
+    });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
 
-		if (table.playing_seats.length == 2)
-	        table.game.highlights_pos = seat_nb;
+        if (table.playing_seats.length == 2)
+            table.game.highlights_pos = seat_nb;
         if (seat_nb != table.game.highlights_pos)
             return;
         if (bet_amount && bet_amount[bet_amount.length - 1] == "$") {
@@ -172,7 +175,7 @@ function adjust_bets_values(table) {
 function switch_next_player(table) {
     var player;
 
-	if (table.game.highlights_pos == "none")
+    if (table.game.highlights_pos == "none")
         return;
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
@@ -218,27 +221,27 @@ function switch_next_player(table) {
 function next_moment(table, game) {
     var player;
 
-	if (to_preflop) {
-		table.game.moment = "preflop";
-		to_preflop = 0;
-	}
+    if (to_preflop) {
+        table.game.moment = "preflop";
+        to_preflop = 0;
+    }
     if (table.game.moment == "preflop") {
         table.game.curbet = "0";
         table.game.moment = "flop";
         deal_flop(table, game);
-		if (evalhand(table, game)) {
-			console.log("PreFlop eval hand");
-		} // Evaluate the current hand of all the players playing.
+        if (evalhand(table, game)) {
+            console.log("PreFlop eval hand");
+        } // Evaluate the current hand of all the players playing.
     } else if (table.game.moment == "flop") {
         table.game.curbet = "0";
         table.game.moment = "turn";
         deal_turn(table, game);
         if (evalhand(table, game)) {
-			console.log("Flop eval hand");
-		}
+            console.log("Flop eval hand");
+        }
     } else if (table.game.moment == "turn") {
         table.game.curbet = "0";
-		table.game.moment = "river";
+        table.game.moment = "river";
         deal_river(table, game);
         evalhand(table, game);
     } else if (table.game.moment == "river")
