@@ -4,22 +4,16 @@ function end_timer(table, game) {
     var lock = true;
 
     board = setInterval(function() {
-        io.to(table.id).emit("remove board");
+        console.log('board removed');
+		io.to(table.id).emit("remove board");
         io.to(table.id).emit("chrono", 10, "The game is restarting ...");
         clearInterval(board)
     }, 10000);
-    tryReinit(table, game);
-}
-
-function tryReinit(table, game) {
     timer = setInterval(function() {
         io.to(table.id).emit("chrono off");
         remove_last_actions(table);
+        reinit(table, game);
         clearInterval(timer);
-        if (table.playing_seats.length > 1)
-            reinit(table, game);
-        else
-            tryReinit(table, game);
     }, 20000);
 }
 
@@ -89,6 +83,7 @@ function reinit(table, game) {
     for (var i = 1; i < 7; i++) {
         io.to(get_private_id(table.private_ids, i)).emit("show buttons", "visible");
     }
+	console.log(table.game.moment, game.moment);
     /* ADD NEW PLAYERS TO PLAYING SEATS ARRAY */
     for (idx = 1; idx <= 6; ++idx)
         if (get_seat(table.seats, idx).state === "busy")
