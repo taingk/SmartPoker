@@ -42,10 +42,11 @@ function socket_listens_players(socket, table) {
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
             }
             if (table.playing_seats.length >= 1 && table.game.moment == "waiting") {
-                if (table.playing_seats.length > 1)
+                if (table.playing_seats.length > 1) {
                     return;
+				}
                 tryChrono(socket, table);
-            }
+        	}
             return;
         }
     });
