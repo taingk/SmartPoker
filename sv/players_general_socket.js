@@ -43,7 +43,6 @@ function socket_listens_players(socket, table) {
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
                 // Chrono  45 secs
-				console.log(table.playing_seats.length);
                 if (table.playing_seats.length > 1) {
                     return;
                 } else {

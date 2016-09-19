@@ -88,7 +88,7 @@ function		socket_listens_global_settings(socket, table, private_channel)
 		if (socket_nickname)
 		{
 			player_seat_idx = get_player_seat_by_nickname(table.seats, socket_nickname);
-			if (player_seat_idx)
+			if (player_seat_idx  && table.game.moment != "waiting")
 			{
 				switch_next_player(table);
 				remove_from_seat_array(table, socket_nickname/*get_seat(table.seats, table.game.highlights_pos)*/);
@@ -101,7 +101,7 @@ function		socket_listens_global_settings(socket, table, private_channel)
 				io.to(table.id).emit("kick player", player_seat_idx);
 				if (table.players_nb > 0)
 					--table.players_nb;
-				if (table.playing_seats.length == 1 && table.game.moment != "waiting") {
+				if (table.playing_seats.length == 1) {
 					console.log('one player left');
 					return one_playing_player_left(table);
 				}
