@@ -4,7 +4,7 @@ function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
-    var lock = false;
+//    var lock = false;
     //table = get_table(table.id, tables);
 
     /*socket.on("nb player", function(nb) {
@@ -43,14 +43,13 @@ function socket_listens_players(socket, table) {
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
                 // Chrono  45 secs
-                if (table.playing_seats.length > 0 && lock) {
-					console.log(lock);
-					console.log(table.playing_seats.length);
+				console.log(table.playing_seats.length);
+                if (table.playing_seats.length > 1) {
                     return;
                 } else {
                     io.to(table.id).emit("chrono", 45, "The game will begin ...");
                     var timer = setInterval(function() {
-                        lock = true;
+//                        lock = true;
                         new_cashgame(socket, table);
                         io.to(table.id).emit("chrono off");
                         clearInterval(timer);
