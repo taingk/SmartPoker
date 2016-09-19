@@ -37,18 +37,20 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("new player", player);
             if (table.playing_seats.indexOf(seat_idx) != -1)
                 return;
-				console.log('first '+table.playing_seats.length);
-			if (table.playing_seats.length == 1 && lock)
+			console.log('first '+ table.players_nb);
+
+			if (table.players_nb == 1 && lock)
                 tryChrono(socket, table);
+
             if (table.game.moment == "waiting")
                 table.playing_seats.push(seat_idx);
             for (var i = 0; i < table.playing_seats.length; i++)
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
-			console.log('second '+table.playing_seats.length);
-            if (table.playing_seats.length >= 1 && table.game.moment == "waiting") {
-                if (table.playing_seats.length > 1)
+			console.log('second '+ table.players_nb);
+            if (table.players_nb >= 1 && table.game.moment == "waiting") {
+                if (table.players_nb > 1)
                     return;
-				console.log('third '+table.playing_seats.length);
+				console.log('third '+ table.players_nb);
 				if (!lock)
                 	tryChrono(socket, table);
             }
@@ -115,7 +117,7 @@ function tryChrono(socket, table) {
     var timer = setInterval(function() {
         clearInterval(timer);
         io.to(table.id).emit("chrono off");
-        if (table.playing_seats.length > 1) {
+        if (table.players_nb > 1) {
             console.log("Starting a new game...");
             new_cashgame(socket, table);
 			lock = true;
