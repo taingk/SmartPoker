@@ -11,7 +11,7 @@
 			{
 			   "host": "http://82.127.122.187",
 			   "port": "1337",
-			   "start_bankroll": "500",
+			   "start_bankroll": "1000",
 			   "small_blind": "10",
 			   "big_blind": "20"
 			}

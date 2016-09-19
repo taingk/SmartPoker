@@ -37,12 +37,14 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("new player", player);
             if (table.playing_seats.indexOf(seat_idx) != -1)
                 return;
+            if (table.playing_seats.length == 1)
+                lock = true
+			console.log('first ' +table.playing_seats.length);
             if (table.game.moment == "waiting")
                 table.playing_seats.push(seat_idx);
             for (var i = 0; i < table.playing_seats.length; i++)
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
-            if (table.playing_seats.length == 1)
-				lock = true
+			console.log('second ' +table.playing_seats.length);
             if (table.playing_seats.length >= 1 && table.game.moment == "waiting") {
                 if (table.playing_seats.length > 2)
                     return;
@@ -116,7 +118,7 @@ function tryChrono(socket, table) {
         io.to(table.id).emit("chrono off");
         if (table.playing_seats.length > 1) {
             console.log("Starting a new game...");
-			lock = false;
+            lock = false;
             new_cashgame(socket, table);
         } else
             tryChrono(socket, table);
