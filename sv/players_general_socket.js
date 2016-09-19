@@ -4,7 +4,7 @@ function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
-//    var lock = false;
+
     //table = get_table(table.id, tables);
 
     /*socket.on("nb player", function(nb) {
@@ -42,19 +42,9 @@ function socket_listens_players(socket, table) {
                 console.log("Starting a new game...");
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
-                // Chrono  45 secs
-                if (table.playing_seats.length > 1) {
+                if (table.playing_seats.length > 1)
                     return;
-                } else {
-                    io.to(table.id).emit("chrono", 45, "The game will begin ...");
-                    var timer = setInterval(function() {
-//                        lock = true;
-                        new_cashgame(socket, table);
-                        io.to(table.id).emit("chrono off");
-                        clearInterval(timer);
-                    }, 45000);
-                }
-                // !Chrono 45 secs
+                tryChrono(socket, table);
             }
             return;
         }
@@ -105,6 +95,18 @@ function socket_listens_players(socket, table) {
         }
         ++table.game.round_nb;
     });
+}
+
+function tryChrono(socket, table) {
+    io.to(table.id).emit("chrono", 45, "The game will begin ...");
+    var timer = setInterval(function() {
+        io.to(table.id).emit("chrono off");
+        clearInterval(timer);
+        if (table.playing_seats.length > 1)
+            new_cashgame(socket, table);
+        else
+            tryChrono(socket, table);
+    }, 45000);
 }
 
 function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) {
