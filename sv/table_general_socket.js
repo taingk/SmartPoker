@@ -101,8 +101,8 @@ function		socket_listens_global_settings(socket, table, private_channel)
 				remove_from_seat_array(table, socket_nickname);
 				console.log("table playing seats " + table.playing_seats);
 				remove_from_playing_seats(table.playing_seats, player_seat_idx);
-//				io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-//				table.game.highlights_pos = 0;
+				io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
+				table.game.highlights_pos = 0;
 				io.to(table.id).emit("bet", player_seat_idx, 0);
 				io.to(table.id).emit("kick player", player_seat_idx);
 				if (table.players_nb > 0)
