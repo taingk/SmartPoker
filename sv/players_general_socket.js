@@ -36,6 +36,8 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("new player", player);
             if (table.playing_seats.indexOf(seat_idx) != -1)
                 return;
+			if (table.playing_seats.length == 1)
+                tryChrono(socket, table);
             if (table.game.moment == "waiting")
                 table.playing_seats.push(seat_idx);
             for (var i = 0; i < table.playing_seats.length; i++)
