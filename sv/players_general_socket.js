@@ -38,7 +38,9 @@ function socket_listens_players(socket, table) {
                 return;
 /*            if (table.game.moment == "waiting" || table.game.moment == "waiting end game")
                 table.playing_seats.push(seat_idx);
-*/            if (table.playing_seats.length >= 1 && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
+*/
+			console.log(table.game.moment);
+            if (table.playing_seats.length >= 1 && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
 				table.playing_seats.push(seat_idx);
                 for (var i = 0; i < table.playing_seats.length; i++)
                     get_seat(table.seats, table.playing_seats[i]).state = "playing";
