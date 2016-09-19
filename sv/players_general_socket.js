@@ -27,6 +27,8 @@ function socket_listens_players(socket, table) {
             console.log(nickname + " is valid!");
             socket.emit("is valid nickname info", "valid", nickname);
             table.nicknames.push(nickname); // Add the user nickname to the table nicknames array.
+			if (table.players_nb == 1 && lock)
+			tryChrono(socket, table);
             if (table.players_nb < 6)
                 ++table.players_nb;
             console.log("There are now " + table.players_nb + " seated at the table (imo of course)!");
@@ -38,10 +40,6 @@ function socket_listens_players(socket, table) {
             if (table.playing_seats.indexOf(seat_idx) != -1)
                 return;
 			console.log('first '+ table.players_nb);
-
-			if (table.players_nb == 1 && lock)
-                tryChrono(socket, table);
-
             if (table.game.moment == "waiting")
                 table.playing_seats.push(seat_idx);
             for (var i = 0; i < table.playing_seats.length; i++)
