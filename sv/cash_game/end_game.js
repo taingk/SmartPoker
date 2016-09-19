@@ -71,7 +71,6 @@ function reinit(table, game) {
     io.to(table.id).emit("remove emplacements");
     game.highlights_pos = "none"; // We don't need it anymore for now.
     game.board = new Array();
-    game.moment = "waiting";
     ++game.d_pos;
     ++game.sb_pos;
     ++game.bb_pos;
@@ -83,12 +82,11 @@ function reinit(table, game) {
     for (var i = 1; i < 7; i++) {
         io.to(get_private_id(table.private_ids, i)).emit("show buttons", "visible");
     }
-	console.log(table.game.moment, game.moment);
     /* ADD NEW PLAYERS TO PLAYING SEATS ARRAY */
     for (idx = 1; idx <= 6; ++idx)
         if (get_seat(table.seats, idx).state === "busy")
             table.playing_seats.push(idx);
-    if (table.playing_seats.length >= 2 && game.moment == "waiting") {
+    if (table.playing_seats.length >= 2 && table.game.moment == "waiting end game") {
         console.log("Starting a new game...");
         for (var i = 0; i < table.playing_seats.length; i++)
             get_seat(table.seats, table.playing_seats[i]).state = "playing";
