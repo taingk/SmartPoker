@@ -117,5 +117,10 @@ function		socket_listens_global_settings(socket, table, private_channel)
 			socket.leave(private_channel);
 			socket.disconnect();
 		}
+		else {
+			player_seat_idx = get_player_seat_by_nickname(table.seats, "Waiting...");
+			io.to(table.id).emit("bet", player_seat_idx, 0);
+			io.to(table.id).emit("kick player", player_seat_idx);
+		}
 	});
 }
