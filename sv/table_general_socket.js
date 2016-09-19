@@ -98,7 +98,6 @@ function		socket_listens_global_settings(socket, table, private_channel)
 				if (table.players_nb > 0)
 					--table.players_nb;
 			} else {
-				switch_next_player(table);
 				remove_from_seat_array(table, socket_nickname);
 				console.log("table playing seats " + table.playing_seats);
 				get_seat(table.seats, table.playing_seats).state = "busy";
