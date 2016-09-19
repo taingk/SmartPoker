@@ -1,10 +1,10 @@
 var to_preflop = 0;
+var push = false;
 
 function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
-
     //table = get_table(table.id, tables);
 
     /*socket.on("nb player", function(nb) {
@@ -98,10 +98,17 @@ function socket_listens_players(socket, table) {
 }
 
 function tryChrono(socket, table) {
-    io.to(table.id).emit("chrono", 45, "The game will begin ...");
+	var chrono = setInterval(function() {
+		push = false;
+		clearInterval(chrono);
+	}, 45000);
+    if (push == false) {
+        io.to(table.id).emit("chrono", 45, "The game will begin ...");
+        push = true;
+    }
     var timer = setInterval(function() {
-        io.to(table.id).emit("chrono off");
         clearInterval(timer);
+        io.to(table.id).emit("chrono off");
         if (table.playing_seats.length > 1)
             new_cashgame(socket, table);
         else

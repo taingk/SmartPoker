@@ -89,7 +89,6 @@ function reinit(table, game) {
     for (var i = 1; i < 7; i++) {
         io.to(get_private_id(table.private_ids, i)).emit("show buttons", "visible");
     }
-    console.log(table.game.moment, game.moment);
     /* ADD NEW PLAYERS TO PLAYING SEATS ARRAY */
     for (idx = 1; idx <= 6; ++idx)
         if (get_seat(table.seats, idx).state === "busy")

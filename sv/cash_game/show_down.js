@@ -30,6 +30,8 @@ function	show_down(table, game)
 	var		winners; // Indeed, with a 's' at the end in case of split.
 	var		player;
 
+
+	table.game.moment != "waiting";
 	if (!(winners = evalwin(table, game)))
 		console.log("Can't retrieve winner(s)! Game error!");
 	console.log("And the winner is..." + winners[0].nickname);
