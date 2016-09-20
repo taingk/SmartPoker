@@ -77,7 +77,12 @@ function socket_listens_players(socket, table) {
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
-        if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
+        if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
+            if (table.playing_seats.length < 2)
+                return one_playing_player_left(table);
+			console.log('Fold last');
+            next_moment(table, table.game);
+        } else if (table.game.round_nb == table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
             console.log('Un');
