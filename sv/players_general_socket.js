@@ -2,12 +2,7 @@ function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
     var channel; // Channel involved.
-    //table = get_table(table.id, tables);
 
-    /*socket.on("nb player", function(nb) {
-    	nb_player = nb;
-    	console.log('first '+ nb_player);
-    })*/
     socket.on("is valid nickname", function(nickname, seat_idx) {
         curseat = get_seat(table.seats, seat_idx);
         channel = get_private_id(table.private_ids, seat_idx);
@@ -57,9 +52,6 @@ function socket_listens_players(socket, table) {
         if (table.game.board.length === 5)
             io.to(table.id).emit("send river", table.game.board[4]);
     });
-    socket.on("to preflop", function(init) {
-        to_preflop = init;
-    });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
         if (!decision || !channel_id)
             return;
@@ -90,7 +82,9 @@ function socket_listens_players(socket, table) {
                 return one_playing_player_left(table);
             switch_next_player(table);
         }
-        if (decision != "FOLD")
+        if (decision != "FOLD");
+            ++table.game.round_nb;
+		else if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length);
             ++table.game.round_nb;
     });
 }
@@ -190,10 +184,7 @@ function switch_next_player(table) {
                 if (table.game.curbet * 2 > get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
                     send_option(table, table.game.highlights_pos, "second choice", "null", -1);
                 } else {
-                    /*table.game.curbet == 20 ? */
                     send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet * 2)
-                        /*:
-					send_option(table, table.game.highlights_pos, "second choice", "raise", table.game.curbet = table.game.curbet + (table.game.curbet - ));*/
                 }
             }
         }
