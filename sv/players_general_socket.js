@@ -79,7 +79,16 @@ function socket_listens_players(socket, table) {
 		console.log(table.game.round_nb + "/" + table.playing_seats.length);
 		if (decision == "FOLD") {
 			console.log('round and playing seat '+table.game.round_nb, table.playing_seats.length);
-			if (table.game.round_nb < table.playing_seats.length+1) {
+			if (table.game.round_nb == table.playing_seats.length) {
+				if (table.playing_seats.length < 2) {
+					return one_playing_player_left(table);
+				}
+				console.log('switch next player');
+				switch_next_player(table);
+				++table.game.round_nb;
+				return;
+			}
+			else if (table.game.round_nb < table.playing_seats.length) {
 				if (table.playing_seats.length < 2) {
 					return one_playing_player_left(table);
 				}
