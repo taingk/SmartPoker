@@ -70,6 +70,7 @@ function reinit(table, game) {
     }
     io.to(table.id).emit("remove emplacements");
     game.highlights_pos = "none"; // We don't need it anymore for now.
+	game.moment == "waiting";
     game.board = new Array();
     ++game.d_pos;
     ++game.sb_pos;
