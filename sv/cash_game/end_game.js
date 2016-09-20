@@ -12,7 +12,7 @@ function end_timer(table, game) {
     timer = setInterval(function() {
         io.to(table.id).emit("chrono off");
         remove_last_actions(table);
-		table.game.moment == "waiting";
+		table.game.moment = "waiting";
 		if (table.playing_seats.length > 1)
         	reinit(table, game);
 		clearInterval(timer);
