@@ -57,6 +57,8 @@ function remove_from_playing_seats(playing_seats, idx) {
 function socket_listens_global_settings(socket, table, private_channel) {
     var socket_nickname;
     var player_seat_idx;
+	var private_idx;
+	var private_channelx;
 
     socket.emit("player name info");
     socket.on("socket nickname on table", function(nickname) {
@@ -67,6 +69,16 @@ function socket_listens_global_settings(socket, table, private_channel) {
         if (socket_nickname) {
             console.log(table.game.moment);
             player_seat_idx = get_player_seat_by_nickname(table.seats, socket_nickname);
+			private_idx = get_private_id(table.private_ids, player_seat_idx)
+			private_channelx = table.id + player_seat_idx;
+			console.log(private_idx);
+			console.log(private_channelx);
+			for (var i = 0, var j = null; i < private_idx.length; i++) {
+				j = private_idx[i];
+				if (j == private_channelx)
+					private_idx.splice(private_channelx, 1);
+			}
+			console.log(private_idx);
             if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
                 console.log('in waiting dc');
                 remove_from_seat_array(table, socket_nickname);
@@ -76,31 +88,23 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 io.to(table.id).emit("kick player", player_seat_idx);
                 if (table.players_nb > 0)
                     --table.players_nb;
-            } else if (player_seat_idx) {
+            } else {
                 console.log('in game dc');
                 remove_from_seat_array(table, socket_nickname);
                 remove_from_playing_seats(table.playing_seats, player_seat_idx);
                 var seatPlayer = get_seat(table.seats, player_seat_idx);
 				seatPlayer.player = -1;
-                console.log(seatPlayer);
+				seatPlayer.bet = 0;
                 console.log("table playing seats " + table.playing_seats);
-                console.log(table);
                 if (player_seat_idx == table.game.highlights_pos) {
                     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
                     table.game.highlights_pos = 0;
-                    if (table.playing_seats.length == 1) {
-                        console.log('one player left');
-                    }
-                    else if (table.game.round_nb > table.playing_seats.length) {
-                        console.log("1");
+                    if (table.playing_seats.length == 1)
+                        console.log('return one player left');
+                    else if (table.game.round_nb > table.playing_seats.length)
                         next_moment(table, table.game);
-                    } else if (table.game.round_nb == table.playing_seats.length) {
-                        console.log("2");
+                    else
                         switch_next_player(table)
-                    } else {
-                        console.log("3");
-                        switch_next_player(table);
-                    }
                 }
                 io.to(table.id).emit("bet", player_seat_idx, 0);
                 io.to(table.id).emit("kick player", player_seat_idx);
