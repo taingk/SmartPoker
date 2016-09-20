@@ -1,5 +1,3 @@
-var to_preflop = 0;
-
 function socket_listens_players(socket, table) {
     var player; // Current player.
     var curseat; // Current seat.
@@ -214,24 +212,16 @@ function switch_next_player(table) {
 function next_moment(table, game) {
     var player;
 
-    if (to_preflop) {
-        table.game.moment = "preflop";
-        to_preflop = 0;
-    }
     if (table.game.moment == "preflop") {
         table.game.curbet = "0";
         table.game.moment = "flop";
         deal_flop(table, game);
-        if (evalhand(table, game)) {
-            console.log("PreFlop eval hand");
-        } // Evaluate the current hand of all the players playing.
+        evalhand(table, game);
     } else if (table.game.moment == "flop") {
         table.game.curbet = "0";
         table.game.moment = "turn";
         deal_turn(table, game);
-        if (evalhand(table, game)) {
-            console.log("Flop eval hand");
-        }
+        evalhand(table, game);
     } else if (table.game.moment == "turn") {
         table.game.curbet = "0";
         table.game.moment = "river";
