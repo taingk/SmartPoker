@@ -71,15 +71,16 @@ function socket_listens_global_settings(socket, table, private_channel) {
         if (socket_nickname) {
             console.log(table.game.moment);
             player_seat_idx = get_player_seat_by_nickname(table.seats, socket_nickname);
-			private_idx = get_private_id(table.private_ids, player_seat_idx)
+
 			private_channelx = table.id + player_seat_idx;
-			console.log(private_idx);
-			//for (; i < private_idx.length; i++) {
-			//	j = private_idx[i];
-			//	if (j == private_channelx)
-					private_idx.splice(private_channelx, 1);
-			//}
-			console.log(private_idx);
+			console.log(table.private_ids);
+			for (; i < table.private_ids.length; i++) {
+				j = table.private_ids[i];
+				if (j == private_channelx)
+					table.private_ids.splice(private_channelx, 1);
+			}
+			console.log(table.private_ids);
+			
             if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
                 console.log('in waiting dc');
                 remove_from_seat_array(table, socket_nickname);
