@@ -66,23 +66,18 @@ function get_next_player(table, game) {
     return pos;
 }
 
-function get_first_to_talk(table, game) {
-    var pos = game.bb_pos + 1;
+function get_first_to_talk(table, game, token) {
+    var pos;
 
+	token ? pos = game.bb_pos + 1 : pos = game.d_pos + 1;
     if (table.playing_seats.length < 2)
         return 0;
-    /*if (table.playing_seats.length == 2)
-	{
-        game.highlights_pos = game.sb_pos;
-        return game.highlights_pos;
-    }*/
     while (table.playing_seats.indexOf(pos) == -1) {
         if (pos >= 7 || pos <= 0)
             pos = 0;
         ++pos;
     }
     game.highlights_pos = pos;
-	console.log(pos);
     return pos;
 }
 
@@ -210,7 +205,7 @@ function game_routine(socket, table) {
     table.game.d_pos = find_dealer(table, table.game);
     table.game.sb_pos = find_sb(table, table.game);
     table.game.bb_pos = find_bb(table, table.game);
-	get_first_to_talk(table, table.game);
+	get_first_to_talk(table, table.game, true);
     console.log("Dealer is at seat " + table.game.d_pos);
     console.log("Small blind is at seat " + table.game.sb_pos);
     console.log("Big blind is at seat " + table.game.bb_pos);

@@ -233,7 +233,7 @@ function next_moment(table, game) {
     }
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-    table.game.highlights_pos = get_first_to_talk(table, game);
+    table.game.highlights_pos = get_first_to_talk(table, game, false);
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 1);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
