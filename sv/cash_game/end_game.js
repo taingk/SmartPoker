@@ -13,7 +13,7 @@ function end_timer(table, game) {
         io.to(table.id).emit("chrono off");
         remove_last_actions(table);
 		table.game.moment == "waiting";
-		if (table.playing_seats.length > 1 && table.game.moment == "waiting end game")
+		if (table.playing_seats.length > 1)
         	reinit(table, game);
 		clearInterval(timer);
     }, 20000);
