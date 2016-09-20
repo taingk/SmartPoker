@@ -52,6 +52,7 @@ function sync_sv() {
         $("#btn" + seat_nb).css("visibility", "hidden");
 		$("#card1_" + seat_nb).css("visibility", "hidden");
 		$("#card2_" + seat_nb).css("visibility", "hidden");
+		$("#last_action"+ seat_nb).css("visibility", "hidden");
     });
     socket.emit("ask buttons");
     socket.on("place button", function(type, seat_nb) {
