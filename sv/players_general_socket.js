@@ -1,6 +1,4 @@
 var to_preflop = 0;
-var push = false;
-var lock = false;
 
 function socket_listens_players(socket, table) {
     var player; // Current player.
@@ -27,9 +25,6 @@ function socket_listens_players(socket, table) {
             console.log(nickname + " is valid!");
             socket.emit("is valid nickname info", "valid", nickname);
             table.nicknames.push(nickname); // Add the user nickname to the table nicknames array.
-			if (table.players_nb == 1 && lock)
-			tryChrono(socket, table);
-			console.log('first '+ table.players_nb);
             if (table.players_nb < 6)
                 ++table.players_nb;
             console.log("There are now " + table.players_nb + " seated at the table (imo of course)!");
@@ -44,13 +39,11 @@ function socket_listens_players(socket, table) {
                 table.playing_seats.push(seat_idx);
             for (var i = 0; i < table.playing_seats.length; i++)
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
-			console.log('second '+ table.players_nb);
+
             if (table.players_nb >= 1 && table.game.moment == "waiting") {
                 if (table.players_nb > 1)
                     return;
-				console.log('third '+ table.players_nb);
-				if (!lock)
-                	tryChrono(socket, table);
+                tryChrono(socket, table);
             }
             return;
         }
@@ -104,21 +97,13 @@ function socket_listens_players(socket, table) {
 }
 
 function tryChrono(socket, table) {
-    var chrono = setInterval(function() {
-        push = false;
-        clearInterval(chrono);
-    }, 45000);
-    if (push == false) {
-        io.to(table.id).emit("chrono", 45, "The game will begin ...");
-        push = true;
-    }
+    io.to(table.id).emit("chrono", 45, "The game will begin ...");
     var timer = setInterval(function() {
         clearInterval(timer);
         io.to(table.id).emit("chrono off");
-        if (table.players_nb > 1) {
+        if (table.playing_seats.length > 1) {
             console.log("Starting a new game...");
             new_cashgame(socket, table);
-			lock = true;
         } else
             tryChrono(socket, table);
     }, 45000);
