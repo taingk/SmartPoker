@@ -59,6 +59,8 @@ function socket_listens_global_settings(socket, table, private_channel) {
     var player_seat_idx;
 	var private_idx;
 	var private_channelx;
+	var i = 0;
+	var j = null;
 
     socket.emit("player name info");
     socket.on("socket nickname on table", function(nickname) {
@@ -73,7 +75,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
 			private_channelx = table.id + player_seat_idx;
 			console.log(private_idx);
 			console.log(private_channelx);
-			for (var i = 0, var j = null; i < private_idx.length; i++) {
+			for (; i < private_idx.length; i++) {
 				j = private_idx[i];
 				if (j == private_channelx)
 					private_idx.splice(private_channelx, 1);
