@@ -84,6 +84,13 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 if (player_seat_idx == table.game.highlights_pos) {
                     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
                     table.game.highlights_pos = 0;
+					if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
+			            console.log('next_moment');
+			            next_moment(table, table.game);
+			        } else {
+			            console.log('switch next player');
+			            switch_next_player(table);
+			        }
                 }
                 io.to(table.id).emit("bet", player_seat_idx, 0);
                 io.to(table.id).emit("kick player", player_seat_idx);
