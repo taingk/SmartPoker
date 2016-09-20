@@ -80,7 +80,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 console.log('in game dc');
                 remove_from_seat_array(table, socket_nickname);
                 remove_from_playing_seats(table.playing_seats, player_seat_idx);
-                var seatPlayer = table.seats.seat + player_seat_idx;
+                var seatPlayer = get_seat(table.seats, player_seat_idx);
                 console.log(seatPlayer);
                 console.log("table playing seats " + table.playing_seats);
                 console.log(table);
@@ -106,7 +106,6 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 if (table.players_nb > 0)
                     --table.players_nb;
                 if (table.playing_seats.length == 1) {
-                    console.log('one player left');
                     return one_playing_player_left(table);
                 }
             }
