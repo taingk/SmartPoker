@@ -82,6 +82,7 @@ function get_first_to_talk(table, game) {
         ++pos;
     }
     game.highlights_pos = pos;
+	console.log(pos);
     return pos;
 }
 
