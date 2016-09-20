@@ -142,10 +142,12 @@ function sync_sv() {
     });
     socket.on("show down", function(card1, card2, seat_nb) {
         if ($('#qr_spot' + seat_nb).css('visibility') == 'hidden') {
-            $("#card1_" + seat_nb).attr("src", "../img/cards/" + card1 + ".png");
-            $("#card2_" + seat_nb).attr("src", "../img/cards/" + card2 + ".png");
-            $("#card1_" + seat_nb).css("visibility", "visible");
-            $("#card2_" + seat_nb).css("visibility", "visible");
+			if (card1 && card2) {
+            	$("#card1_" + seat_nb).attr("src", "../img/cards/" + card1 + ".png");
+            	$("#card2_" + seat_nb).attr("src", "../img/cards/" + card2 + ".png");
+	            $("#card1_" + seat_nb).css("visibility", "visible");
+	            $("#card2_" + seat_nb).css("visibility", "visible");
+			}
         }
     });
     socket.on("show down off", function(seat_nb) {
