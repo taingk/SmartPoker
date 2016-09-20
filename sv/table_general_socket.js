@@ -61,6 +61,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
 	var private_channelx;
 	var i = 0;
 	var j = null;
+	var seatPlayer;
 
     socket.emit("player name info");
     socket.on("socket nickname on table", function(nickname) {
@@ -69,19 +70,15 @@ function socket_listens_global_settings(socket, table, private_channel) {
     });
     socket.on("disconnect", function() {
         if (socket_nickname) {
-            console.log(table.game.moment);
             player_seat_idx = get_player_seat_by_nickname(table.seats, socket_nickname);
-
 			private_channelx = get_table(table.id, tables).id + player_seat_idx;
 			private_idx = get_table(table.id, tables).private_ids;
-			console.log(private_idx);
 			for (; i < private_idx.length; i++) {
 				j = private_idx[i];
 				if (j == private_channelx)
 					private_idx.splice(i, 1);
 			}
 			console.log(private_idx);
-
             if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
                 console.log('in waiting dc');
                 remove_from_seat_array(table, socket_nickname);
@@ -95,7 +92,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 console.log('in game dc');
                 remove_from_seat_array(table, socket_nickname);
                 remove_from_playing_seats(table.playing_seats, player_seat_idx);
-                var seatPlayer = get_seat(table.seats, player_seat_idx);
+                seatPlayer = get_seat(table.seats, player_seat_idx);
 				seatPlayer.player = -1;
 				seatPlayer.bet = 0;
                 console.log("table playing seats " + table.playing_seats);

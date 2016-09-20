@@ -80,17 +80,14 @@ function socket_listens_players(socket, table) {
         if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
-			console.log('Fold last');
             next_moment(table, table.game);
         } else if (table.game.round_nb == table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
-            console.log('Un');
             decision == "FOLD" ? switch_next_player(table) : next_moment(table, table.game);
         } else {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
-            console.log('Deux');
             switch_next_player(table);
         }
         if (decision != "FOLD")
