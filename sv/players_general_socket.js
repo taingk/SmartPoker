@@ -82,10 +82,11 @@ function socket_listens_players(socket, table) {
                 return one_playing_player_left(table);
             switch_next_player(table);
         }
-        if (decision != "FOLD")
+		if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length)
             ++table.game.round_nb;
-		else if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length);
+        else
             ++table.game.round_nb;
+
     });
 }
 
