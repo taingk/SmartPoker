@@ -169,7 +169,7 @@ io.on("connection", function(socket) {
 
         socket.on('re init', function(table, game) {
 			var player;
-			
+
 			evalhand(table, game);
             for (idx = 1; idx <= 6; ++idx) {
                 player = get_seat(table.seats, idx).player;
@@ -182,14 +182,17 @@ io.on("connection", function(socket) {
     if (device_client) {
         console.log(table.private_ids);
         private_channel = table_id + seat_nb; //shortId.generate() + seat_nb;
-        if (!get_private_id(table.private_ids, seat_nb))
+        if (!get_private_id(table.private_ids, seat_nb)) {
             table.private_ids.push(private_channel);
-        socket.on("get private channel", function() {
-            socket.emit("private channel", private_channel, seat_nb);
-        });
-        socket.join(private_channel);
-        console.log("Joining private channel " + private_channel);
-        hide_qr(table, seat_nb);
+	        socket.on("get private channel", function() {
+	            socket.emit("private channel", private_channel, seat_nb);
+	        });
+	        socket.join(private_channel);
+	        console.log("Joining private channel " + private_channel);
+	        hide_qr(table, seat_nb);
+		} else {
+			console.log('Seat busy');
+		}
     }
     socket.on("disconnect", function() {
         re_qr(table, seat_nb);
