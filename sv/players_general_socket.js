@@ -81,7 +81,7 @@ function socket_listens_players(socket, table) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
             next_moment(table, table.game);
-        } else if (table.game.round_nb == table.playing_seats.length && check_bets(table, table.seats)) {
+        } else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
             decision == "FOLD" ? switch_next_player(table) : next_moment(table, table.game);
