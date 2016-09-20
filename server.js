@@ -193,7 +193,6 @@ io.on("connection", function(socket) {
         }
 		else {
 			console.log("Seat busy");
-			io.to(table.id).emit("redirect url");
 		}
     }
     socket.on("disconnect", function() {

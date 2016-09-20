@@ -95,9 +95,6 @@
 				seat_nb = res2;
 			}
 		});
-		socket.on("redirect url", function(){
-			window.location = "http://poker.smartgames.tv/page_not_found.html";
-		});
 		socket.on('game over', function() {
 			$('#msg').text('Game over!');
 			$('#curtain').hide();

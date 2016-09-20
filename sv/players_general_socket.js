@@ -76,22 +76,20 @@ function socket_listens_players(socket, table) {
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
-		console.log(table.game.round_nb + "/" + table.playing_seats.length);
+        console.log(table.game.round_nb + "/" + table.playing_seats.length);
         if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
-            if (table.playing_seats.length < 2) {
+            if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
-            }
-            console.log('next_moment');
+            console.log('Un');
             decision == "FOLD" ? switch_next_player(table) : next_moment(table, table.game);
         } else {
-            if (table.playing_seats.length < 2) {
+            if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
-            }
-            console.log('switch next player');
+            console.log('Deux');
             switch_next_player(table);
         }
-		if (decision != "FOLD")
-        	++table.game.round_nb;
+        if (decision != "FOLD")
+            ++table.game.round_nb;
     });
 }
 
@@ -167,6 +165,7 @@ function adjust_bets_values(table) {
 function switch_next_player(table) {
     var player;
 
+    console.log('switch next player');
     if (table.game.highlights_pos == "none")
         return;
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
@@ -213,6 +212,7 @@ function switch_next_player(table) {
 function next_moment(table, game) {
     var player;
 
+    console.log('next_moment');
     if (table.game.moment == "preflop") {
         table.game.curbet = "0";
         table.game.moment = "flop";
