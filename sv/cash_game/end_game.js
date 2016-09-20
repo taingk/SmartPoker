@@ -10,12 +10,12 @@ function end_timer(table, game) {
         clearInterval(board)
     }, 10000);
     timer = setInterval(function() {
-		clearInterval(timer);
         io.to(table.id).emit("chrono off");
         remove_last_actions(table);
 		table.game.moment == "waiting";
-		if (table.playing_seats.length > 1)
+		if (table.playing_seats.length > 1 && table.game.moment == "waiting end game")
         	reinit(table, game);
+		clearInterval(timer);
     }, 20000);
 }
 
