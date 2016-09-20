@@ -81,12 +81,18 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 remove_from_seat_array(table, socket_nickname);
                 remove_from_playing_seats(table.playing_seats, player_seat_idx);
 				console.log("table playing seats " + table.playing_seats);
+				console.log(table);
                 if (player_seat_idx == table.game.highlights_pos) {
                     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
                     table.game.highlights_pos = 0;
-					if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
+					if (table.game.round_nb > table.playing_seats.length) {
+						console.log("1");
 			            next_moment(table, table.game);
+			        } else if (table.game.round_nb == table.playing_seats.length) {
+						console.log("2");
+			            switch_next_player(table)
 			        } else {
+						console.log("3");
 			            switch_next_player(table);
 			        }
                 }
