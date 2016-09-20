@@ -78,7 +78,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
 			for (; i < private_idx.length; i++) {
 				j = private_idx[i];
 				if (j == private_channelx)
-					private_idx.splice(private_channelx, 1);
+					private_idx.splice(i, 1);
 			}
 			console.log(private_idx);
 
