@@ -10,10 +10,12 @@ function end_timer(table, game) {
         clearInterval(board)
     }, 10000);
     timer = setInterval(function() {
+		clearInterval(timer);
         io.to(table.id).emit("chrono off");
         remove_last_actions(table);
-        reinit(table, game);
-        clearInterval(timer);
+		table.game.moment == "waiting";
+		if (table.playing_seats.length > 1)
+        	reinit(table, game);
     }, 20000);
 }
 
@@ -70,7 +72,6 @@ function reinit(table, game) {
     }
     io.to(table.id).emit("remove emplacements");
     game.highlights_pos = "none"; // We don't need it anymore for now.
-	game.moment == "waiting";
     game.board = new Array();
     ++game.d_pos;
     ++game.sb_pos;
