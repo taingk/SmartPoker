@@ -80,6 +80,8 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 console.log('in game dc');
                 remove_from_seat_array(table, socket_nickname);
                 remove_from_playing_seats(table.playing_seats, player_seat_idx);
+				var seatPlayer = table.seats.seat + player_seat_idx;
+				seatPlayer[player] = -1;
 				console.log("table playing seats " + table.playing_seats);
 				console.log(table);
                 if (player_seat_idx == table.game.highlights_pos) {
