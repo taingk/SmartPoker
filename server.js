@@ -180,9 +180,9 @@ io.on("connection", function(socket) {
         });
     }
     if (device_client) {
-        console.log(table.private_ids);
-        private_channel = table_id + seat_nb; //shortId.generate() + seat_nb;
-        if (!get_private_id(table.private_ids, seat_nb)) {
+		if (!get_private_id(table.private_ids, seat_nb)) {
+        	console.log(table.private_ids);
+        	private_channel = table_id + seat_nb; //shortId.generate() + seat_nb;
             table.private_ids.push(private_channel);
 	        socket.on("get private channel", function() {
 	            socket.emit("private channel", private_channel, seat_nb);
@@ -192,6 +192,7 @@ io.on("connection", function(socket) {
 	        hide_qr(table, seat_nb);
 		} else {
 			console.log('Seat busy');
+			window.location = "http://poker.smartgames.tv/page_not_found.html";
 		}
     }
     socket.on("disconnect", function() {
