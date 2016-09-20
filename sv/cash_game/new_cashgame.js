@@ -69,13 +69,12 @@ function get_next_player(table, game) {
 function get_first_to_talk(table, game) {
     var pos = game.bb_pos + 1;
 
-	console.log(table, game);
     if (table.playing_seats.length < 2)
         return 0;
     if (table.playing_seats.length == 2)
 	{
-        game.highlights_pos = game.d_pos;
-        return game.d_pos;
+        game.highlights_pos = game.sb_pos;
+        return game.highlights_pos;
     }
     while (table.playing_seats.indexOf(pos) == -1) {
         if (pos >= 7 || pos <= 0)
