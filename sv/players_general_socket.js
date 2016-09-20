@@ -98,7 +98,7 @@ function socket_listens_players(socket, table) {
 				return;
 			}
 		}
-        if (table.game.round_nb == table.playing_seats.length && check_bets(table, table.seats)) {
+        if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2) {
                 return one_playing_player_left(table);
             }
