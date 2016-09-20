@@ -82,7 +82,7 @@ function socket_listens_players(socket, table) {
                 return one_playing_player_left(table);
             }
             console.log('next_moment');
-            next_moment(table, table.game);
+            decision == "FOLD" ? switch_next_player(table) : next_moment(table, table.game);
         } else {
             if (table.playing_seats.length < 2) {
                 return one_playing_player_left(table);
