@@ -13,8 +13,7 @@ function end_timer(table, game) {
         io.to(table.id).emit("chrono off");
         remove_last_actions(table);
 		table.game.moment = "waiting";
-		if (table.playing_seats.length > 1)
-        	reinit(table, game);
+    	reinit(table, game);
 		clearInterval(timer);
     }, 20000);
 }
@@ -88,10 +87,10 @@ function reinit(table, game) {
     for (idx = 1; idx <= 6; ++idx)
         if (get_seat(table.seats, idx).state === "busy")
             table.playing_seats.push(idx);
-    if (table.playing_seats.length >= 2) {
+	for (var i = 0; i < table.playing_seats.length; i++)
+		get_seat(table.seats, table.playing_seats[i]).state = "playing";
+    if (table.playing_seats.length > 1) {
         console.log("Starting a new game...");
-        for (var i = 0; i < table.playing_seats.length; i++)
-            get_seat(table.seats, table.playing_seats[i]).state = "playing";
         new_cashgame(1, table);
     }
 }
