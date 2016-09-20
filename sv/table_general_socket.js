@@ -72,7 +72,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
             console.log(table.game.moment);
             player_seat_idx = get_player_seat_by_nickname(table.seats, socket_nickname);
 
-			private_channelx = table.id + player_seat_idx;
+			private_channelx = get_table(table.id, tables).id + player_seat_idx;
 			console.log(table.private_ids);
 			for (; i < table.private_ids.length; i++) {
 				j = table.private_ids[i];
@@ -80,7 +80,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
 					table.private_ids.splice(private_channelx, 1);
 			}
 			console.log(table.private_ids);
-			
+
             if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
                 console.log('in waiting dc');
                 remove_from_seat_array(table, socket_nickname);
