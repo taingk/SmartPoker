@@ -76,8 +76,29 @@ function socket_listens_players(socket, table) {
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
-        console.log(table.game.round_nb + "/" + table.playing_seats.length);
-        if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
+		console.log(table.game.round_nb + "/" + table.playing_seats.length);
+		if (decision == "FOLD") {
+			console.log('round and playing seat '+table.game.round_nb, table.playing_seats.length);
+			if (table.game.round_nb < table.playing_seats.length+1) {
+				if (table.playing_seats.length < 2) {
+					return one_playing_player_left(table);
+				}
+				console.log('switch next player');
+				switch_next_player(table);
+				++table.game.round_nb;
+				return;
+			}
+			else {
+				if (table.playing_seats.length < 2) {
+					return one_playing_player_left(table);
+				}
+				console.log('next_moment');
+				next_moment(table, table.game);
+				++table.game.round_nb;
+				return;
+			}
+		}
+        if (table.game.round_nb == table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2) {
                 return one_playing_player_left(table);
             }
