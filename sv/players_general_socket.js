@@ -34,7 +34,7 @@ function socket_listens_players(socket, table) {
                 table.playing_seats.push(seat_idx);
             for (var i = 0; i < table.playing_seats.length; i++)
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
-
+				console.log(table.game.moment);
             if (table.players_nb >= 1 && table.game.moment == "waiting") {
                 if (lock)
 					return;
