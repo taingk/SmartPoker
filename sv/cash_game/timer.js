@@ -9,6 +9,7 @@ function stop_timer(table, nick) {
 	remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
 	get_seat(table.seats, table.game.highlights_pos).state = "busy";
 	io.to(table.id).emit("fold", table.game.highlights_pos);
+	io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     console.log("AFK fold");
 }
 
