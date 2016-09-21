@@ -173,7 +173,7 @@ function switch_next_player(table) {
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
-	//start_timer(table, get_seat(table.seats, table.game.highlights_pos).player.nickname);
+	start_timer(table, get_seat(table.seats, table.game.highlights_pos).player.nickname);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
@@ -233,7 +233,7 @@ function next_moment(table, game) {
         get_seat(table.seats, idx).bet = 0;
         io.to(table.id).emit("bet", idx, "");
     }
-	//start_timer(table, get_seat(table.seats, game.highlights_pos).player.nickname);
+	start_timer(table, get_seat(table.seats, game.highlights_pos).player.nickname);
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
     table.game.highlights_pos = get_first_to_talk(table, game, false);
