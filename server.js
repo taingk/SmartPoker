@@ -180,6 +180,7 @@ io.on("connection", function(socket) {
         });
     }
     if (device_client) {
+		hide_qr(table, seat_nb);
         if (!get_private_id(table.private_ids, seat_nb)) {
             console.log(table.private_ids);
             private_channel = table_id + seat_nb; //shortId.generate() + seat_nb;
@@ -189,7 +190,6 @@ io.on("connection", function(socket) {
             });
             socket.join(private_channel);
             console.log("Joining private channel " + private_channel);
-            hide_qr(table, seat_nb);
             socket.on("disconnect", function() {
                 var i = 0;
                 var j = null;
