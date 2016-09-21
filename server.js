@@ -209,6 +209,9 @@ io.on("connection", function(socket) {
     socket.on("disconnect", function() {
         re_qr(table, seat_nb);
     });
+	socket.on("action done", function() {
+		console.log('THE action is done!');
+	});
     //io.to(table.id).emit("double blind", cfg.conf.small_blind, cfg.conf.big_blind);
     /*  socket.on("get qrcodes", function()
     {

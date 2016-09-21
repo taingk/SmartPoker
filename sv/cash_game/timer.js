@@ -29,7 +29,3 @@ function start_timer(table, nick) {
 		timeLock = false;
 	}
 }
-
-io.on("action done", function() {
-	console.log('THE action is done!');
-});

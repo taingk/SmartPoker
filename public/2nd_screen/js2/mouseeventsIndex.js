@@ -136,11 +136,13 @@ function	choice1_chose()
 
 function	choice2_chose()
 {
+	socket.emit("action done");
 	socket.emit("player decision", $('#c2').text(), channel + seat_nb.toString(), $("#c2_amount").text(), $('#c2').text() == "RAISE" ? 0 : 1);
 }
 
 function	choice3_chose()
 {
+	socket.emit("action done");
 	socket.emit("player decision", "FOLD", channel + seat_nb.toString(), 0);
 }
 
