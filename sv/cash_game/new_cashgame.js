@@ -185,7 +185,7 @@ function send_blinds(table, sb, bb) {
     console.log('sb : ' + sb.bet, 'bb : ' + bb.bet);
 }
 
-function ask_first_player(socket, table, game) {
+function ask_first_player(table, game) {
     start_timer(table, get_seat(table.seats, game.highlights_pos).player.nickname);
     send_option(table, game.highlights_pos, "first choice", "call", /*game.highlights_pos === game.sb_pos ? game.curbet / 2 :*/ game.curbet);
     send_option(table, game.highlights_pos, "second choice", "null", -1 /*game.highlights_pos === game.sb_pos ? game.curbet * 2 / 2 : game.curbet */ );
@@ -221,7 +221,7 @@ function game_routine(socket, table) {
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     players_wait_mode(table);
     console.log('ask first player');
-    ask_first_player(socket, table, table.game);
+    ask_first_player(table, table.game);
 }
 
 function init_obj(table) {

@@ -20,6 +20,7 @@ function stop_timer(table, nick) {
 }
 
 function start_timer(table, nick) {
+	console.log("Start timer");
     var timer = setInterval(function() {
         clearInterval(timer);
         if (timeLock) {
@@ -28,6 +29,7 @@ function start_timer(table, nick) {
 		}
         else
             stop_timer(table, nick);
+		console.log("End timer");
     }, 30000);
 }
 
