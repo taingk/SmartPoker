@@ -29,7 +29,7 @@ function start_timer(table, nick) {
 		if (timeLock && sec != 30) {
 			clearInterval(lockTimer);
 			timeLock = false;
-		} else {
+		} else if (sec == 30){
 			clearInterval(lockTimer);
 			timeLock = false;
 			stop_timer(table, nick);
