@@ -1,21 +1,24 @@
-function end_timer(table, game) {
-    var timer
-    var board;
-    var lock = true;
-
-    board = setInterval(function() {
-        console.log('board removed');
+function clear_board(table) {
+	var board = setInterval(function() {
 		io.to(table.id).emit("remove board");
-        io.to(table.id).emit("chrono", 10, "The game is restarting ...");
-        clearInterval(board)
-    }, 10000);
-    timer = setInterval(function() {
-        io.to(table.id).emit("chrono off");
-        remove_last_actions(table);
-		table.game.moment = "waiting";
-    	reinit(table, game);
+		clearInterval(board);
+		end_timer(table, game);
+	}, 10000);
+}
+
+function end_timer(table, game) {
+	table.game.moment = "waiting";
+	io.to(table.id).emit("chrono", 10, "The game is restarting ...");
+    var timer = setInterval(function() {
+		io.to(table.id).emit("chrono off");
 		clearInterval(timer);
-    }, 20000);
+		remove_last_actions(table);
+		console.log('nb player '+table.playing_seats.length);
+		if (table.playing_seats.length > 1)
+    		reinit(table, game);
+		else
+			end_timer(table, game);
+    }, 10000);
 }
 
 function end_game(table, game, winners, player) {
@@ -48,9 +51,9 @@ function end_game(table, game, winners, player) {
             }
         }
         //		io.to(table.id).emit("show down", player.card1, player.card2, player.seat_nb);
-        end_timer(table, game);
+		clear_board(table);
     } else
-        end_timer(table, game);
+		clear_board(table);
 }
 
 function reinit(table, game) {
