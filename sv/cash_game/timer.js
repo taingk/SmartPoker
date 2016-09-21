@@ -29,3 +29,7 @@ function start_timer(table, nick) {
 		timeLock = false;
 	}
 }
+
+io.on("timeLock true", function() {
+	console.log("COUCOU TIME LOCK DEVIENT TRUE");
+});
