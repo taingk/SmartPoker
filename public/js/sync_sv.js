@@ -6,6 +6,7 @@ var push = true;
 var timeLock = false;
 
 function sync_sv() {
+	var = lockTimer;
     socket.emit("get seated players");
     socket.on("chrono", function(i, str) {
         $("#chrono").html(str + '<br><span id="sec">' + i + '</span> sec remaining<br>to add more players');
@@ -27,7 +28,7 @@ function sync_sv() {
 		var sec = 0;
 
 		console.log("Start timer");
-		var lockTimer = setInterval(function() {
+		lockTimer = setInterval(function() {
 			sec++;
 			console.log('Statut '+timeLock + ' ' + sec);
 			if (timeLock && sec != 30) {
