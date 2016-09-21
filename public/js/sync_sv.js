@@ -4,9 +4,9 @@ var game;
 var newTables;
 var push = true;
 var timeLock = false;
+var lockTimer;
 
 function sync_sv() {
-	var lockTimer;
     socket.emit("get seated players");
     socket.on("chrono", function(i, str) {
         $("#chrono").html(str + '<br><span id="sec">' + i + '</span> sec remaining<br>to add more players');
