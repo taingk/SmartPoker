@@ -30,7 +30,6 @@ function sync_sv() {
 		clearInterval(lockTimer);
 		console.log("Start timer");
 		lockTimer = setInterval(function() {
-			clearInterval(lockTimer);
 			sec++;
 			console.log('Statut '+timeLock + ' ' + sec);
 			if (timeLock && sec != 30) {
