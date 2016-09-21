@@ -190,22 +190,21 @@ io.on("connection", function(socket) {
             socket.join(private_channel);
             console.log("Joining private channel " + private_channel);
             hide_qr(table, seat_nb);
-			socket.on("disconnect", function() {
-				var i = 0;
-				var j = null;
+            socket.on("disconnect", function() {
+                var i = 0;
+                var j = null;
 
-				console.log("Seat 'waiting' disconnect");
-				for (; i < table.private_ids.length; i++) {
-					j = table.private_ids[i];
-					if (j == private_channel)
-						table.private_ids.splice(i, 1);
-				}
-				console.log(table.private_ids);
-			});
+                console.log("Seat 'waiting' disconnect");
+                for (; i < table.private_ids.length; i++) {
+                    j = table.private_ids[i];
+                    if (j == private_channel)
+                        table.private_ids.splice(i, 1);
+                }
+                io.to(table.id).emit("kick player", seat_nb);
+            });
+        } else {
+            console.log("Seat busy");
         }
-		else {
-			console.log("Seat busy");
-		}
     }
     socket.on("disconnect", function() {
         re_qr(table, seat_nb);
