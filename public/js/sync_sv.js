@@ -29,15 +29,13 @@ function sync_sv() {
 
 		console.log("Start timer");
 		lockTimer = setInterval(function() {
+			clearInterval(lockTimer);
 			sec++;
 			console.log('Statut '+timeLock + ' ' + sec);
 			if (timeLock && sec != 30) {
 				clearInterval(lockTimer);
-				clearInterval(lockTimer);
 				timeLock = false;
-				return;
 			} else if (sec == 30) {
-				clearInterval(lockTimer);
 				clearInterval(lockTimer);
 				timeLock = false;
 				socket.emit("stop timer action", table, nick);
