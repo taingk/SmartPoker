@@ -187,7 +187,6 @@ function send_blinds(table, sb, bb) {
 
 function ask_first_player(socket, table, game) {
     starts_timer(table, get_seat(table.seats, game.highlights_pos).player.nickname);
-	console.log(get_seat(table.seats, game.highlights_pos).player.nickname);
     send_option(table, game.highlights_pos, "first choice", "call", /*game.highlights_pos === game.sb_pos ? game.curbet / 2 :*/ game.curbet);
     send_option(table, game.highlights_pos, "second choice", "null", -1 /*game.highlights_pos === game.sb_pos ? game.curbet * 2 / 2 : game.curbet */ );
     send_option(table, game.highlights_pos, "third choice", "fold");
