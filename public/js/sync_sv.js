@@ -6,7 +6,7 @@ var push = true;
 var timeLock = false;
 
 function sync_sv() {
-	var = lockTimer;
+	var lockTimer;
     socket.emit("get seated players");
     socket.on("chrono", function(i, str) {
         $("#chrono").html(str + '<br><span id="sec">' + i + '</span> sec remaining<br>to add more players');
