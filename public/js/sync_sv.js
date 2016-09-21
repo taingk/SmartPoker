@@ -33,6 +33,7 @@ function sync_sv() {
 			if (timeLock && sec != 30) {
 				clearInterval(lockTimer);
 				timeLock = false;
+				return;
 			} else if (sec == 30) {
 				clearInterval(lockTimer);
 				timeLock = false;
