@@ -30,6 +30,6 @@ function start_timer(table, nick) {
 	}
 }
 
-socket.on("action done", function() {
+io.on("action done", function() {
 	console.log('THE action is done!');
 });
