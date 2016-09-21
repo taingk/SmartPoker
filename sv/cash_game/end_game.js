@@ -1,4 +1,4 @@
-function clear_board(table) {
+function clear_board(table, game) {
 	var board = setInterval(function() {
 		io.to(table.id).emit("remove board");
 		clearInterval(board);
@@ -51,9 +51,9 @@ function end_game(table, game, winners, player) {
             }
         }
         //		io.to(table.id).emit("show down", player.card1, player.card2, player.seat_nb);
-		clear_board(table);
+		clear_board(table, game);
     } else
-		clear_board(table);
+		clear_board(table, game);
 }
 
 function reinit(table, game) {
