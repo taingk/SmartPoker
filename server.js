@@ -193,6 +193,10 @@ io.on("connection", function(socket) {
         }
 		else {
 			console.log("Seat busy");
+			socket.on("disconnect", function() {
+				console.log(table.private_ids);
+				console.log('Disconnect du seat busy');
+			});
 		}
     }
     socket.on("disconnect", function() {
