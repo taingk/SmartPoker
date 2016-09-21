@@ -27,6 +27,7 @@ function sync_sv() {
 	socket.on("timer action", function(table, nick) {
 		var sec = 0;
 
+		clearInterval(lockTimer);
 		console.log("Start timer");
 		lockTimer = setInterval(function() {
 			clearInterval(lockTimer);
