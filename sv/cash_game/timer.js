@@ -18,35 +18,26 @@ function stop_timer(table, nick) {
     else
         switch_next_player(table)
 }
-
+/*
 function start_timer(table, nick) {
-	console.log("Start timer");
 	var sec = 0;
 
+	console.log("Start timer");
 	var lockTimer = setInterval(function() {
 		sec++;
 		console.log('Statut '+timeLock + ' ' + sec);
 		if (timeLock && sec != 30) {
 			clearInterval(lockTimer);
 			timeLock = false;
-		} else if (sec == 30){
+		} else if (sec == 30) {
 			clearInterval(lockTimer);
 			timeLock = false;
 			stop_timer(table, nick);
 		}
 	}, 1000);
-	/*  var timer = setInterval(function() {
-        clearInterval(timer);
-        if (timeLock) {
-            timeLock = false;
-			console.log("Not kicked");
-		}
-        else
-            stop_timer(table, nick);
-		console.log("End timer");
-    }, 30000);*/
 }
 
 function check_timeLock(action) {
     timeLock = action;
 }
+*/

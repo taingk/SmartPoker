@@ -210,8 +210,12 @@ io.on("connection", function(socket) {
         re_qr(table, seat_nb);
     });
 	socket.on("action done", function() {
-		var action = true;
-		check_timeLock(action);
+		//var action = true;
+		io.to(table.id).emit("action is true");
+		//check_timeLock(action);
+	});
+	socket.on("stop timer action", function(table, nick) {
+		stop_timer(table, nick);
 	});
     //io.to(table.id).emit("double blind", cfg.conf.small_blind, cfg.conf.big_blind);
     /*  socket.on("get qrcodes", function()
