@@ -5,6 +5,7 @@ var newTables;
 var push = true;
 var timeLock = false;
 var lockTimer;
+var sec = 0;
 
 function sync_sv() {
     socket.emit("get seated players");
@@ -25,23 +26,8 @@ function sync_sv() {
 		timeLock = true;
 	});
 	socket.on("timer action", function(table, nick) {
-		var sec = 0;
-
 		console.log("Start timer");
-		lockTimer = setInterval(function() {
-			sec++;
-			console.log('Statut '+timeLock + ' ' + sec);
-			if (timeLock && sec != 30) {
-				clearInterval(lockTimer);
-				timeLock = false;
-				return;
-			} else if (sec == 30) {
-				clearInterval(lockTimer);
-				timeLock = false;
-				socket.emit("stop timer action", table, nick);
-				//stop_timer(table, nick);
-			}
-		}, 1000);
+		lockTimer = setInterval(eachSec(timeLock, sec, lockTimer, table, nick), 1000);
 	});
     socket.on("seated players info", function(seat, seat_idx) {
         $("#qr" + seat_idx).css("visibility", "hidden");
@@ -199,6 +185,21 @@ function sync_sv() {
     socket.on("win off", function() {
         $("#winner, #card1_1, #card2_1, #card1_2, #card2_2, #card1_3, #card2_3, #card1_4, #card2_4, #card1_5, #card2_5, #card1_6, #card2_6").css("visibility", "hidden");
     });
+}
+
+function eachSec(timeLock, sec, lockTimer, table, nick) {
+	sec++;
+	console.log('Statut '+timeLock + ' ' + sec);
+	if (timeLock && sec != 30) {
+		clearInterval(lockTimer);
+		timeLock = false;
+		return;
+	} else if (sec == 30) {
+		clearInterval(lockTimer);
+		timeLock = false;
+		socket.emit("stop timer action", table, nick);
+		//stop_timer(table, nick);
+	}
 }
 
 function check_timeLock(action) {
