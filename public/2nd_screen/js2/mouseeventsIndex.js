@@ -127,6 +127,7 @@ function	register_player()
 
 function	choice1_chose()
 {
+	socket.emit("action done");
 	if ($("#c1").text() == "CHECK")
 		socket.emit("player decision", "CHECK", channel + seat_nb.toString(), 0);
 	else

@@ -20,14 +20,16 @@ function stop_timer(table, nick) {
 }
 
 function start_timer(table, nick) {
-	var idx = 1;
     var timer = setInterval(function() {
-	/*	clearInterval(timer);
-		if (!timeLock)
-        	stop_timer(table, nick);*/
-			console.log('timer '+idx);
-			idx++
-    }, /*30*/2000);
-	//if (timeLock)
 		clearInterval(timer);
+    	stop_timer(table, nick);
+    }, 30000);
+	if (timeLock) {
+		clearInterval(timer);
+		timeLock = false;
+	}
 }
+
+socket.on("action done", function() {
+	console.log('THE action is done!');
+});
