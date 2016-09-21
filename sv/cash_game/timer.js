@@ -17,7 +17,7 @@ function stop_timer(table, nick) {
 		next_moment(table, table.game);
 	else
 		switch_next_player(table)
-	}
+	
 }
 
 function starts_timer(table, nick) {
