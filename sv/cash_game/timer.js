@@ -21,14 +21,21 @@ function stop_timer(table, nick) {
 
 function start_timer(table, nick) {
 	console.log("Start timer");
+	var sec = 0;
+
 	var lockTimer = setInterval(function() {
-		console.log('Statut '+timeLock);
-		if (timeLock) {
+		sec++;
+		console.log('Statut '+timeLock + ' ' + sec);
+		if (timeLock && sec != 30) {
 			clearInterval(lockTimer);
-			return;
+			timeLock = false;
+		} else {
+			clearInterval(lockTimer);
+			timeLock = false;
+			stop_timer(table, nick);
 		}
-	}, 1000);/*
-    var timer = setInterval(function() {
+	}, 1000);
+	/*  var timer = setInterval(function() {
         clearInterval(timer);
         if (timeLock) {
             timeLock = false;
