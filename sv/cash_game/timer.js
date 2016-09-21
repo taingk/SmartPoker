@@ -17,13 +17,17 @@ function stop_timer(table, nick) {
 		next_moment(table, table.game);
 	else
 		switch_next_player(table)
-	
 }
 
-function starts_timer(table, nick) {
+function start_timer(table, nick) {
+	var idx = 1;
     var timer = setInterval(function() {
-		clearInterval(timer);
+	/*	clearInterval(timer);
 		if (!timeLock)
-        	stop_timer(table, nick);
-    }, 30000);
+        	stop_timer(table, nick);*/
+			console.log('timer '+idx);
+			idx++
+    }, /*30*/2000);
+	//if (timeLock)
+		clearInterval(timer);
 }
