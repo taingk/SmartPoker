@@ -72,7 +72,6 @@ function socket_listens_players(socket, table) {
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
-		start_timer(table, get_seat(table.seats, table.game.highlights_pos).player.nickname);
         if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
@@ -174,7 +173,7 @@ function switch_next_player(table) {
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
-	start_timer(table, get_seat(table.seats, table.game.highlights_pos).player.nickname);
+	//start_timer(table, get_seat(table.seats, table.game.highlights_pos).player.nickname);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
@@ -234,7 +233,7 @@ function next_moment(table, game) {
         get_seat(table.seats, idx).bet = 0;
         io.to(table.id).emit("bet", idx, "");
     }
-	start_timer(table, get_seat(table.seats, game.highlights_pos).player.nickname);
+	//start_timer(table, get_seat(table.seats, game.highlights_pos).player.nickname);
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
     table.game.highlights_pos = get_first_to_talk(table, game, false);
