@@ -191,7 +191,16 @@ io.on("connection", function(socket) {
             console.log("Joining private channel " + private_channel);
             hide_qr(table, seat_nb);
 			socket.on("disconnect", function() {
-				console.log("Seat waiting disconnect");
+				var i = 0;
+				var j = null;
+
+				console.log("Seat 'waiting' disconnect");
+				for (; i < table.private_ids.length; i++) {
+					j = table.private_ids[i];
+					if (j == private_channel)
+						table.private_ids.splice(i, 1);
+				}
+				console.log(table.private_ids);
 			});
         }
 		else {
