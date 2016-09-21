@@ -1,4 +1,3 @@
-var socket = io();
 var timeLock = false;
 
 function stop_timer(table, nick) {
@@ -23,14 +22,15 @@ function stop_timer(table, nick) {
 function start_timer(table, nick) {
     var timer = setInterval(function() {
 		clearInterval(timer);
+		console.log(timeLock);
     	stop_timer(table, nick);
-    }, 30000);
+    }, 30000);/*
 	if (timeLock) {
 		clearInterval(timer);
 		timeLock = false;
-	}
+	}*/
 }
 
-socket.on("timeLock true", function() {
-	console.log("COUCOU TIME LOCK DEVIENT TRUE");
-});
+function check_timeLock(action) {
+	timeLock = action;
+}
