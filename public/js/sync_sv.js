@@ -39,7 +39,6 @@ function sync_sv() {
 				clearInterval(lockTimer);
 				timeLock = false;
 				socket.emit("stop timer action", table, nick);
-				//stop_timer(table, nick);
 			}
 		}, 1000);
 	});
