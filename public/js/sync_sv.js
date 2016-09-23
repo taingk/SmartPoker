@@ -120,9 +120,9 @@ function sync_sv() {
     });
     socket.on("bet", function(seat_idx, amount) {
         if (!amount)
-            $("#bet_val" + seat_idx).text('');
+            $("#last_action" + seat_idx).text('');
         else {
-            $("#bet_val" + seat_idx).text((Math.floor(amount * 100)) / 100 + "$");
+            $("#last_action" + seat_idx).text((Math.floor(amount * 100)) / 100 + "$");
         }
     });
 
@@ -132,7 +132,7 @@ function sync_sv() {
         var str = decision.split(" ");
         var text = "<p>" + nick + " " + str[0] + amount + "</p>";
 
-        $("#last_action" + seat_nb).text(str[0]);
+		$("#last_action").text(nick + " " + str[0] + amount);
         $("#histoContent").empty();
         $("#histoContent").append(text);
     });
