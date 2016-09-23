@@ -83,6 +83,7 @@ h2 {
 	height: 139px;
 	border-radius: 15px;
 	display: block;
+	overflow: hidden;
 }
 
 #hSeat1, #hSeat2, #hSeat3, #hSeat4, #hSeat5, #hSeat6 {

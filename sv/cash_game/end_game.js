@@ -12,8 +12,8 @@ function end_timer(table, game) {
 		io.to(table.id).emit("chrono off");
 		clearInterval(timer);
 		remove_last_actions(table);
-		console.log('nb player '+table.players_nb);
-		if (table.players_nb > 1)
+		console.log('nb player '+ table.playing_seats.length);
+		if (table.playing_seats.length > 1)
     		reinit(table, game);
 		else
 			end_timer(table, game);
