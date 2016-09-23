@@ -102,7 +102,6 @@
 			$('#choice2').hide();
 			$('#choice3').hide();
 			socket.disconnect('caca');
-			socket.emit("i dc", seat_nb);
 			setTimeout(function(){ window.location = "http://poker.smartgames.tv/seat-disconnected.html"; }, 5000);
 		});
 		function	on_slidechange(event, ui)

@@ -205,10 +205,7 @@ io.on("connection", function(socket) {
             console.log("Seat busy");
         }
     }
-	socket.on("i dc", function(nb){
-		console.log(nb);
-	});
-    socket.on("disconnect", function() {
+	socket.on("disconnect", function() {
         re_qr(table, seat_nb);
     });
 	socket.on("action done", function() {
