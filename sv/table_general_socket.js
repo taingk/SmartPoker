@@ -71,7 +71,6 @@ function socket_listens_global_settings(socket, table, private_channel) {
     socket.on("disconnect", function() {
         if (socket_nickname) {
             player_seat_idx = get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname);
-			console.log('suppose to kick this mofo : '+player_seat_idx, socket_nickname);
 			private_channelx = get_table(table.id, tables).id + player_seat_idx;
 			private_idx = get_table(table.id, tables).private_ids;
 			for (; i < private_idx.length; i++) {
