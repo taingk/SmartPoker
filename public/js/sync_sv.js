@@ -100,11 +100,12 @@ function sync_sv() {
 
         if (new_state == "off") {
 			pos.hide();
+			pos.css("width","100%"),
 			pos.stop();
 		}
         else if (new_state == "on") {
 			pos.show();
-			pos.css({"width":"100%", "background-color":"#FE554C"});
+			pos.css("background-color", "#FE554C");
 			pos.animate({"width":"0%"}, 31000);
 		}
     });
