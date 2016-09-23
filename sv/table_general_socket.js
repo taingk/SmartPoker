@@ -54,14 +54,14 @@ function remove_from_playing_seats(playing_seats, idx) {
     return (-1);
 }
 
-function socket_listens_global_settings(socket, table, private_channel) {
+function socket_listens_global_settings(socket, table, nb_seat) {
     var socket_nickname;
     var player_seat_idx;
-	var private_idx;
-	var private_channelx;
-	var i = 0;
-	var j = null;
-	var seatPlayer;
+    var private_idx = get_table(table.id, tables).private_ids;
+    var private_channelx;
+    var i = 0;
+    var j = null;
+    var seatPlayer;
 
     socket.emit("player name info");
     socket.on("socket nickname on table", function(nickname) {
@@ -69,19 +69,16 @@ function socket_listens_global_settings(socket, table, private_channel) {
             socket_nickname = nickname;
     });
     socket.on("disconnect", function() {
-		console.log('JME DECO');
+        console.log('JME DECO');
         if (socket_nickname) {
             player_seat_idx = get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname);
-			private_channelx = get_table(table.id, tables).id + player_seat_idx;
-			private_idx = get_table(table.id, tables).private_ids;
-			console.log('x '+private_channelx);
-			console.log('not x '+private_channel.seat_nb);
-			for (; i < private_idx.length; i++) {
-				j = private_idx[i];
-				if (j == private_channelx)
-					private_idx.splice(i, 1);
-			}
-			console.log(private_idx);
+            private_channelx = get_table(table.id, tables).id + player_seat_idx;
+            for (; i < private_idx.length; i++) {
+                j = private_idx[i];
+                if (j == private_channelx)
+                    private_idx.splice(i, 1);
+            }
+            console.log(private_idx);
             if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
                 console.log('in waiting dc');
                 remove_from_seat_array(table, socket_nickname);
@@ -96,8 +93,8 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 remove_from_seat_array(table, socket_nickname);
                 remove_from_playing_seats(table.playing_seats, player_seat_idx);
                 seatPlayer = get_seat(table.seats, player_seat_idx);
-				seatPlayer.player = -1;
-				seatPlayer.bet = 0;
+                seatPlayer.player = -1;
+                seatPlayer.bet = 0;
                 console.log("table playing seats " + table.playing_seats);
                 if (player_seat_idx == table.game.highlights_pos) {
                     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
@@ -116,10 +113,22 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 if (table.playing_seats.length == 1) {
                     return one_playing_player_left(table);
                 }
-        	}
-			console.log('SALUT');
+            }
+            console.log('SALUT');
             socket.leave(private_channel);
             socket.disconnect();
+        } else {
+			private_channelx = get_table(table.id, tables).id + seat_nb;
+
+			console.log('wesh wesh');
+            console.log("Seat 'waiting' disconnect");
+        	for (; i < private_idx.length; i++) {
+                j = private_idx[i];
+                if (j == private_channelx) {
+                    private_idx.splice(i, 1);
+					io.to(table.id).emit("kick player", private_channelx.substring(-1));
+				}
+            }
         }
     });
 }

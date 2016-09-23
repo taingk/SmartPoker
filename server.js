@@ -189,18 +189,6 @@ io.on("connection", function(socket) {
             });
             socket.join(private_channel);
             console.log("Joining private channel " + private_channel);
-            socket.on("disconnect", function() {
-                var i = 0;
-                var j = null;
-
-                console.log("Seat 'waiting' disconnect");
-                for (; i < table.private_ids.length; i++) {
-                    j = table.private_ids[i];
-                    if (j == private_channel)
-                        table.private_ids.splice(i, 1);
-                }
-                io.to(table.id).emit("kick player", seat_nb);
-            });
         } else {
             console.log("Seat busy");
         }
@@ -238,5 +226,5 @@ io.on("connection", function(socket) {
     io.to(table.id).emit("pot modification", table.game.pot_amount);
     send_bets(table); // Currents bets on the table.
     socket_listens_players(socket, table);
-    socket_listens_global_settings(socket, table, table.seats); // Event handler for major events.
+    socket_listens_global_settings(socket, table, seat_nb); // Event handler for major events.
 });
