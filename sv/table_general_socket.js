@@ -71,12 +71,11 @@ function socket_listens_global_settings(socket, table, private_channel) {
     socket.on("disconnect", function() {
 		console.log('JME DECO');
         if (socket_nickname) {
-			console.log('x '+private_channelx);
-			console.log('not x '+private_channel);
-			console.log('YA MON NOM '+ socket_nickname);
             player_seat_idx = get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname);
 			private_channelx = get_table(table.id, tables).id + player_seat_idx;
 			private_idx = get_table(table.id, tables).private_ids;
+			console.log('x '+private_channelx);
+			console.log('not x '+private_channel.seat_nb);
 			for (; i < private_idx.length; i++) {
 				j = private_idx[i];
 				if (j == private_channelx)
@@ -119,7 +118,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 }
         	}
 			console.log('SALUT');
-            socket.leave(private_channelx);
+            socket.leave(private_channel);
             socket.disconnect();
         }
     });
