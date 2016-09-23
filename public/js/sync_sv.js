@@ -100,7 +100,7 @@ function sync_sv() {
 
         if (new_state == "off") {
 			pos.hide();
-			pos.css("width","100%"),
+			pos.css("width","200px"),
 			pos.stop();
 		}
         else if (new_state == "on") {
