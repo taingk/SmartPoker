@@ -165,6 +165,7 @@ function sync_sv() {
         $("#b1, #b2, #b3, #b4, #b5").css("visibility", "hidden");
         for (var idx = 1; idx <= 6; ++idx)
             $("#player_cards" + idx).attr("src", "../img/avatar.png");
+		$("#last_action").text('');
     });
     socket.on("remove emplacements", function() {
         for (var idx = 1; idx <= 6; ++idx)

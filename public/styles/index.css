@@ -35,11 +35,12 @@ body
 
 #last_action {
 	position: absolute;
-	top: 490px;
-	left: 600px;
-	height: 20px;
-	width: 200px;
+	top: 410px;
+	left: 550px;
+	width: 400px;
 	text-align: center;
+	font-size: 2em;
+	color: white;
 }
 
 #historique {
