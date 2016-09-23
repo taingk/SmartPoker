@@ -88,7 +88,7 @@ h2 {
 
 #hSeat1, #hSeat2, #hSeat3, #hSeat4, #hSeat5, #hSeat6 {
 	position: absolute;
-	width: 100%;
+	width: 200px;
 	height: 100%;
 	border-radius: 15px;
 	display: block;
