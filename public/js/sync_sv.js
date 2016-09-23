@@ -96,7 +96,7 @@ function sync_sv() {
         $("#player_cards" + seat_nb).attr("src", "../img/hidden_cards.png");
     });
     socket.on("highlights", function(seat_idx, new_state) {
-		var pos = $("hSeat"+seat_idx);
+		var pos = $("#hSeat"+seat_idx);
 
         if (new_state == "off") {
 			pos.hide();
