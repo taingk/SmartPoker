@@ -29,10 +29,8 @@ function sync_sv() {
 
 		clearInterval(lockTimer);
 		timeLock = false;
-		console.log("Start timer");
 		lockTimer = setInterval(function() {
 			sec++;
-			console.log('Statut '+timeLock + ' ' + sec);
 			if (timeLock && sec != 30) {
 				clearInterval(lockTimer);
 				timeLock = false;
@@ -98,10 +96,17 @@ function sync_sv() {
         $("#player_cards" + seat_nb).attr("src", "../img/hidden_cards.png");
     });
     socket.on("highlights", function(seat_idx, new_state) {
-        if (new_state == "off")
-            $("#seat" + seat_idx).css("background-color", "#006F60");
-        else if (new_state == "on")
-            $("#seat" + seat_idx).css("background-color", "#FE554C");
+		var pos = $("hSeat"+seat_idx);
+
+        if (new_state == "off") {
+			pos.hide();
+			pos.stop();
+		}
+        else if (new_state == "on") {
+			pos.show();
+			pos.css({"width":"100%", "background-color":"#FE554C"});
+			pos.animate({"width":"0%"}, 31000);
+		}
     });
     socket.on("bankroll modification", function(seat_idx, player) {
         if (player.bankroll == "ALL IN")

@@ -85,6 +85,14 @@ h2 {
 	display: block;
 }
 
+#hSeat1, #hSeat2, #hSeat3, #hSeat4, #hSeat5, #hSeat6 {
+	position: absolute;
+	width: 239px;
+	height: 139px;
+	border-radius: 15px;
+	display: block;
+}
+
 /* background-color: #FE554C;  Focus mode for currently playing player */
 
 #seat1
