@@ -182,15 +182,14 @@ io.on("connection", function(socket) {
     if (device_client) {
         if (!get_private_id(table.private_ids, seat_nb)) {
 			hide_qr(table, seat_nb);
-            console.log(table.private_ids);
-            private_channel = table_id + seat_nb; //shortId.generate() + seat_nb;
+            private_channel = get_table(table.id, tables).id + seat_nb; //shortId.generate() + seat_nb;
             table.private_ids.push(private_channel);
             socket.on("get private channel", function() {
                 socket.emit("private channel", private_channel, seat_nb);
             });
             socket.join(private_channel);
             console.log("Joining private channel " + private_channel);
-/*            socket.on("disconnect", function() {
+            socket.on("disconnect", function() {
                 var i = 0;
                 var j = null;
 
@@ -201,7 +200,7 @@ io.on("connection", function(socket) {
                         table.private_ids.splice(i, 1);
                 }
                 io.to(table.id).emit("kick player", seat_nb);
-            });*/
+            });
         } else {
             console.log("Seat busy");
         }
