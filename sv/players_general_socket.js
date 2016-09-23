@@ -259,5 +259,8 @@ function one_playing_player_left(table) {
 
     player.bankroll += +table.game.pot_amount;
     io.to(table.id).emit("bankroll modification", table.playing_seats[0], player);
-    return end_game(table, table.game, 42, player);
+	if (table.game.moment != "waiting" || table.game.moment != "waiting end game")
+    	return end_game(table, table.game, 42, player);
+	else
+		return;
 }
