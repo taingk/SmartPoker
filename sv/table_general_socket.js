@@ -120,13 +120,13 @@ function socket_listens_global_settings(socket, table, nb_seat) {
         } else {
 			private_channelx = get_table(table.id, tables).id + seat_nb;
 
-			console.log('wesh wesh');
+			console.log('private_channelx ' + private_channelx);
             console.log("Seat 'waiting' disconnect");
         	for (; i < private_idx.length; i++) {
                 j = private_idx[i];
                 if (j == private_channelx) {
                     private_idx.splice(i, 1);
-					io.to(table.id).emit("kick player", private_channelx.substring(-1));
+					io.to(table.id).emit("kick player", seat_nb);
 				}
             }
         }
