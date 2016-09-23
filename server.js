@@ -200,7 +200,7 @@ io.on("connection", function(socket) {
                     if (j == private_channel)
                         table.private_ids.splice(i, 1);
                 }
-                io.to(table.id).emit("kick player", seat_nb);
+//                io.to(table.id).emit("kick player", seat_nb);
             });
         } else {
             console.log("Seat busy");

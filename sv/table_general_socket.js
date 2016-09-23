@@ -85,8 +85,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
                 remove_from_playing_seats(table.playing_seats, player_seat_idx);
                 console.log("table playing seats " + table.playing_seats);
                 io.to(table.id).emit("bet", player_seat_idx, 0);
-				console.log('le numero seat est '+get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname));
-                io.to(table.id).emit("kick player", get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname));
+                io.to(table.id).emit("kick player", player_seat_idx);
                 if (table.players_nb > 0)
                     --table.players_nb;
             } else {

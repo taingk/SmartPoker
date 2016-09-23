@@ -62,8 +62,6 @@ function sync_sv() {
         $("#player_cards" + player.seat_nb).css("visibility", "visible");
     });
     socket.on("kick player", function(seat_nb) {
-		console.log('le numero seat est '+seat_nb);
-
         $("#qr" + seat_nb).css("visibility", "visible");
         $("#qr_spot" + seat_nb).css("visibility", "visible");
         $("#scan_msg" + seat_nb).css("visibility", "visible");
