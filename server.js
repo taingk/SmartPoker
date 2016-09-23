@@ -190,7 +190,7 @@ io.on("connection", function(socket) {
             });
             socket.join(private_channel);
             console.log("Joining private channel " + private_channel);
-            socket.on("disconnect", function() {
+/*            socket.on("disconnect", function() {
                 var i = 0;
                 var j = null;
 
@@ -200,8 +200,8 @@ io.on("connection", function(socket) {
                     if (j == private_channel)
                         table.private_ids.splice(i, 1);
                 }
-//                io.to(table.id).emit("kick player", seat_nb);
-            });
+                io.to(table.id).emit("kick player", seat_nb);
+            });*/
         } else {
             console.log("Seat busy");
         }

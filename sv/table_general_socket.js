@@ -114,7 +114,7 @@ function socket_listens_global_settings(socket, table, private_channel) {
                     return one_playing_player_left(table);
                 }
             }
-            socket.leave(private_channel);
+            socket.leave(private_channelx);
             socket.disconnect();
         }
     });
