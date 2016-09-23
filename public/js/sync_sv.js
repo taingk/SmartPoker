@@ -33,7 +33,7 @@ function sync_sv() {
 		lockTimer = setInterval(function() {
 			sec++;
 			console.log('Statut '+timeLock + ' ' + sec);
-			if (timeLock && sec != 60) {
+			if (timeLock && sec != 30) {
 				clearInterval(lockTimer);
 				timeLock = false;
 			} else if (sec == 30) {
@@ -41,7 +41,7 @@ function sync_sv() {
 				timeLock = false;
 				socket.emit("stop timer action", table, nick);
 			}
-		}, 500);
+		}, 1000);
 	});
     socket.on("seated players info", function(seat, seat_idx) {
         $("#qr" + seat_idx).css("visibility", "hidden");
