@@ -59,6 +59,7 @@ function socket_listens_players(socket, table) {
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
+		var player = get_seat(table.seats, seat_nb).player;
 
         if (table.playing_seats.length == 2)
             table.game.highlights_pos = seat_nb;
@@ -72,6 +73,20 @@ function socket_listens_players(socket, table) {
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
+		if (player.bankroll <= 0) {
+			console.log('je rentre, <= 0');
+			if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
+				if (table.playing_seats.length < 2)
+					return one_playing_player_left(table);
+				next_moment(table, table.game);
+			} else {
+				if (table.playing_seats.length < 2)
+					return one_playing_player_left(table);
+				switch_next_player(table);
+			}
+			++table.game.round_nb;
+			return;
+		}
         if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
