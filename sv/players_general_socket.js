@@ -166,7 +166,7 @@ function switch_next_player(table) {
     var player;
 
     console.log('switch next player');
-	console.log('bankroll ' + player.bankroll);
+	console.log('bankroll ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
     if (table.game.highlights_pos == "none")
         return;
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
@@ -212,7 +212,7 @@ function next_moment(table, game) {
     var player;
 
     console.log('next_moment');
-	console.log('bankroll ' + player.bankroll);
+	console.log('bankroll ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
     if (table.game.moment == "preflop") {
         table.game.curbet = "0";
         table.game.moment = "flop";
