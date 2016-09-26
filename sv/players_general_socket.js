@@ -195,7 +195,7 @@ function switch_next_player(table) {
         }
         send_option(table, table.game.highlights_pos, "third choice", "fold");
     } else {
-/*        if (table.playing_seats.length < 3) {
+        if (table.playing_seats.length < 3) {
             if (table.game.moment == "preflop") {
                 table.game.moment = "flop";
                 deal_flop(table, table.game);
@@ -275,7 +275,7 @@ function next_moment(table, game) {
             send_option(table, table.game.highlights_pos, "second choice", "call", cfg.conf.big_blind);
         send_option(table, table.game.highlights_pos, "third choice", "fold");
     } else {
-/*        if (table.playing_seats.length < 3) {
+        if (table.playing_seats.length < 3) {
             if (table.game.moment == "preflop") {
                 table.game.moment = "flop";
                 deal_flop(table, table.game);
