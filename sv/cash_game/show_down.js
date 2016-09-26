@@ -30,6 +30,7 @@ function	show_down(table, game)
 	var		winners; // Indeed, with a 's' at the end in case of split.
 	var		player;
 
+	table = get_table(table.id, tables);
 	table.game.moment = "waiting end game";
 	if (!(winners = evalwin(table, game)))
 		console.log("Can't retrieve winner(s)! Game error!");

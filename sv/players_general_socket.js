@@ -204,8 +204,8 @@ function switch_next_player(table) {
             send_option(table, table.game.highlights_pos, "second choice", "null", -1);
         }
         send_option(table, table.game.highlights_pos, "third choice", "fold"); */
-		get_seat(table.seats, table.game.highlights_pos).state = "busy";
-		++table.game.round_nb;
+		if (table.playing_seats.length < 2)
+			return show_down(table, table.game);
     }
 }
 
@@ -253,8 +253,8 @@ function next_moment(table, game) {
 /*        send_option(table, table.game.highlights_pos, "first choice", "check", 0);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
         send_option(table, table.game.highlights_pos, "third choice", "fold");*/
-		get_seat(table.seats, table.game.highlights_pos).state = "busy";
-		++table.game.round_nb;
+		if (table.playing_seats.length < 2)
+			return show_down(table, table.game);
     }
 }
 
