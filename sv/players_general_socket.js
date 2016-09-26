@@ -212,6 +212,7 @@ function next_moment(table, game) {
     var player;
 
     console.log('next_moment');
+	console.log('bankroll ' + player.bankroll);
     if (table.game.moment == "preflop") {
         table.game.curbet = "0";
         table.game.moment = "flop";
