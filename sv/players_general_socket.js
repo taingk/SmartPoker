@@ -166,7 +166,6 @@ function switch_next_player(table) {
     var player;
 
     console.log('switch next player');
-	console.log('bankroll ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
     if (table.game.highlights_pos == "none")
         return;
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
@@ -176,6 +175,7 @@ function switch_next_player(table) {
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
 	io.to(table.id).emit("timer action", get_table(table.id, tables), get_seat(table.seats, table.game.highlights_pos).player.nickname);
+	console.log('bankroll ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
@@ -212,7 +212,6 @@ function next_moment(table, game) {
     var player;
 
     console.log('next_moment');
-	console.log('bankroll ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
     if (table.game.moment == "preflop") {
         table.game.curbet = "0";
         table.game.moment = "flop";
@@ -242,6 +241,7 @@ function next_moment(table, game) {
     table.game.highlights_pos = get_first_to_talk(table, game, false);
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 1);
+	console.log('bankroll ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         send_option(table, table.game.highlights_pos, "first choice", "check", 0);
         if (get_seat(table.seats, table.game.highlights_pos).player.bankroll < cfg.conf.big_blind)
