@@ -207,7 +207,7 @@ function switch_next_player(table) {
 		        deal_turn(table, table.game);
 		        evalhand(table, table.game);
 		    }
-			if (table.game.moment == "turn")
+			if (table.game.moment == "turn") {
 		        table.game.moment = "river";
 		        deal_river(table, table.game);
 		        evalhand(table, table.game);
@@ -280,7 +280,7 @@ function next_moment(table, game) {
 		        deal_turn(table, table.game);
 		        evalhand(table, table.game);
 		    }
-			if (table.game.moment == "turn")
+			if (table.game.moment == "turn") {
 		        table.game.moment = "river";
 		        deal_river(table, table.game);
 		        evalhand(table, table.game);
