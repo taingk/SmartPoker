@@ -234,6 +234,7 @@ function switch_next_player(table) {
         /*		remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
         		get_seat(table.seats, table.game.highlights_pos).state = "zero bankroll";
         		console.log(get_seat(table.seats, table.game.highlights_pos));*/
+				console.log('je rentre dans le switch car < 0');
         switch_next_player(table);
     }
 }
@@ -318,6 +319,7 @@ function next_moment(table, game) {
         /*remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
         get_seat(table.seats, table.game.highlights_pos).state = "zero bankroll";
         console.log(get_seat(table.seats, table.game.highlights_pos));*/
+		console.log('je rentre dans le next moment car < 0');
         next_moment(table, table.game);
     }
 }
