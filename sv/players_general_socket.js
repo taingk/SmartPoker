@@ -175,7 +175,6 @@ function switch_next_player(table) {
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
 	io.to(table.id).emit("timer action", get_table(table.id, tables), get_seat(table.seats, table.game.highlights_pos).player.nickname);
-	console.log('bankroll ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
@@ -195,7 +194,7 @@ function switch_next_player(table) {
             }
         }
         send_option(table, table.game.highlights_pos, "third choice", "fold");
-    } else {
+    } else {/*
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
             send_option(table, table.game.highlights_pos, "second choice", "null", -1);
@@ -204,7 +203,9 @@ function switch_next_player(table) {
             send_option(table, table.game.highlights_pos, "first choice", "call", 0);
             send_option(table, table.game.highlights_pos, "second choice", "null", -1);
         }
-        send_option(table, table.game.highlights_pos, "third choice", "fold");
+        send_option(table, table.game.highlights_pos, "third choice", "fold"); */
+		get_seat(table.seats, table.game.highlights_pos).state = "busy";
+		++table.game.round_nb;
     }
 }
 
@@ -241,7 +242,6 @@ function next_moment(table, game) {
     table.game.highlights_pos = get_first_to_talk(table, game, false);
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 1);
-	console.log('bankroll ' + get_seat(table.seats, table.game.highlights_pos).player.bankroll);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         send_option(table, table.game.highlights_pos, "first choice", "check", 0);
         if (get_seat(table.seats, table.game.highlights_pos).player.bankroll < cfg.conf.big_blind)
@@ -250,9 +250,11 @@ function next_moment(table, game) {
             send_option(table, table.game.highlights_pos, "second choice", "call", cfg.conf.big_blind);
         send_option(table, table.game.highlights_pos, "third choice", "fold");
     } else {
-        send_option(table, table.game.highlights_pos, "first choice", "check", 0);
+/*        send_option(table, table.game.highlights_pos, "first choice", "check", 0);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-        send_option(table, table.game.highlights_pos, "third choice", "fold");
+        send_option(table, table.game.highlights_pos, "third choice", "fold");*/
+		get_seat(table.seats, table.game.highlights_pos).state = "busy";
+		++table.game.round_nb;
     }
 }
 
