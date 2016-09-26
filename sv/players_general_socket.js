@@ -34,12 +34,12 @@ function socket_listens_players(socket, table) {
                 table.playing_seats.push(seat_idx);
             for (var i = 0; i < table.playing_seats.length; i++)
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
-				console.log(table.game.moment);
+            console.log(table.game.moment);
             if (table.players_nb >= 1 && table.game.moment == "waiting") {
                 if (lock)
-					return;
-				else
-                	tryChrono(socket, table);
+                    return;
+                else
+                    tryChrono(socket, table);
             }
             return;
         }
@@ -59,7 +59,7 @@ function socket_listens_players(socket, table) {
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
-		var player = get_seat(table.seats, seat_nb).player;
+        var player = get_seat(table.seats, seat_nb).player;
 
         if (table.playing_seats.length == 2)
             table.game.highlights_pos = seat_nb;
@@ -86,13 +86,13 @@ function socket_listens_players(socket, table) {
                 return one_playing_player_left(table);
             switch_next_player(table);
         }
-		if (decision != "FOLD")
+        if (decision != "FOLD")
             ++table.game.round_nb;
     });
 }
 
 function tryChrono(socket, table) {
-	lock = true;
+    lock = true;
     io.to(table.id).emit("chrono", 45, "The game will begin ...");
     var timer = setInterval(function() {
         clearInterval(timer);
@@ -100,7 +100,7 @@ function tryChrono(socket, table) {
         if (table.playing_seats.length > 1) {
             console.log("Starting a new game...");
             new_cashgame(socket, table);
-			lock = false;
+            lock = false;
         } else
             tryChrono(socket, table);
     }, 45000);
@@ -174,7 +174,7 @@ function switch_next_player(table) {
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
-	io.to(table.id).emit("timer action", get_table(table.id, tables), get_seat(table.seats, table.game.highlights_pos).player.nickname);
+    io.to(table.id).emit("timer action", get_table(table.id, tables), get_seat(table.seats, table.game.highlights_pos).player.nickname);
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
@@ -194,7 +194,14 @@ function switch_next_player(table) {
             }
         }
         send_option(table, table.game.highlights_pos, "third choice", "fold");
-    } else {/*
+    } else {
+        console.log('nb player ' + table.playing_seats.length);
+        if (table.playing_seats.length < 3) {
+			deal_flop(table, table.game);
+	        deal_turn(table, table.game);
+	        deal_river(table, table.game);
+            return show_down(table, table.game);
+		}
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
             send_option(table, table.game.highlights_pos, "second choice", "null", -1);
@@ -203,11 +210,7 @@ function switch_next_player(table) {
             send_option(table, table.game.highlights_pos, "first choice", "call", 0);
             send_option(table, table.game.highlights_pos, "second choice", "null", -1);
         }
-        send_option(table, table.game.highlights_pos, "third choice", "fold"); */
-		console.log('nb player ' + table.playing_seats.length);
-		if (table.playing_seats.length < 3)
-			return show_down(table, table.game);
-
+        send_option(table, table.game.highlights_pos, "third choice", "fold");
     }
 }
 
@@ -238,7 +241,7 @@ function next_moment(table, game) {
         get_seat(table.seats, idx).bet = 0;
         io.to(table.id).emit("bet", idx, "");
     }
-	io.to(table.id).emit("timer action", get_table(table.id, tables), get_seat(table.seats, table.game.highlights_pos).player.nickname);
+    io.to(table.id).emit("timer action", get_table(table.id, tables), get_seat(table.seats, table.game.highlights_pos).player.nickname);
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
     table.game.highlights_pos = get_first_to_talk(table, game, false);
@@ -252,23 +255,27 @@ function next_moment(table, game) {
             send_option(table, table.game.highlights_pos, "second choice", "call", cfg.conf.big_blind);
         send_option(table, table.game.highlights_pos, "third choice", "fold");
     } else {
-/*        send_option(table, table.game.highlights_pos, "first choice", "check", 0);
+        console.log('nb player ' + table.playing_seats.length);
+		if (table.playing_seats.length < 3) {
+			deal_flop(table, game);
+	        deal_turn(table, game);
+	        deal_river(table, game);
+            return show_down(table, game);
+		}
+        send_option(table, table.game.highlights_pos, "first choice", "check", 0);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-        send_option(table, table.game.highlights_pos, "third choice", "fold");*/
-		console.log('nb player ' + table.playing_seats.length);
-		if (table.playing_seats.length < 3)
-			return show_down(table, table.game);
+        send_option(table, table.game.highlights_pos, "third choice", "fold");
     }
 }
 
 function one_playing_player_left(table) {
     var player = get_seat(table.seats, table.playing_seats[0]).player;
-	table = get_table(table.id, tables);
+    table = get_table(table.id, tables);
 
     player.bankroll += +table.game.pot_amount;
     io.to(table.id).emit("bankroll modification", table.playing_seats[0], player);
-	if (table.game.moment != "waiting" || table.game.moment != "waiting end game")
-    	return end_game(table, table.game, 42, player);
-	else
-		return;
+    if (table.game.moment != "waiting" || table.game.moment != "waiting end game")
+        return end_game(table, table.game, 42, player);
+    else
+        return;
 }
