@@ -73,20 +73,6 @@ function socket_listens_players(socket, table) {
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
-		if (player.bankroll <= 0) {
-			console.log('je rentre, <= 0');
-			if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
-				if (table.playing_seats.length < 2)
-					return one_playing_player_left(table);
-				next_moment(table, table.game);
-			} else {
-				if (table.playing_seats.length < 2)
-					return one_playing_player_left(table);
-				switch_next_player(table);
-			}
-			++table.game.round_nb;
-			return;
-		}
         if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
@@ -180,6 +166,7 @@ function switch_next_player(table) {
     var player;
 
     console.log('switch next player');
+	console.log('bankroll ' + player.bankroll);
     if (table.game.highlights_pos == "none")
         return;
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
