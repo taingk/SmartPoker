@@ -196,42 +196,45 @@ function switch_next_player(table) {
         send_option(table, table.game.highlights_pos, "third choice", "fold");
     } else {
         if (table.playing_seats.length < 3) {
-			if (table.game.moment == "preflop") {
-				table.game.moment = "flop";
-				deal_flop(table, table.game);
-				evalhand(table, table.game);
-			}
-		    if (table.game.moment == "flop") {
-		        table.game.moment = "turn";
-		        deal_turn(table, table.game);
-		        evalhand(table, table.game);
-		    }
-			if (table.game.moment == "turn") {
-		        table.game.moment = "river";
-		        deal_river(table, table.game);
-		        evalhand(table, table.game);
-			}
-			if (table.game.moment == "river") {
-				for (idx = 1; idx <= 6; ++idx) {
-					if (get_seat(table.seats, idx).state === "zero bankroll") {
-						table.playing_seats.push(idx);
-						get_seat(table.seats, idx).state = "playing";
-					}
-				}
-            	return show_down(table, table.game);
-			}
-		}/*
-        if (table.game.curbet == "0") {
-            send_option(table, table.game.highlights_pos, "first choice", "check", 0);
-            send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-            send_raise_limits(table, table.game, table.game.highlights_pos, 1);
-        } else {
-            send_option(table, table.game.highlights_pos, "first choice", "call", 0);
-            send_option(table, table.game.highlights_pos, "second choice", "null", -1);
+            if (table.game.moment == "preflop") {
+                table.game.moment = "flop";
+                deal_flop(table, table.game);
+                evalhand(table, table.game);
+            }
+            if (table.game.moment == "flop") {
+                table.game.moment = "turn";
+                deal_turn(table, table.game);
+                evalhand(table, table.game);
+            }
+            if (table.game.moment == "turn") {
+                table.game.moment = "river";
+                deal_river(table, table.game);
+                evalhand(table, table.game);
+            }
+            if (table.game.moment == "river") {
+                for (idx = 1; idx <= 6; ++idx) {
+                    if (get_seat(table.seats, idx).state === "zero bankroll") {
+                        table.playing_seats.push(idx);
+                        get_seat(table.seats, idx).state = "playing";
+                    }
+                }
+                return show_down(table, table.game);
+            }
         }
-        send_option(table, table.game.highlights_pos, "third choice", "fold");*/
-		remove_from_playing_seats(table.playing_seats, seat_nb);
-		get_seat(table.seats, table.game.highlights_pos).state = "zero bankroll";
+        /*
+                if (table.game.curbet == "0") {
+                    send_option(table, table.game.highlights_pos, "first choice", "check", 0);
+                    send_option(table, table.game.highlights_pos, "second choice", "null", -1);
+                    send_raise_limits(table, table.game, table.game.highlights_pos, 1);
+                } else {
+                    send_option(table, table.game.highlights_pos, "first choice", "call", 0);
+                    send_option(table, table.game.highlights_pos, "second choice", "null", -1);
+                }
+                send_option(table, table.game.highlights_pos, "third choice", "fold");*/
+        /*		remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
+        		get_seat(table.seats, table.game.highlights_pos).state = "zero bankroll";
+        		console.log(get_seat(table.seats, table.game.highlights_pos));*/
+        switch_next_player(table);
     }
 }
 
@@ -255,14 +258,14 @@ function next_moment(table, game) {
         deal_river(table, game);
         evalhand(table, game);
     } else if (table.game.moment == "river") {
-		for (idx = 1; idx <= 6; ++idx) {
-			if (get_seat(table.seats, idx).state === "zero bankroll") {
-				table.playing_seats.push(idx);
-				get_seat(table.seats, idx).state = "playing";
-			}
-		}
+        for (idx = 1; idx <= 6; ++idx) {
+            if (get_seat(table.seats, idx).state === "zero bankroll") {
+                table.playing_seats.push(idx);
+                get_seat(table.seats, idx).state = "playing";
+            }
+        }
         return show_down(table, game);
-	}
+    }
     table.game.round_nb = 0;
     table.game.curbet = "0";
     for (var idx = 1; idx <= 6; ++idx) {
@@ -283,37 +286,39 @@ function next_moment(table, game) {
             send_option(table, table.game.highlights_pos, "second choice", "call", cfg.conf.big_blind);
         send_option(table, table.game.highlights_pos, "third choice", "fold");
     } else {
-		if (table.playing_seats.length < 3) {
-			if (table.game.moment == "preflop") {
-				table.game.moment = "flop";
-				deal_flop(table, table.game);
-				evalhand(table, table.game);
-			}
-		    if (table.game.moment == "flop") {
-		        table.game.moment = "turn";
-		        deal_turn(table, table.game);
-		        evalhand(table, table.game);
-		    }
-			if (table.game.moment == "turn") {
-		        table.game.moment = "river";
-		        deal_river(table, table.game);
-		        evalhand(table, table.game);
-			}
-			if (table.game.moment == "river") {
-				for (idx = 1; idx <= 6; ++idx) {
-					if (get_seat(table.seats, idx).state === "zero bankroll") {
-						table.playing_seats.push(idx);
-						get_seat(table.seats, idx).state = "playing";
-					}
-				}
-            	return show_down(table, table.game);
-			}
-		}
-/*        send_option(table, table.game.highlights_pos, "first choice", "check", 0);
-        send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-        send_option(table, table.game.highlights_pos, "third choice", "fold");*/
-		remove_from_playing_seats(table.playing_seats, seat_nb);
-		get_seat(table.seats, table.game.highlights_pos).state = "zero bankroll";
+        if (table.playing_seats.length < 3) {
+            if (table.game.moment == "preflop") {
+                table.game.moment = "flop";
+                deal_flop(table, table.game);
+                evalhand(table, table.game);
+            }
+            if (table.game.moment == "flop") {
+                table.game.moment = "turn";
+                deal_turn(table, table.game);
+                evalhand(table, table.game);
+            }
+            if (table.game.moment == "turn") {
+                table.game.moment = "river";
+                deal_river(table, table.game);
+                evalhand(table, table.game);
+            }
+            if (table.game.moment == "river") {
+                for (idx = 1; idx <= 6; ++idx) {
+                    if (get_seat(table.seats, idx).state === "zero bankroll") {
+                        table.playing_seats.push(idx);
+                        get_seat(table.seats, idx).state = "playing";
+                    }
+                }
+                return show_down(table, table.game);
+            }
+        }
+        /*        send_option(table, table.game.highlights_pos, "first choice", "check", 0);
+                send_option(table, table.game.highlights_pos, "second choice", "null", -1);
+                send_option(table, table.game.highlights_pos, "third choice", "fold");*/
+        /*remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
+        get_seat(table.seats, table.game.highlights_pos).state = "zero bankroll";
+        console.log(get_seat(table.seats, table.game.highlights_pos));*/
+        next_moment(table, table.game);
     }
 }
 
