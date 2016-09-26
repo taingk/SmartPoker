@@ -197,10 +197,23 @@ function switch_next_player(table) {
     } else {
         console.log('nb player ' + table.playing_seats.length);
         if (table.playing_seats.length < 3) {
-			deal_flop(table, table.game);
-	        deal_turn(table, table.game);
-	        deal_river(table, table.game);
-            return show_down(table, table.game);
+			if (table.game.moment == "preflop") {
+				table.game.moment = "flop";
+				deal_flop(table, table.game);
+				evalhand(table, table.game);
+			}
+		    if (table.game.moment == "flop") {
+		        table.game.moment = "turn";
+		        deal_turn(table, table.game);
+		        evalhand(table, table.game);
+		    }
+			if (table.game.moment == "turn")
+		        table.game.moment = "river";
+		        deal_river(table, table.game);
+		        evalhand(table, table.game);
+			}
+			if (table.game.moment == "river")
+            	return show_down(table, table.game);
 		}
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
@@ -257,10 +270,23 @@ function next_moment(table, game) {
     } else {
         console.log('nb player ' + table.playing_seats.length);
 		if (table.playing_seats.length < 3) {
-			deal_flop(table, table.game);
-	        deal_turn(table, table.game);
-	        deal_river(table, table.game);
-            return show_down(table, table.game);
+			if (table.game.moment == "preflop") {
+				table.game.moment = "flop";
+				deal_flop(table, table.game);
+				evalhand(table, table.game);
+			}
+		    if (table.game.moment == "flop") {
+		        table.game.moment = "turn";
+		        deal_turn(table, table.game);
+		        evalhand(table, table.game);
+		    }
+			if (table.game.moment == "turn")
+		        table.game.moment = "river";
+		        deal_river(table, table.game);
+		        evalhand(table, table.game);
+			}
+			if (table.game.moment == "river")
+            	return show_down(table, table.game);
 		}
         send_option(table, table.game.highlights_pos, "first choice", "check", 0);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
