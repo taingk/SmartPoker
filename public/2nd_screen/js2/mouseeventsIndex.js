@@ -252,6 +252,7 @@ function allin_chosen() {
 
 function	mouse_handler_device()
 {
+	console.log('Clic!');
 	$("#play").click(register_player);
 	$("#choice1").click(choice1_chose);
 	$("#choice2").click(choice2_chose);

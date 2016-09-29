@@ -56,15 +56,18 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("send river", table.game.board[4]);
     });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
+		console.log('yo1');
         if (!decision || !channel_id)
             return;
+		console.log('yo2');
         var seat_nb = +channel_id[channel_id.length - 1];
         var player = get_seat(table.seats, seat_nb).player;
 
         if (table.playing_seats.length == 2)
             table.game.highlights_pos = seat_nb;
-        if (seat_nb != table.game.highlights_pos)
+		if (seat_nb != table.game.highlights_pos)
             return;
+		console.log('yo3');
         if (bet_amount && bet_amount[bet_amount.length - 1] == "$") {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
@@ -73,6 +76,7 @@ function socket_listens_players(socket, table) {
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
+		console.log('yo4');
         if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
@@ -200,17 +204,15 @@ function switch_next_player(table) {
     io.to(table.id).emit("timer action", get_table(table.id, tables));
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
-			console.log('je suis la normalement');
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
             send_option(table, table.game.highlights_pos, "second choice", "call", cfg.conf.big_blind);
             send_raise_limits(table, table.game, table.game.highlights_pos, 1);
         } else {
             if (table.game.curbet > get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
-				console.log('ou la');
+				console.log('quel pos fdp '+table.game.highlights_pos);
                 send_option(table, table.game.highlights_pos, "first choice", "call", get_seat(table.seats, table.game.highlights_pos).player.bankroll);
                 send_option(table, table.game.highlights_pos, "second choice", "null", -1);
             } else {
-				console.log('ou laaaaaaaaaaa');
                 send_option(table, table.game.highlights_pos, "first choice", "call", table.game.curbet);
                 if (table.game.curbet * 2 > get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
                     send_option(table, table.game.highlights_pos, "second choice", "null", -1);
@@ -221,7 +223,6 @@ function switch_next_player(table) {
         }
         send_option(table, table.game.highlights_pos, "third choice", "fold", 0);
     } else {
-		console.log('surement la alors');
         if (table.playing_seats.length < 3) {
             if (table.game.moment == "preflop") {
                 table.game.moment = "flop";
