@@ -237,12 +237,11 @@ function switch_next_player(table) {
             if (table.game.moment == "river") {
                 return show_down(table, table.game);
             }
-        }/*
+        }
 		io.to(table.id).emit("action is true");
 		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-		++table.game.round_nb;
-		++table.game.highlights_pos;
-        switch_next_player(table);*/
+		table.game.highlights_pos = get_next_player(table, table.game);
+        switch_next_player(table);
     }
 }
 
@@ -307,12 +306,11 @@ function next_moment(table, game) {
             if (table.game.moment == "river") {
                 return show_down(table, table.game);
             }
-        }/*
+        }
 		io.to(table.id).emit("action is true");
 		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-		++table.game.round_nb
-		++table.game.highlights_pos;
-        next_moment(table, table.game);*/
+		table.game.highlights_pos = get_next_player(table, table.game);
+        next_moment(table, table.game);
     }
 }
 
