@@ -1,41 +1,35 @@
-function	check_bets(table, seats)
-{
-	var		curseat;
-	var		bet = 0;
-	var		idx;
+function check_bets(table, seats, decision) {
+    var curseat;
+    var bet = 0;
+    var idx;
 
-
-	for (idx = 1; idx <= 6; ++idx)
-		{
-			if (table.playing_seats.indexOf(idx) != -1)
-			{
-				curseat = get_seat(seats, idx);
-				if (+curseat.bet > bet)
-					bet = +curseat.bet;
-			}
-		}
-	if (bet == 0)
-	{
-		console.log("0 BETS, FINE");
+	if (decision == "PASS")
 		return (1);
-	}
-	bet = -1;
-	for (idx = 1; idx <= 6; ++idx)
-	{
-		if (table.playing_seats.indexOf(idx) != -1)
-		{
-			curseat = get_seat(seats, idx);
-			if (curseat.bet <= 0 || bet > 0 && curseat.bet != bet)
-			{
-				console.log("BETS DIFFERS");
-				return (0);
-			}
-			if (curseat.bet > 0)
-				bet = curseat.bet;
-		}
-	}
-	console.log("SAME BETS");
-	return (1);
+    for (idx = 1; idx <= 6; ++idx) {
+        if (table.playing_seats.indexOf(idx) != -1) {
+                curseat = get_seat(seats, idx);
+            if (+curseat.bet > bet)
+                bet = +curseat.bet;
+        }
+    }
+    if (bet == 0) {
+        console.log("0 BETS, FINE");
+        return (1);
+    }
+    bet = -1;
+    for (idx = 1; idx <= 6; ++idx) {
+        if (table.playing_seats.indexOf(idx) != -1) {
+            curseat = get_seat(seats, idx);
+            if (curseat.bet <= 0 || bet > 0 && curseat.bet != bet) {
+                console.log("BETS DIFFERS");
+                return (0);
+            }
+            if (curseat.bet > 0)
+                bet = curseat.bet;
+        }
+    }
+    console.log("SAME BETS");
+    return (1);
 }
 
 /*function	check_bets(seats)
