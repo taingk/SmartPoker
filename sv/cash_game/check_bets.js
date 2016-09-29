@@ -1,10 +1,8 @@
-function check_bets(table, seats, decision) {
+function check_bets(table, seats) {
     var curseat;
     var bet = 0;
     var idx;
 
-	if (decision == "PASS")
-		return (1);
     for (idx = 1; idx <= 6; ++idx) {
         if (table.playing_seats.indexOf(idx) != -1) {
                 curseat = get_seat(seats, idx);

@@ -70,15 +70,14 @@ function socket_listens_players(socket, table) {
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
-		if (decision != "PASS")
-			treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
+		treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
-        if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats, decision)) {
+        if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
             next_moment(table, table.game);
-        } else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats, decision)) {
+        } else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
             decision == "FOLD" ? switch_next_player(table) : next_moment(table, table.game);
@@ -87,7 +86,6 @@ function socket_listens_players(socket, table) {
                 return one_playing_player_left(table);
             switch_next_player(table);
         }
-        //if (decision != "FOLD")
 		if (decision == "FOLD" && (table.game.round_nb+1) == table.playing_seats.length);
 		else
             ++table.game.round_nb;
@@ -131,6 +129,8 @@ function tryChrono(socket, table) {
 }
 
 function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) {
+	if (decision == "PASS")
+		return (1);
     if (decision == "FOLD")
         decision = "FOLD";
     else if (rc == "undefined")
