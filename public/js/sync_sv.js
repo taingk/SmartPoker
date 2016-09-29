@@ -21,26 +21,26 @@ function sync_sv() {
     socket.on("chrono off", function() {
         $("#chrono").empty();
     });
-	socket.on("action is true", function() {
-		timeLock = true;
-	});
-	socket.on("timer action", function(table, nick) {
-		var sec = 0;
+    socket.on("action is true", function() {
+        timeLock = true;
+    });
+    socket.on("timer action", function(table, nick) {
+        var sec = 0;
 
-		clearInterval(lockTimer);
-		timeLock = false;
-		lockTimer = setInterval(function() {
-			sec++;
-			if (timeLock && sec != 30) {
-				clearInterval(lockTimer);
-				timeLock = false;
-			} else if (sec == 30) {
-				clearInterval(lockTimer);
-				timeLock = false;
-				socket.emit("stop timer action", table, nick);
-			}
-		}, 1000);
-	});
+        clearInterval(lockTimer);
+        timeLock = false;
+        lockTimer = setInterval(function() {
+            sec++;
+            if (timeLock && sec != 30) {
+                clearInterval(lockTimer);
+                timeLock = false;
+            } else if (sec == 30) {
+                clearInterval(lockTimer);
+                timeLock = false;
+                socket.emit("stop timer action", table, nick);
+            }
+        }, 1000);
+    });
     socket.on("seated players info", function(seat, seat_idx) {
         $("#qr" + seat_idx).css("visibility", "hidden");
         $("#qr_spot" + seat_idx).css("visibility", "hidden");
@@ -72,9 +72,9 @@ function sync_sv() {
         $("#player_cards" + seat_nb).css("visibility", "hidden");
         $("#btn" + seat_nb).attr("src", "");
         $("#btn" + seat_nb).css("visibility", "hidden");
-		$("#card1_" + seat_nb).css("visibility", "hidden");
-		$("#card2_" + seat_nb).css("visibility", "hidden");
-		$("#last_action"+ seat_nb).css("visibility", "hidden");
+        $("#card1_" + seat_nb).css("visibility", "hidden");
+        $("#card2_" + seat_nb).css("visibility", "hidden");
+        $("#last_action" + seat_nb).css("visibility", "hidden");
     });
     socket.emit("ask buttons");
     socket.on("place button", function(type, seat_nb) {
@@ -96,18 +96,19 @@ function sync_sv() {
         $("#player_cards" + seat_nb).attr("src", "../img/hidden_cards.png");
     });
     socket.on("highlights", function(seat_idx, new_state) {
-		var pos = $("#hSeat"+seat_idx);
+        var pos = $("#hSeat" + seat_idx);
 
         if (new_state == "off") {
-			pos.hide();
-			pos.css("width","200px"),
-			pos.stop();
-		}
-        else if (new_state == "on") {
-			pos.show();
-			pos.css("background-color", "#FE554C");
-			pos.animate({"width":"0%"}, 31000);
-		}
+            pos.hide();
+            pos.css("width", "200px");
+            pos.stop();
+        } else if (new_state == "on") {
+            pos.show();
+            pos.css("background-color", "#FE554C");
+            pos.animate({
+                "width": "0%"
+            }, 31000);
+        }
     });
     socket.on("bankroll modification", function(seat_idx, player) {
         if (player.bankroll == "ALL IN")
@@ -132,7 +133,7 @@ function sync_sv() {
         var str = decision.split(" ");
         var text = "<p>" + nick + " " + str[0] + amount + "</p>";
 
-		$("#last_action").text(nick + " " + str[0] + amount);
+        $("#last_action").text(nick + " " + str[0] + amount);
         $("#histoContent").empty();
         $("#histoContent").append(text);
     });
@@ -165,7 +166,7 @@ function sync_sv() {
         $("#b1, #b2, #b3, #b4, #b5").css("visibility", "hidden");
         for (var idx = 1; idx <= 6; ++idx)
             $("#player_cards" + idx).attr("src", "../img/avatar.png");
-		$("#last_action").text('');
+        $("#last_action").text('');
     });
     socket.on("remove emplacements", function() {
         for (var idx = 1; idx <= 6; ++idx)
@@ -173,12 +174,12 @@ function sync_sv() {
     });
     socket.on("show down", function(card1, card2, seat_nb) {
         if ($('#qr_spot' + seat_nb).css('visibility') == 'hidden') {
-			if (card1 && card2) {
-            	$("#card1_" + seat_nb).attr("src", "../img/cards/" + card1 + ".png");
-            	$("#card2_" + seat_nb).attr("src", "../img/cards/" + card2 + ".png");
-	            $("#card1_" + seat_nb).css("visibility", "visible");
-	            $("#card2_" + seat_nb).css("visibility", "visible");
-			}
+            if (card1 && card2) {
+                $("#card1_" + seat_nb).attr("src", "../img/cards/" + card1 + ".png");
+                $("#card2_" + seat_nb).attr("src", "../img/cards/" + card2 + ".png");
+                $("#card1_" + seat_nb).css("visibility", "visible");
+                $("#card2_" + seat_nb).css("visibility", "visible");
+            }
         }
     });
     socket.on("show down off", function(seat_nb) {
@@ -190,18 +191,15 @@ function sync_sv() {
         var won = '<p>' + $("#player_name" + seat_nb).text() + ' won with ' + rank_name + '</p>';
 
         if (rank_name == 'disconnected') {
-            //$("#winner_msg").text($("#player_name" + seat_nb).text());
             $('#histoContent').empty();
             $('#histoContent').append(disconnect);
         } else if (seat_nb == 42 && rank_name == 'null') {
-            //$("#winner_msg").text("Split!");
             $('#histoContent').empty();
             $('#histoContent').append('<p>Split !</p>');
         } else {
             $('#histoContent').empty();
             $('#histoContent').append(won);
         }
-        //$("#winner").css("visibility", "visible");
     });
     socket.on("win off", function() {
         $("#winner, #card1_1, #card2_1, #card1_2, #card2_2, #card1_3, #card2_3, #card1_4, #card2_4, #card1_5, #card2_5, #card1_6, #card2_6").css("visibility", "hidden");
@@ -210,59 +208,4 @@ function sync_sv() {
 
 function check_timeLock(action) {
     timeLock = action;
-}
-
-function get_seat(seats, idx) {
-    if (idx == 1)
-        return seats.seat1;
-    else if (idx == 2)
-        return seats.seat2;
-    else if (idx == 3)
-        return seats.seat3;
-    else if (idx == 4)
-        return seats.seat4;
-    else if (idx == 5)
-        return seats.seat5;
-    else if (idx == 6)
-        return seats.seat6;
-    return 0;
-}
-
-function get_table(table_id, tables) {
-    var idx = 0;
-
-    while (idx < tables.length) {
-        if (tables[idx].id == table_id)
-            return tables[idx];
-        ++idx;
-    }
-    return "not found";
-}
-
-socket.on('tableId', function(tableId, tables, tableGame) {
-    id = tableId;
-    array = tables;
-    game = tableGame;
-});
-
-function restart() {
-    socket.emit('get tableId and tableGame', id);
-    socket.on('give tableId and tableGame', function(tables, tableGame) {
-        array = tables;
-        game = tableGame;
-    });
-    console.log(array, game);
-    push = false;
-}
-
-function confirm() {
-    push = true;
-    socket.emit('get tableId and tableGame', id);
-    socket.on('give tableId and tableGame', function(tables, tableGame) {
-        array = tables;
-        game = tableGame;
-    });
-    console.log(array, game);
-	socket.emit("to preflop", 1);
-    socket.emit('re init', array, game);
 }

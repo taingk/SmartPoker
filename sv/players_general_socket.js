@@ -89,6 +89,27 @@ function socket_listens_players(socket, table) {
         if (decision != "FOLD")
             ++table.game.round_nb;
     });
+    socket.on("action done", function() {
+        io.to(table.id).emit("action is true");
+    });
+    socket.on("stop timer action", function(table, nick) {
+        stop_timer(table, nick);
+    });
+    socket.on("ask buttons", function() {
+        if (table.game.highlights_pos) {
+            io.to(table.id).emit("place button", "sb", table.game.sb_pos); // Respect this sending order.
+            io.to(table.id).emit("place button", "dealer", table.game.d_pos);
+            io.to(table.id).emit("place button", "bb", table.game.bb_pos);
+        }
+        io.to(table.id).emit("highlights", table.game.highlights_pos);
+    });
+    socket.on('get pot amount', function() {
+        socket.emit('pot amount', table.game.pot_amount);
+    });
+    socket.on('need Id', function() {
+        io.to(table.id).emit('give Idx', table_id);
+    });
+    io.to(table.id).emit("pot modification", table.game.pot_amount);
 }
 
 function tryChrono(socket, table) {
@@ -215,20 +236,7 @@ function switch_next_player(table) {
                 return show_down(table, table.game);
             }
         }
-        /*
-                if (table.game.curbet == "0") {
-                    send_option(table, table.game.highlights_pos, "first choice", "check", 0);
-                    send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-                    send_raise_limits(table, table.game, table.game.highlights_pos, 1);
-                } else {
-                    send_option(table, table.game.highlights_pos, "first choice", "call", 0);
-                    send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-                }
-                send_option(table, table.game.highlights_pos, "third choice", "fold");*/
-        /*		remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
-        		get_seat(table.seats, table.game.highlights_pos).state = "zero bankroll";
-        		console.log(get_seat(table.seats, table.game.highlights_pos));*/
-				console.log('Bankroll < 0');
+        console.log('Bankroll < 0');
         switch_next_player(table);
     }
 }
@@ -295,13 +303,7 @@ function next_moment(table, game) {
                 return show_down(table, table.game);
             }
         }
-        /*        send_option(table, table.game.highlights_pos, "first choice", "check", 0);
-                send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-                send_option(table, table.game.highlights_pos, "third choice", "fold");*/
-        /*remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
-        get_seat(table.seats, table.game.highlights_pos).state = "zero bankroll";
-        console.log(get_seat(table.seats, table.game.highlights_pos));*/
-		console.log('Bankroll < 0');
+        console.log('Bankroll < 0');
         next_moment(table, table.game);
     }
 }

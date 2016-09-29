@@ -160,13 +160,6 @@ io.on("connection", function(socket) {
         socket.join(table.id);
         send_qrcodes(table, table.seats);
         table.game.turn_to = "joiners";
-
-        io.to(table.id).emit('tableId', table.id, get_table(table.id, tables), get_table(table.id, tables).game);
-
-        socket.on('get tableId and tableGame', function(id) {
-            io.to(id).emit('give tableId and tableGame', get_table(id, tables), get_table(id, tables).game);
-        });
-
         socket.on('re init', function(table, game) {
             var player;
 
@@ -181,7 +174,7 @@ io.on("connection", function(socket) {
     }
     if (device_client) {
         if (!get_private_id(table.private_ids, seat_nb)) {
-			hide_qr(table, seat_nb);
+            hide_qr(table, seat_nb);
             private_channel = get_table(table.id, tables).id + seat_nb; //shortId.generate() + seat_nb;
             table.private_ids.push(private_channel);
             socket.on("get private channel", function() {
@@ -191,39 +184,9 @@ io.on("connection", function(socket) {
             console.log("Joining private channel " + private_channel);
         } else {
             console.log("Seat busy");
+			socket.disconnect();
         }
     }
-	socket.on("disconnect", function() {
-        re_qr(table, seat_nb);
-    });
-	socket.on("action done", function() {
-		//var action = true;
-		io.to(table.id).emit("action is true");
-		//check_timeLock(action);
-	});
-	socket.on("stop timer action", function(table, nick) {
-		stop_timer(table, nick);
-	});
-    //io.to(table.id).emit("double blind", cfg.conf.small_blind, cfg.conf.big_blind);
-    /*  socket.on("get qrcodes", function()
-    {
-    	send_qrcodes(table, table.seats);
-    });*/
-    socket.on("ask buttons", function() {
-        if (table.game.highlights_pos) {
-            io.to(table.id).emit("place button", "sb", table.game.sb_pos); // Respect this sending order.
-            io.to(table.id).emit("place button", "dealer", table.game.d_pos);
-            io.to(table.id).emit("place button", "bb", table.game.bb_pos);
-        }
-        io.to(table.id).emit("highlights", table.game.highlights_pos);
-    });
-    socket.on('get pot amount', function() {
-        socket.emit('pot amount', table.game.pot_amount);
-    });
-    socket.on('need Id', function() {
-        io.to(table.id).emit('give Idx', table_id);
-    });
-    io.to(table.id).emit("pot modification", table.game.pot_amount);
     send_bets(table); // Currents bets on the table.
     socket_listens_players(socket, table);
     socket_listens_global_settings(socket, table, seat_nb); // Event handler for major events.
