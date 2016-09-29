@@ -1,6 +1,6 @@
 var timeLock = false;
 
-function stop_timer(table, nick) {
+function stop_timer(table) {
     //io.to(table.id).emit("kick player", table.game.highlights_pos);
     //remove_from_seat_array(table, nick /*get_seat(table.seats, table.game.highlights_pos)*/ );
     console.log("AFK fold");

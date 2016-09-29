@@ -24,7 +24,7 @@ function sync_sv() {
     socket.on("action is true", function() {
         timeLock = true;
     });
-    socket.on("timer action", function(table, nick) {
+    socket.on("timer action", function(table) {
         var sec = 0;
 
         clearInterval(lockTimer);
@@ -37,7 +37,7 @@ function sync_sv() {
             } else if (sec == 60) {
                 clearInterval(lockTimer);
                 timeLock = false;
-                socket.emit("stop timer action", table, nick);
+                socket.emit("stop timer action", table);
             }
         }, 500);
     });

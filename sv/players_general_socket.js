@@ -92,8 +92,8 @@ function socket_listens_players(socket, table) {
     socket.on("action done", function() {
         io.to(table.id).emit("action is true");
     });
-    socket.on("stop timer action", function(table, nick) {
-        stop_timer(table, nick);
+    socket.on("stop timer action", function(table) {
+        stop_timer(table);
     });
     socket.on("ask buttons", function() {
         if (table.game.highlights_pos) {
@@ -195,7 +195,7 @@ function switch_next_player(table) {
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
-    io.to(table.id).emit("timer action", get_table(table.id, tables), get_seat(table.seats, table.game.highlights_pos).player.nickname);
+    io.to(table.id).emit("timer action", get_table(table.id, tables));
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
@@ -272,7 +272,7 @@ function next_moment(table, game) {
         get_seat(table.seats, idx).bet = 0;
         io.to(table.id).emit("bet", idx, "");
     }
-    io.to(table.id).emit("timer action", get_table(table.id, tables), get_seat(table.seats, table.game.highlights_pos).player.nickname);
+    io.to(table.id).emit("timer action", get_table(table.id, tables));
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
     table.game.highlights_pos = get_first_to_talk(table, game, false);
