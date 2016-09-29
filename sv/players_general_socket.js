@@ -189,9 +189,10 @@ function switch_next_player(table) {
     var player;
 
     console.log('switch next player');
-	console.log("hey ca bug !! " + table.game.highlights_pos);
-    if (table.game.highlights_pos == "none")
+    if (table.game.highlights_pos == "none") {
+		console.log('je return lol');
         return;
+	}
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
     table.game.highlights_pos = get_next_player(table, table.game);
@@ -199,6 +200,7 @@ function switch_next_player(table) {
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
     io.to(table.id).emit("timer action", get_table(table.id, tables));
+	console.log("hey ca bug !!");
     if (get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
         if (table.game.curbet == "0") {
             send_option(table, table.game.highlights_pos, "first choice", "check", 0);
