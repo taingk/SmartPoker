@@ -56,12 +56,8 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("send river", table.game.board[4]);
     });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
-		console.log('yo1');
-		console.log('channel id '+channel_id);
-		console.log(decision);
         if (!decision || !channel_id)
             return;
-		console.log('yo2');
         var seat_nb = +channel_id[channel_id.length - 1];
         var player = get_seat(table.seats, seat_nb).player;
 
@@ -69,16 +65,15 @@ function socket_listens_players(socket, table) {
             table.game.highlights_pos = seat_nb;
 		if (seat_nb != table.game.highlights_pos)
             return;
-		console.log('yo3');
         if (bet_amount && bet_amount[bet_amount.length - 1] == "$") {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
-        treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
+		if (decision != "PASS")
+			treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
-		console.log('yo4');
         if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
                 return one_playing_player_left(table);
@@ -244,10 +239,12 @@ function switch_next_player(table) {
             if (table.game.moment == "river") {
                 return show_down(table, table.game);
             }
-        }
+        }/*
         send_option(table, table.game.highlights_pos, "first choice", "check", -1);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
         send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
+		*/
+		io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);
     }
 }
 
@@ -313,9 +310,11 @@ function next_moment(table, game) {
                 return show_down(table, table.game);
             }
         }
+		/*
         send_option(table, table.game.highlights_pos, "first choice", "check", -1);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-        send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
+        send_option(table, table.game.highlights_pos, "third choice", "fold", -1);*/
+		io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);
     }
 }
 

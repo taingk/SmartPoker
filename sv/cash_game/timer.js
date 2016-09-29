@@ -14,14 +14,6 @@ function stop_timer(table) {
     if (table.playing_seats.length == 1)
         return one_playing_player_left(table);
 	io.to(table.id).emit("i fold", "FOLD", get_private_id(table.private_ids, table.game.highlights_pos), 0);
-/*    else if (table.game.round_nb > table.playing_seats.length) {
-		console.log('je rentre afk fold');
-        next_moment(table, table.game);
-	}
-    else {
-		console.log('je rentre switch afk fold');
-        switch_next_player(table);
-	}*/
 }
 /*
 function start_timer(table, nick) {
