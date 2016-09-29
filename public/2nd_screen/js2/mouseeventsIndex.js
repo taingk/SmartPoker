@@ -62,7 +62,9 @@ function	register_player()
 		$("#choice2").css("visibility", "visible");
 		$("#choice3").css("visibility", "visible");
 		$("#hide_cards").css("visibility", "visible");
-		if (choice == "call" && amount >= 0)
+		if (amount == -1)
+			$("#c1").text("PASS");
+		else if (choice == "call" && amount >= 0)
 		{
 			$("#c1").text("CALL");
 			$("#c1_amount").text((Math.floor(+amount * 100)) / 100 + "$");
@@ -105,9 +107,12 @@ function	register_player()
 		$("#choice2").css("visibility", visible);
 		$("#choice3").css("visibility", visible);
 	});
-	socket.on("third choice", function(choice)
+	socket.on("third choice", function(choice, amount)
 	{
-		$("#c3").text("FOLD");
+		if (amount == -1)
+			$("#choice3").css("visibility", "hidden");
+		else
+			$("#c3").text("FOLD");
 	});
 	socket.on("turn wait", function()
 	{
