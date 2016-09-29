@@ -60,8 +60,7 @@ function socket_listens_players(socket, table) {
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
         var player = get_seat(table.seats, seat_nb).player;
-		console.log('chanel id + '+ +channel_id[channel_id.length - 1]);
-		console.log('channel id '+ channel_id[channel_id.length - 1]);
+
         if (table.playing_seats.length == 2)
             table.game.highlights_pos = seat_nb;
         if (seat_nb != table.game.highlights_pos)
@@ -89,6 +88,28 @@ function socket_listens_players(socket, table) {
         }
         if (decision != "FOLD")
             ++table.game.round_nb;
+        if (!get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
+            if (table.playing_seats.length < 3) {
+                if (table.game.moment == "preflop") {
+                    table.game.moment = "flop";
+                    deal_flop(table, table.game);
+                    evalhand(table, table.game);
+                }
+                if (table.game.moment == "flop") {
+                    table.game.moment = "turn";
+                    deal_turn(table, table.game);
+                    evalhand(table, table.game);
+                }
+                if (table.game.moment == "turn") {
+                    table.game.moment = "river";
+                    deal_river(table, table.game);
+                    evalhand(table, table.game);
+                }
+                if (table.game.moment == "river") {
+                    return show_down(table, table.game);
+                }
+            }
+        }
     });
     socket.on("action done", function() {
         io.to(table.id).emit("action is true");
@@ -217,26 +238,6 @@ function switch_next_player(table) {
         }
         send_option(table, table.game.highlights_pos, "third choice", "fold");
     } else {
-        if (table.playing_seats.length < 3) {
-            if (table.game.moment == "preflop") {
-                table.game.moment = "flop";
-                deal_flop(table, table.game);
-                evalhand(table, table.game);
-            }
-            if (table.game.moment == "flop") {
-                table.game.moment = "turn";
-                deal_turn(table, table.game);
-                evalhand(table, table.game);
-            }
-            if (table.game.moment == "turn") {
-                table.game.moment = "river";
-                deal_river(table, table.game);
-                evalhand(table, table.game);
-            }
-            if (table.game.moment == "river") {
-                return show_down(table, table.game);
-            }
-        }
         console.log('Bankroll < 0');
         switch_next_player(table);
     }
@@ -284,7 +285,7 @@ function next_moment(table, game) {
             send_option(table, table.game.highlights_pos, "second choice", "call", cfg.conf.big_blind);
         send_option(table, table.game.highlights_pos, "third choice", "fold");
     } else {
-        if (table.playing_seats.length < 3) {
+        /*if (table.playing_seats.length < 3) {
             if (table.game.moment == "preflop") {
                 table.game.moment = "flop";
                 deal_flop(table, table.game);
@@ -303,7 +304,7 @@ function next_moment(table, game) {
             if (table.game.moment == "river") {
                 return show_down(table, table.game);
             }
-        }
+        }*/
         console.log('Bankroll < 0');
         next_moment(table, table.game);
     }
