@@ -31,15 +31,15 @@ function sync_sv() {
         timeLock = false;
         lockTimer = setInterval(function() {
             sec++;
-            if (timeLock && sec != 30) {
+            if (timeLock && sec != 60) {
                 clearInterval(lockTimer);
                 timeLock = false;
-            } else if (sec == 30) {
+            } else if (sec == 60) {
                 clearInterval(lockTimer);
                 timeLock = false;
                 socket.emit("stop timer action", table, nick);
             }
-        }, 1000);
+        }, 500);
     });
     socket.on("seated players info", function(seat, seat_idx) {
         $("#qr" + seat_idx).css("visibility", "hidden");

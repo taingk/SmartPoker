@@ -1,4 +1,13 @@
 function clear_board(table, game) {
+	for (var idx = 1; idx <= 6; ++idx) {
+		var seat = get_seat(table.seats, idx);
+		if (seat.player.bankroll != undefined) {
+			if (seat.player.bankroll <= 0) {
+				console.log(seat.player.nickname + ' is Game Over!');
+				io.to(get_private_id(table.private_ids, seat.player.seat_nb)).emit('game over');
+			}
+		}
+	}
 	var board = setInterval(function() {
 		io.to(table.id).emit("remove board");
 		clearInterval(board);
@@ -49,7 +58,6 @@ function end_game(table, game, winners, player) {
                 io.to(table.id).emit("show down", player.card1, player.card2, idx);
             }
         }
-        //		io.to(table.id).emit("show down", player.card1, player.card2, player.seat_nb);
 		clear_board(table, game);
     } else
 		clear_board(table, game);
@@ -63,12 +71,6 @@ function reinit(table, game) {
         seat.player.card_2 = "undefined";
         seat.player.rank_name = "undefined";
         seat.player.rank_value = 0;
-        if (seat.player.bankroll != undefined) {
-            if (seat.player.bankroll <= 0) {
-                console.log(seat.player.nickname + ' is Game Over!');
-                io.to(get_private_id(table.private_ids, seat.player.seat_nb)).emit('game over');
-            }
-        }
         io.to(get_private_id(table.private_ids, idx)).emit("turn wait");
     }
     io.to(table.id).emit("remove emplacements");

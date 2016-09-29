@@ -69,7 +69,7 @@ function get_next_player(table, game) {
 function get_first_to_talk(table, game, token) {
     var pos;
 
-	token ? pos = game.bb_pos + 1 : pos = game.d_pos + 1;
+    token ? pos = game.bb_pos + 1 : pos = game.d_pos + 1;
     if (table.playing_seats.length < 2)
         return 0;
     while (table.playing_seats.indexOf(pos) == -1) {
@@ -186,7 +186,7 @@ function send_blinds(table, sb, bb) {
 }
 
 function ask_first_player(table, game) {
-	io.to(table.id).emit("timer action", table, get_seat(table.seats, game.highlights_pos).player.nickname);
+    io.to(table.id).emit("timer action", table, get_seat(table.seats, game.highlights_pos).player.nickname);
     //start_timer(table, get_seat(table.seats, game.highlights_pos).player.nickname);
     send_option(table, game.highlights_pos, "first choice", "call", /*game.highlights_pos === game.sb_pos ? game.curbet / 2 :*/ game.curbet);
     send_option(table, game.highlights_pos, "second choice", "null", -1 /*game.highlights_pos === game.sb_pos ? game.curbet * 2 / 2 : game.curbet */ );
@@ -206,7 +206,7 @@ function game_routine(socket, table) {
     table.game.d_pos = find_dealer(table, table.game);
     table.game.sb_pos = find_sb(table, table.game);
     table.game.bb_pos = find_bb(table, table.game);
-	get_first_to_talk(table, table.game, true);
+    get_first_to_talk(table, table.game, true);
     console.log("Dealer is at seat " + table.game.d_pos);
     console.log("Small blind is at seat " + table.game.sb_pos);
     console.log("Big blind is at seat " + table.game.bb_pos);
@@ -241,8 +241,8 @@ function stop_high_rollers(table) {
 
     for (var idx = 1; idx <= 6; ++idx) {
         seat = get_seat(table.seats, idx)
-        /*if (seat.player.bankroll >= 9999)
-            seat.player.bankroll = 9000;*/
+            /*if (seat.player.bankroll >= 9999)
+                seat.player.bankroll = 9000;*/
         if (seat.player.bankroll <= 0)
             seat.player.bankroll = +cfg.start_bankroll;
         io.to(table.id).emit("bankroll modification", idx, seat.player);
@@ -254,7 +254,7 @@ function stop_high_rollers(table) {
 
 function new_cashgame(socket, table) {
     init_obj(table);
-	io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
+    io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
     table.game.moment = "preflop";
     table.game.round_nb = socket === 42 ? 0 : 1;
     table.game.pot_amount = 0;
