@@ -20,8 +20,9 @@ function	evalwin(table, game)
 	}
 	if (!winners.length)
 		winners.push(best);
-	//console.log("winners: " + winners);
-	//console.log("best: " + best.rank_value);
+
+	console.log("winners: " + winners);
+	console.log("best: " + best.rank_value);
 	return winners;
 }
 
