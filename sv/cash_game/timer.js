@@ -7,16 +7,20 @@ function stop_timer(table) {
     remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
     get_seat(table.seats, table.game.highlights_pos).state = "busy";
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
-    io.to(table.id).emit("fold", table.game.highlights_pos);
+    io.to(table.id).emit("fold", table.game.highlights_pos, 0);
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
     io.to(table.id).emit("bet", table.game.highlights_pos, 0);
     table.game.highlights_pos = 0;
     if (table.playing_seats.length == 1)
         return one_playing_player_left(table);
-    else if (table.game.round_nb > table.playing_seats.length)
+    else if (table.game.round_nb > table.playing_seats.length) {
+		console.log('je rentre afk fold');
         next_moment(table, table.game);
-    else
-        switch_next_player(table)
+	}
+    else {
+		console.log('je rentre switch afk fold');
+        switch_next_player(table);
+	}
 }
 /*
 function start_timer(table, nick) {

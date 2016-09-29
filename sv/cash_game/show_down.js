@@ -7,8 +7,8 @@ function	evalwin(table, game)
 
 	while (idx <= 6)
 	{
-		player = get_seat(table.seats, idx).player;
-		//console.log("Player hand value: " + player.rank_value);
+		if (get_seat(table.seats, idx).state != "busy")
+			player = get_seat(table.seats, idx).player;
 		if (player.rank_value)
 		{
 			if (!best || player.rank_value > best.rank_value)
@@ -20,9 +20,6 @@ function	evalwin(table, game)
 	}
 	if (!winners.length)
 		winners.push(best);
-
-	console.log("winners: " + winners);
-	console.log("best: " + best.rank_value);
 	return winners;
 }
 
