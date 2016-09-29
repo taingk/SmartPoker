@@ -129,8 +129,6 @@ function tryChrono(socket, table) {
 }
 
 function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) {
-	if (decision == "PASS")
-		return (1);
     if (decision == "FOLD")
         decision = "FOLD";
     else if (rc == "undefined")
