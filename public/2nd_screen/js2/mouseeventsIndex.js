@@ -64,6 +64,7 @@ function	register_player()
 		$("#hide_cards").css("visibility", "visible");
 		if (amount == -1)
 			$("#c1").text("PASS");
+			$("#c1_amount").text("");
 		else if (choice == "call" && amount >= 0)
 		{
 			$("#c1").text("CALL");
