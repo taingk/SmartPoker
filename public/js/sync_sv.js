@@ -110,9 +110,9 @@ function sync_sv() {
             }, 31000);
         }
     });
-	socket.on("i fold", function(fold, private_ids, zero) {
-		socket.emit("player decision", fold, private_ids, zero);
-	})
+    socket.on("i fold", function(fold, private_ids, zero) {
+        socket.emit("player decision", fold, private_ids, zero);
+    })
     socket.on("bankroll modification", function(seat_idx, player) {
         if (player.bankroll == "ALL IN")
             $("#player_bankroll" + seat_idx).text("ALL IN");
@@ -182,11 +182,10 @@ function sync_sv() {
                 $("#card2_" + seat_nb).attr("src", "../img/cards/" + card2 + ".png");
                 $("#card1_" + seat_nb).css("visibility", "visible");
                 $("#card2_" + seat_nb).css("visibility", "visible");
+            } else {
+                $("#card1_" + seat_nb).css("visibility", "hidden");
+                $("#card2_" + seat_nb).css("visibility", "hidden");
             }
-			else {
-				$("#card1_" + seat_nb).css("visibility", "hidden");
-				$("#card2_" + seat_nb).css("visibility", "hidden");
-			}
         }
     });
     socket.on("show down off", function(seat_nb) {
@@ -197,8 +196,8 @@ function sync_sv() {
         var disconnect = '<p>' + $("#player_name" + seat_nb).text() + ' won because player ' + rank_name + ' or folded</p>';
         var won = '<p>' + $("#player_name" + seat_nb).text() + ' won with ' + rank_name + '</p>';
 
-		if (rank_name == "null")
-			return;
+        if (rank_name == "null")
+            return;
         if (rank_name == 'disconnected') {
             $('#histoContent').empty();
             $('#histoContent').append(disconnect);

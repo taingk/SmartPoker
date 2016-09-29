@@ -5,7 +5,7 @@ function check_bets(table, seats) {
 
     for (idx = 1; idx <= 6; ++idx) {
         if (table.playing_seats.indexOf(idx) != -1) {
-                curseat = get_seat(seats, idx);
+            curseat = get_seat(seats, idx);
             if (+curseat.bet > bet)
                 bet = +curseat.bet;
         }
