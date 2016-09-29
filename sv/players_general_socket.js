@@ -61,6 +61,12 @@ function socket_listens_players(socket, table) {
         var seat_nb = +channel_id[channel_id.length - 1];
         var player = get_seat(table.seats, seat_nb).player;
 
+		if (!get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
+			io.to(table.id).emit("action is true");
+			io.to(table.id).emit("highlights", seat_nb, "off");
+			remove_from_playing_seats(table.playing_seats, seat_nb);
+			get_seat(table.seats, seat_nb).state = "busy";
+		}
         if (table.playing_seats.length == 2)
             table.game.highlights_pos = seat_nb;
         if (seat_nb != table.game.highlights_pos)
@@ -236,11 +242,11 @@ function switch_next_player(table) {
                 return show_down(table, table.game);
             }
         }
-		io.to(table.id).emit("action is true");
+/*		io.to(table.id).emit("action is true");
 		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
 		remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
 		get_seat(table.seats, seat_nb).state = "busy";
-        switch_next_player(table);
+        switch_next_player(table);*/
     }
 }
 
@@ -306,12 +312,12 @@ function next_moment(table, game) {
                 return show_down(table, table.game);
             }
         }
-		io.to(table.id).emit("action is true");
+/*		io.to(table.id).emit("action is true");
 		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
 		remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
 		get_seat(table.seats, seat_nb).state = "busy";
         next_moment(table, table.game);
-    }
+*/    }
 }
 
 function one_playing_player_left(table) {
