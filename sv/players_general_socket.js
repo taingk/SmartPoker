@@ -72,13 +72,6 @@ function socket_listens_players(socket, table) {
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
-        /*		if (!get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
-        			io.to(table.id).emit("action is true");
-        			io.to(table.id).emit("highlights", seat_nb, "off");
-        			remove_from_playing_seats(table.playing_seats, seat_nb);
-        			get_seat(table.seats, seat_nb).state = "busy";
-        		}
-        */
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
         if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
@@ -196,6 +189,7 @@ function switch_next_player(table) {
     var player;
 
     console.log('switch next player');
+	console.log("hey ca bug !! " + table.game.highlights_pos);
     if (table.game.highlights_pos == "none")
         return;
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
