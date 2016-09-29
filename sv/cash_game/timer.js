@@ -21,7 +21,7 @@ function stop_timer(table) {
 		console.log('je rentre switch afk fold');
         switch_next_player(table);
 	}*/
-	io.to(table.id).emit("player decision", "FOLD", channel + seat_nb.toString(), 0);
+	io.to(table.id).emit("player decision", "FOLD", get_private_id(table.private_ids, table.game.highlights_pos), 0);
 }
 /*
 function start_timer(table, nick) {
