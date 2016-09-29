@@ -191,9 +191,7 @@ function switch_next_player(table) {
         return;
     io.to(get_private_id(table.private_ids, table.game.highlights_pos)).emit("turn wait");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-	console.log('AVANT '+table.game.highlights_pos);
     table.game.highlights_pos = get_next_player(table, table.game);
-	console.log('APRES '+table.game.highlights_pos);
     io.to(table.id).emit("highlights", table.game.highlights_pos, "on");
     send_raise_limits(table, table.game, table.game.highlights_pos, 0);
     adjust_bets_values(table);
@@ -240,7 +238,8 @@ function switch_next_player(table) {
         }
 		io.to(table.id).emit("action is true");
 		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-		table.game.highlights_pos = get_next_player(table, table.game);
+		console.log('remove pos '+table.game.highlights_pos);
+		remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
         switch_next_player(table);
     }
 }
@@ -309,7 +308,8 @@ function next_moment(table, game) {
         }
 		io.to(table.id).emit("action is true");
 		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-		table.game.highlights_pos = get_next_player(table, table.game);
+		console.log('remove pos '+table.game.highlights_pos);
+		remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
         next_moment(table, table.game);
     }
 }
