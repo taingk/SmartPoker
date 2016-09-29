@@ -174,12 +174,16 @@ function sync_sv() {
     });
     socket.on("show down", function(card1, card2, seat_nb) {
         if ($('#qr_spot' + seat_nb).css('visibility') == 'hidden') {
-            if (card1 && card2) {
+            if (card1 != -1 && card2 != -1) {
                 $("#card1_" + seat_nb).attr("src", "../img/cards/" + card1 + ".png");
                 $("#card2_" + seat_nb).attr("src", "../img/cards/" + card2 + ".png");
                 $("#card1_" + seat_nb).css("visibility", "visible");
                 $("#card2_" + seat_nb).css("visibility", "visible");
             }
+			else {
+				$("#card1_" + seat_nb).css("visibility", "hidden");
+				$("#card2_" + seat_nb).css("visibility", "hidden");
+			}
         }
     });
     socket.on("show down off", function(seat_nb) {
