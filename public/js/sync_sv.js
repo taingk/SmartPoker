@@ -111,7 +111,7 @@ function sync_sv() {
         }
     });
 	socket.on("i fold", function(fold, private_ids, zero) {
-		socket.emit("player decision", zero, private_ids, zero);
+		socket.emit("player decision", fold, private_ids, zero);
 	})
     socket.on("bankroll modification", function(seat_idx, player) {
         if (player.bankroll == "ALL IN")

@@ -59,9 +59,9 @@ function socket_listens_players(socket, table) {
 		console.log('yo1');
 		console.log('channel id '+channel_id);
 		console.log(decision);
-/*        if (!decision || !channel_id)
+        if (!decision || !channel_id)
             return;
-*/		console.log('yo2');
+		console.log('yo2');
         var seat_nb = +channel_id[channel_id.length - 1];
         var player = get_seat(table.seats, seat_nb).player;
 
