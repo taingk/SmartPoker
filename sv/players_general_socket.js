@@ -60,7 +60,8 @@ function socket_listens_players(socket, table) {
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
         var player = get_seat(table.seats, seat_nb).player;
-
+		console.log('chanel id + '+ +channel_id[channel_id.length - 1]);
+		console.log('channel id '+ channel_id[channel_id.length - 1]);
         if (table.playing_seats.length == 2)
             table.game.highlights_pos = seat_nb;
         if (seat_nb != table.game.highlights_pos)
