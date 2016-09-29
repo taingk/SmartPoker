@@ -106,7 +106,7 @@ function socket_listens_players(socket, table) {
         io.to(table.id).emit("highlights", table.game.highlights_pos);
     });
     socket.on('get pot amount', function() {
-        socket.emit('pot amount', t²able.game.pot_amount);
+        socket.emit('pot amount', table.game.pot_amount);
     });
     socket.on('need Id', function() {
         io.to(table.id).emit('give Idx', table_id);
