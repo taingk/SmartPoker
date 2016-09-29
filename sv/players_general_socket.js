@@ -93,7 +93,7 @@ function socket_listens_players(socket, table) {
                 return one_playing_player_left(table);
             switch_next_player(table);
         }
-        if (decision != "FOLD")
+        //if (decision != "FOLD")
             ++table.game.round_nb;
     });
     socket.on("action done", function() {
