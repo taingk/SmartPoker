@@ -94,6 +94,8 @@ function socket_listens_players(socket, table) {
             switch_next_player(table);
         }
         //if (decision != "FOLD")
+		if (decision == "FOLD" && (table.game.round_nb+1) == table.playing_seats.length);
+		else
             ++table.game.round_nb;
     });
     socket.on("action done", function() {
