@@ -236,9 +236,10 @@ function switch_next_player(table) {
                 return show_down(table, table.game);
             }
         }
-        console.log('Bankroll < 0');
-		console.log('POS = ' +table.game.highlights_pos);
-		console.log('POS+1 = ' +table.game.highlights_pos++);
+		io.to(table.id).emit("action is true");
+		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
+		++table.game.round_nb;
+		++table.game.highlights_pos;
         switch_next_player(table);
     }
 }
@@ -305,7 +306,10 @@ function next_moment(table, game) {
                 return show_down(table, table.game);
             }
         }
-        console.log('Bankroll < 0');
+		io.to(table.id).emit("action is true");
+		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
+		++table.game.round_nb
+		++table.game.highlights_pos;
         next_moment(table, table.game);
     }
 }
