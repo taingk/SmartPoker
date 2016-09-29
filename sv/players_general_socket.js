@@ -238,8 +238,8 @@ function switch_next_player(table) {
         }
 		io.to(table.id).emit("action is true");
 		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-		console.log('remove pos '+table.game.highlights_pos);
 		remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
+		seat.state = "busy";
         switch_next_player(table);
     }
 }
@@ -308,8 +308,8 @@ function next_moment(table, game) {
         }
 		io.to(table.id).emit("action is true");
 		io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-		console.log('remove pos '+table.game.highlights_pos);
 		remove_from_playing_seats(table.playing_seats, table.game.highlights_pos);
+		seat.state = "busy";
         next_moment(table, table.game);
     }
 }
