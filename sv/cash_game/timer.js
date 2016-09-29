@@ -13,14 +13,15 @@ function stop_timer(table) {
     io.to(table.id).emit("bet", table.game.highlights_pos, 0);
     if (table.playing_seats.length == 1)
         return one_playing_player_left(table);
-    else if (table.game.round_nb > table.playing_seats.length) {
+/*    else if (table.game.round_nb > table.playing_seats.length) {
 		console.log('je rentre afk fold');
         next_moment(table, table.game);
 	}
     else {
 		console.log('je rentre switch afk fold');
         switch_next_player(table);
-	}
+	}*/
+	io.to(table.id).emit("player decision", "FOLD", channel + seat_nb.toString(), 0);
 }
 /*
 function start_timer(table, nick) {

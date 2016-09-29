@@ -57,6 +57,7 @@ function socket_listens_players(socket, table) {
     });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
 		console.log('yo1');
+		console.log('channel id '+channel_id);
         if (!decision || !channel_id)
             return;
 		console.log('yo2');
