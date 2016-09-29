@@ -190,6 +190,8 @@ function sync_sv() {
         var disconnect = '<p>' + $("#player_name" + seat_nb).text() + ' won because player ' + rank_name + ' or folded</p>';
         var won = '<p>' + $("#player_name" + seat_nb).text() + ' won with ' + rank_name + '</p>';
 
+		if (rank_name == "null")
+			return;
         if (rank_name == 'disconnected') {
             $('#histoContent').empty();
             $('#histoContent').append(disconnect);

@@ -1,14 +1,14 @@
 function clear_board(table, game) {
-	for (var idx = 1; idx <= 6; ++idx) {
-		var seat = get_seat(table.seats, idx);
-		if (seat.player.bankroll != undefined) {
-			if (seat.player.bankroll <= 0) {
-				console.log(seat.player.nickname + ' is Game Over!');
-				io.to(get_private_id(table.private_ids, seat.player.seat_nb)).emit('game over');
+	var board = setInterval(function() {
+		for (var idx = 1; idx <= 6; ++idx) {
+			var seat = get_seat(table.seats, idx);
+			if (seat.player.bankroll != undefined) {
+				if (seat.player.bankroll <= 0) {
+					console.log(seat.player.nickname + ' is Game Over!');
+					io.to(get_private_id(table.private_ids, seat.player.seat_nb)).emit('game over');
+				}
 			}
 		}
-	}
-	var board = setInterval(function() {
 		io.to(table.id).emit("remove board");
 		clearInterval(board);
 		end_timer(table, game);
