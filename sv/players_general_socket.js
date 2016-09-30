@@ -70,14 +70,8 @@ function socket_listens_players(socket, table) {
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
-		console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
+        console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
-
-		if (!get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
-			remove_from_playing_seats(table.playing_seats, seat_nb);
-			get_seat(table.seats, table.game.highlights_pos).state = "busy";
-			console.log('qui ? '+seat_nb, get_seat(table.seats, table.game.highlights_pos).state);
-		}
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
         if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
             if (table.playing_seats.length < 2)
@@ -92,10 +86,14 @@ function socket_listens_players(socket, table) {
                 return one_playing_player_left(table);
             switch_next_player(table);
         }
-        if (decision == "FOLD" && (table.game.round_nb + 1) == table.playing_seats.length)
-			return;
+        if (decision == "FOLD" && (table.game.round_nb + 1) == table.playing_seats.length);
         else
             ++table.game.round_nb;
+        if (!get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
+            remove_from_playing_seats(table.playing_seats, seat_nb);
+            get_seat(table.seats, table.game.highlights_pos).state = "busy";
+            console.log('qui ? ' + seat_nb, get_seat(table.seats, table.game.highlights_pos).state);
+        }
     });
     socket.on("action done", function() {
         io.to(table.id).emit("action is true");
@@ -244,7 +242,7 @@ function switch_next_player(table) {
                 return show_down(table, table.game);
             }
         }
-		io.to(table.id).emit("action is true");
+        io.to(table.id).emit("action is true");
         /*send_option(table, table.game.highlights_pos, "first choice", "check", -1);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
         send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
@@ -314,7 +312,7 @@ function next_moment(table, game) {
                 return show_down(table, table.game);
             }
         }
-		io.to(table.id).emit("action is true");
+        io.to(table.id).emit("action is true");
         /*send_option(table, table.game.highlights_pos, "first choice", "check", -1);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
         send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
