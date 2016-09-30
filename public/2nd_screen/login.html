@@ -2,19 +2,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//HbbTV//1.1.1//EN" "http://www.hbbtv.org/dtd/hbbTV-1.1.1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<title>Poker</title>
-		<!-- [LIBRARY] -->
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
- 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-		<script type="text/javascript" src="../lib/keyhandler.js"></script>
-		<!-- [CSS] -->
-		<link rel="stylesheet" href="login.css" type="text/css" />
-		<!-- [SOCKET] -->
-		<script src="/socket.io/socket.io.js"></script>
-		<!-- [Google Analytics]
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Poker</title>
+	<!-- [LIBRARY] -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="../lib/keyhandler.js"></script>
+	<!-- [CSS] -->
+	<link rel="stylesheet" href="login.css" type="text/css" />
+	<!-- [SOCKET] -->
+	<script src="/socket.io/socket.io.js"></script>
+	<!-- [Google Analytics]
 		<script type="text/javascript">
 	    	var _gaq = _gaq || [];
 	        _gaq.push(['_setAccount', 'UA-16498833-6']);
@@ -25,75 +26,138 @@
 	        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	    	})();
     	</script> -->
-	</head>
-	<body onload="init_me()"; >
+</head>
 
-		<center><div id="container">
-			<input id="nick_zone"/>
+<body onload="init_me()" ;>
+
+	<center>
+		<div id="container">
+			<input id="nick_zone" />
 			<div id="play"><span id="playtxt">PLAY</div>
 			<span id="msg"></span>
-			<!-- GAME -->
-			<div id="disconnect"><span id="cross">X</span></div>
-			<img id="card1" src="img/cards/card_back.png" />
-			<img id="card2" src="img/cards/card_back.png" />
-			<span id="player_name"></span>
-			<span id="hand_value"></span>
-			<span id="min_bet"></span>
-			<span id="max_bet"></span>
-			<div id="bet_pot">
-				<div id="pot1">1/3 Pot</div>
-				<div id="pot2">2/3 Pot</div>
-				<div id="pot3">Pot</div>
-				<div id="allin">All in</div>
+				<!-- GAME -->
+				<div id="disconnect"><span id="cross">X</span></div>
+				<img id="card1" src="img/cards/card_back.png" />
+				<img id="card2" src="img/cards/card_back.png" />
+				<span id="player_name"></span>
+				<span id="hand_value"></span>
+				<span id="min_bet"></span>
+				<span id="max_bet"></span>
+				<div id="bet_pot">
+					<div id="pot1">1/3 Pot</div>
+					<div id="pot2">2/3 Pot</div>
+					<div id="pot3">Pot</div>
+					<div id="allin">All in</div>
+				</div>
+				<!-- <img id="aim" src="img/aim.png" /> -->
+				<div id="tot_amount"><span id="raise_amount"></span></div>
+				<div id="choice1"><span id="c1" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span><span id="c1_amount" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span></div>
+				<div id="choice2"><span id="c2" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span><span id="c2_amount" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span></div>
+				<div id="choice3"><span id="c3" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span></div>
+				<div id="slider"></div>
+				<div id="curtain">Waiting for your turn</div>
+				<div id="hide_cards"><span id="hidenshow" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;">Hide/Show</span></div>
 			</div>
-			<!-- <img id="aim" src="img/aim.png" /> -->
-			<div id="tot_amount"><span id="raise_amount"></span></div>
-			<div id="choice1"><span id="c1" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span><span id="c1_amount" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span></div>
-			<div id="choice2"><span id="c2" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span><span id="c2_amount" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span></div>
-			<div id="choice3"><span id="c3" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;"></span></div>
-			<div id="slider"></div>
-			<div id="curtain">Waiting for your turn</div>
-			<div id="hide_cards"><span id="hidenshow" style="position: relative;color: #FFFFFF;font: 2em 'Roboto-bold';margin: auto;">Hide/Show</span></div>
-		</div></center>
-		<script>
+	</center>
+	<script>
 		var socket = io();
 		var channel;
-		var	seat_nb;
+		var seat_nb;
 
 		window.addEventListener("orientationchange", function() {
-  			// Announce the new orientation number
-  			if (window.orientation == 0)
-			{
-				$('#c1').css({'position': 'relative','color': '#FFFFFF', 'font': '2em "Roboto-bold"','margin': 'auto'});
-				$('#c2').css({'position': 'relative','color': '#FFFFFF', 'font': '2em "Roboto-bold"','margin': 'auto'});
-				$('#c3').css({'position': 'relative','color': '#FFFFFF', 'font': '2em "Roboto-bold"','margin': 'auto'});
-				$('#c1_amount').css({'position': 'relative','color': '#FFFFFF', 'font': '2em "Roboto-bold"','margin': 'auto'});
-				$('#c2_amount').css({'position': 'relative','color': '#FFFFFF', 'font': '2em "Roboto-bold"','margin': 'auto'});
-				$('#hidenshow').css({'position': 'relative','color': '#FFFFFF', 'font': '2em "Roboto-bold"','margin': 'auto'});
+			// Announce the new orientation number
+			if (window.orientation == 0) {
+				$('#c1').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '2em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#c2').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '2em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#c3').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '2em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#c1_amount').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '2em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#c2_amount').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '2em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#hidenshow').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '2em "Roboto-bold"',
+					'margin': 'auto'
+				});
 				$('.ui-slider .ui-slider-handle').css('width', '4em');
 				$('.ui-slider .ui-slider-handle').css('height', '4em');
-			}
-			else if (window.orientation == 90)
-			{
-				$('#c1').css({'position': 'relative','color': '#FFFFFF', 'font': '1em "Roboto-bold"','margin': 'auto'});
-				$('#c2').css({'position': 'relative','color': '#FFFFFF', 'font': '1em "Roboto-bold"','margin': 'auto'});
-				$('#c3').css({'position': 'relative','color': '#FFFFFF', 'font': '1em "Roboto-bold"','margin': 'auto'});
-				$('#c1_amount').css({'position': 'relative','color': '#FFFFFF', 'font': '1em "Roboto-bold"','margin': 'auto'});
-				$('#c2_amount').css({'position': 'relative','color': '#FFFFFF', 'font': '1em "Roboto-bold"','margin': 'auto'});
-				$('#hidenshow').css({'position': 'relative','color': '#FFFFFF', 'font': '1em "Roboto-bold"','margin': 'auto'});
+			} else if (window.orientation == 90) {
+				$('#c1').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '1em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#c2').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '1em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#c3').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '1em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#c1_amount').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '1em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#c2_amount').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '1em "Roboto-bold"',
+					'margin': 'auto'
+				});
+				$('#hidenshow').css({
+					'position': 'relative',
+					'color': '#FFFFFF',
+					'font': '1em "Roboto-bold"',
+					'margin': 'auto'
+				});
 				$('.ui-slider .ui-slider-handle').css('width', '1em');
 				$('.ui-slider .ui-slider-handle').css('height', '1em');
 			}
 		}, false);
 
 		socket.emit("get private channel");
-		socket.on("private channel", function(res1, res2)
-		{
-			if (res1 && res2)
-			{
+		socket.on("private channel", function(res1, res2) {
+			if (res1 && res2) {
 				channel = res1;
 				seat_nb = res2;
 			}
+		});
+		socket.on('ping', function(data) {
+			socket.emit('pong', {
+				beat: 1
+			});
 		});
 		socket.on('game over', function() {
 			$('#msg').text('Game over!');
@@ -102,39 +166,41 @@
 			$('#choice2').hide();
 			$('#choice3').hide();
 			socket.disconnect('caca');
-			setTimeout(function(){ window.location = "http://poker.smartgames.tv/seat-disconnected.html"; }, 5000);
+			setTimeout(function() {
+				window.location = "http://poker.smartgames.tv/seat-disconnected.html";
+			}, 5000);
 		});
-		function	on_slidechange(event, ui)
-	    {
-	    	if (g_connected)
-	    		{
-	    			var	current_value =  $("#slider" ).slider( "value");
-	    			var max_bet = $("#max_bet").text();
-	    			max_bet = max_bet.slice(0, max_bet.length - 1);
-	    			var	min_bet = $("#min_bet").text();
-	    			min_bet = min_bet.slice(0, min_bet.length - 1);
-	    			var	 cont = max_bet - min_bet;
-	    			var divi = 100 / current_value;
-	    			var seum = cont / divi;
-	    			var	current_amount = +min_bet + ((max_bet - min_bet) / (100 / current_value));
 
-	    			$("#raise_amount").text(current_amount = Math.floor(current_amount * 100) / 100 + "$");
-	    			$("#c2_amount").text(current_amount);
-	    		}
-	    }
+		function on_slidechange(event, ui) {
+			if (g_connected) {
+				var current_value = $("#slider").slider("value");
+				var max_bet = $("#max_bet").text();
+				max_bet = max_bet.slice(0, max_bet.length - 1);
+				var min_bet = $("#min_bet").text();
+				min_bet = min_bet.slice(0, min_bet.length - 1);
+				var cont = max_bet - min_bet;
+				var divi = 100 / current_value;
+				var seum = cont / divi;
+				var current_amount = +min_bet + ((max_bet - min_bet) / (100 / current_value));
+
+				$("#raise_amount").text(current_amount = Math.floor(current_amount * 100) / 100 + "$");
+				$("#c2_amount").text(current_amount);
+			}
+		}
 		$(function() {
-	    				$("#slider" ).slider();
-	    				$("#slider").on("slide", on_slidechange);
-	    				$("#slider").on("slidestop", on_slidechange);
-	 				});
-	/*	socket.on('sent pot amount', function(pot) {
-			console.log(pot);
-		});*/
-		</script>
-		<!-- [JAVASCRIPT] -->
-		<script type="text/javascript" src="js2/index.js"></script>
-		<script type="text/javascript" src="js2/eventsIndex.js"></script>
-		<script type="text/javascript" src="js2/mouseeventsIndex.js"></script>
- 	</body>
+			$("#slider").slider();
+			$("#slider").on("slide", on_slidechange);
+			$("#slider").on("slidestop", on_slidechange);
+		});
+		/*	socket.on('sent pot amount', function(pot) {
+				console.log(pot);
+			});*/
+	</script>
+	<!-- [JAVASCRIPT] -->
+	<script type="text/javascript" src="js2/index.js"></script>
+	<script type="text/javascript" src="js2/eventsIndex.js"></script>
+	<script type="text/javascript" src="js2/mouseeventsIndex.js"></script>
+</body>
+
 </html>
- <!-- Copyright © 2014 Ngine Networks - All Rights Reserved. -->
+<!-- Copyright © 2014 Ngine Networks - All Rights Reserved. -->
