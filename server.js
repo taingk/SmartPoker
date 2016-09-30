@@ -188,11 +188,11 @@ io.on("connection", function(socket) {
         }
     }
 	socket.on('pong', function(data){
-        console.log("Pong received from client");
+		console.log(data);
     });
-    setTimeout(sendHeartbeat, 25000);
+    setTimeout(sendHeartbeat, 10000);
     function sendHeartbeat(){
-        setTimeout(sendHeartbeat, 25000);
+        setTimeout(sendHeartbeat, 10000);
         io.sockets.emit('ping', { beat : 1 });
     }
 	send_bets(table); // Currents bets on the table.
