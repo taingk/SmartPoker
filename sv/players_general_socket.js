@@ -56,6 +56,8 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("send river", table.game.board[4]);
     });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
+		console.log('Decision ' + decision);
+		console.log('Bet amount ' + bet_amount);
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
@@ -69,8 +71,9 @@ function socket_listens_players(socket, table) {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
-        console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
+		console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
+		console.log('Decision ' + decision);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
         if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
@@ -86,7 +89,8 @@ function socket_listens_players(socket, table) {
                 return one_playing_player_left(table);
             switch_next_player(table);
         }
-        if (decision == "FOLD" && (table.game.round_nb + 1) == table.playing_seats.length);
+        if (decision == "FOLD" && (table.game.round_nb + 1) == table.playing_seats.length)
+			return;
         else
             ++table.game.round_nb;
     });
