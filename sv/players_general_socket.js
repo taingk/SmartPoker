@@ -70,12 +70,12 @@ function socket_listens_players(socket, table) {
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
-		if (table.playing_seats.length < 2)
-			return one_playing_player_left(table);
-    	console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
+        if (table.playing_seats.length < 2)
+            return one_playing_player_left(table);
+        console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
-		decision == "PASS" ? pass_decision(table) : next_decision(table, decision);
+        decision == "PASS" ? pass_decision(table) : next_decision(table, decision);
     });
     socket.on("action done", function() {
         io.to(table.id).emit("action is true");
@@ -101,26 +101,27 @@ function socket_listens_players(socket, table) {
 }
 
 function pass_decision(table) {
-	console.log('Pass decision');
-	if (table.game.round_nb >= table.playing_seats.length)
-		next_moment(table, table.game);
-	else if (table.game.round_nb < table.playing_seats.length)
+    console.log('Pass decision');
+    if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
+        next_moment(table, table.game);
+    else if (table.game.round_nb < table.playing_seats.length)
+        switch_next_player(table);
+	else
 		switch_next_player(table);
-	++table.game.round_nb;
+    ++table.game.round_nb;
 }
 
 function next_decision(table, decision) {
-	console.log('Next decision');
-	if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
-		next_moment(table, table.game);
-	} else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats)) {
-		decision == "FOLD" ? switch_next_player(table) : next_moment(table, table.game);
-	} else {
-		switch_next_player(table);
-	}
-	if (decision == "FOLD" && (table.game.round_nb + 1) == table.playing_seats.length);
-	else
-		++table.game.round_nb;
+    console.log('Next decision');
+    if (decision == "FOLD" && table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats))
+        next_moment(table, table.game);
+    else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
+        decision == "FOLD" ? switch_next_player(table) : next_moment(table, table.game);
+    else
+        switch_next_player(table);
+    if (decision == "FOLD" && (table.game.round_nb + 1) == table.playing_seats.length);
+    else
+        ++table.game.round_nb;
 }
 
 function tryChrono(socket, table) {
@@ -247,10 +248,11 @@ function switch_next_player(table) {
                 return show_down(table, table.game);
             }
         }
-/*        send_option(table, table.game.highlights_pos, "first choice", "check", -1);
-        send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-        send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
-*/      io.to(table.id).emit("action is true");
+        /*        send_option(table, table.game.highlights_pos, "first choice", "check", -1);
+                send_option(table, table.game.highlights_pos, "second choice", "null", -1);
+                send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
+        */
+        io.to(table.id).emit("action is true");
         io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);
     }
 }
@@ -317,10 +319,11 @@ function next_moment(table, game) {
                 return show_down(table, table.game);
             }
         }
-/*        send_option(table, table.game.highlights_pos, "first choice", "check", -1);
-        send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-        send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
-*/		io.to(table.id).emit("action is true");
+        /*        send_option(table, table.game.highlights_pos, "first choice", "check", -1);
+                send_option(table, table.game.highlights_pos, "second choice", "null", -1);
+                send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
+        */
+        io.to(table.id).emit("action is true");
         io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);
     }
 }
