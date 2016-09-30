@@ -22,6 +22,7 @@ function sync_sv() {
         $("#chrono").empty();
     });
     socket.on("action is true", function() {
+		console.log('timeLock est true');
         timeLock = true;
     });
     socket.on("timer action", function(table) {
