@@ -6,8 +6,7 @@ function check_bets(table, seats) {
 
     for (idx = 1; idx <= 6; ++idx) {
         if (table.playing_seats.indexOf(idx) != -1) {
-            if (curseat.player.bankroll)
-                curseat = get_seat(seats, idx);
+			curseat = get_seat(seats, idx);
             if (+curseat.bet > bet)
                 bet = +curseat.bet;
         }
@@ -20,6 +19,10 @@ function check_bets(table, seats) {
     for (idx = 1; idx <= 6; ++idx) {
         if (table.playing_seats.indexOf(idx) != -1) {
             curseat = get_seat(seats, idx);
+			if (!curseat.player.bankroll) {
+				console.log('Ca continue!');
+				continue;
+			}
             if (curseat.bet <= 0 || bet > 0 && curseat.bet != bet) {
                 console.log("BETS DIFFERS");
                 return (0);
