@@ -141,6 +141,11 @@ var table; // Current table handler.
 var private_channel; // Device private channel.
 var clients = [];
 
+function sendHeartbeat(){
+    setTimeout(sendHeartbeat, 8000);
+    io.sockets.emit('ping', { beat : 1 });
+}
+
 io.on("connection", function(socket) {
     var client_ip = socket.request.connection.remoteAddress;
     var curgame;
