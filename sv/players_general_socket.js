@@ -96,9 +96,7 @@ function socket_listens_players(socket, table) {
         io.to(table.id).emit('give Idx', table_id);
     });
     io.to(table.id).emit("pot modification", table.game.pot_amount);
-	socket.on('pong', function(data){
-		console.log("Pong received from client");
-	});
+	socket.on('pong', function(data){});
 }
 
 function pass_decision(table) {

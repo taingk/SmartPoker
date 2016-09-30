@@ -141,11 +141,6 @@ var table; // Current table handler.
 var private_channel; // Device private channel.
 var clients = [];
 
-function sendHeartbeat(){
-    setTimeout(sendHeartbeat, 8000);
-    io.sockets.emit('ping', { beat : 1 });
-}
-
 io.on("connection", function(socket) {
     var client_ip = socket.request.connection.remoteAddress;
     var curgame;
@@ -192,8 +187,15 @@ io.on("connection", function(socket) {
 			socket.disconnect();
         }
     }
-	setTimeout(sendHeartbeat, 8000);
-    send_bets(table); // Currents bets on the table.
+	socket.on('pong', function(data){
+        console.log("Pong received from client");
+    });
+    setTimeout(sendHeartbeat, 25000);
+    function sendHeartbeat(){
+        setTimeout(sendHeartbeat, 25000);
+        io.sockets.emit('ping', { beat : 1 });
+    }
+	send_bets(table); // Currents bets on the table.
     socket_listens_players(socket, table);
     socket_listens_global_settings(socket, table, seat_nb); // Event handler for major events.
 });
