@@ -188,7 +188,6 @@ io.on("connection", function(socket) {
         }
     }
 	socket.on('pong', function(data){
-		console.log(data);
     });
     setTimeout(sendHeartbeat, 10000);
     function sendHeartbeat(){
