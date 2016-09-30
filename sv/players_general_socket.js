@@ -94,6 +94,8 @@ function socket_listens_players(socket, table) {
             get_seat(table.seats, table.game.highlights_pos).state = "busy";
             console.log('qui ? ' + seat_nb, get_seat(table.seats, table.game.highlights_pos).state);
         }
+		if (table.playing_seats.length < 2)
+			return one_playing_player_left(table);
     });
     socket.on("action done", function() {
         io.to(table.id).emit("action is true");
