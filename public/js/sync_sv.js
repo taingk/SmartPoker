@@ -22,7 +22,7 @@ function sync_sv() {
         $("#chrono").empty();
     });
     socket.on("action is true", function() {
-		console.log('timeLock est true');
+        console.log('timeLock est true');
         timeLock = true;
     });
     socket.on("timer action", function(table) {
@@ -36,7 +36,7 @@ function sync_sv() {
                 clearInterval(lockTimer);
                 timeLock = false;
             } else if (sec == 30) {
-				sec = 0;
+                sec = 0;
                 clearInterval(lockTimer);
                 timeLock = false;
                 socket.emit("stop timer action", table);
@@ -99,11 +99,16 @@ function sync_sv() {
     });
     socket.on("highlights", function(seat_idx, new_state) {
         var pos = $("#hSeat" + seat_idx);
+        var idx;
+        var pos_idx;
 
         if (new_state == "off") {
-            pos.hide();
-            pos.css("width", "100%");
-            pos.stop();
+            for (idx = 1; idx <= 6; idx++) {
+                pos_idx = $("#hSeat" + idx);
+                pos_idx.hide();
+				pos_idx.stop();
+                pos_idx.css("width", "100%");
+            }
         } else if (new_state == "on") {
             pos.show();
             pos.css("background-color", "#FE554C");
