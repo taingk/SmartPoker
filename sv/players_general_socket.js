@@ -89,13 +89,13 @@ function socket_listens_players(socket, table) {
         if (decision == "FOLD" && (table.game.round_nb + 1) == table.playing_seats.length);
         else
             ++table.game.round_nb;
-        if (!get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
+    /*    if (!get_seat(table.seats, table.game.highlights_pos).player.bankroll) {
             remove_from_playing_seats(table.playing_seats, seat_nb);
             get_seat(table.seats, table.game.highlights_pos).state = "busy";
             console.log('qui ? ' + seat_nb, get_seat(table.seats, table.game.highlights_pos).state);
         }
 		if (table.playing_seats.length < 2)
-			return one_playing_player_left(table);
+			return one_playing_player_left(table);*/
     });
     socket.on("action done", function() {
         io.to(table.id).emit("action is true");
@@ -244,11 +244,11 @@ function switch_next_player(table) {
                 return show_down(table, table.game);
             }
         }
-        io.to(table.id).emit("action is true");
-        /*send_option(table, table.game.highlights_pos, "first choice", "check", -1);
+//        io.to(table.id).emit("action is true");
+        send_option(table, table.game.highlights_pos, "first choice", "check", -1);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
         send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
-        io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);*/
+//        io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);
     }
 }
 
@@ -314,11 +314,11 @@ function next_moment(table, game) {
                 return show_down(table, table.game);
             }
         }
-        io.to(table.id).emit("action is true");
-        /*send_option(table, table.game.highlights_pos, "first choice", "check", -1);
+//        io.to(table.id).emit("action is true");
+        send_option(table, table.game.highlights_pos, "first choice", "check", -1);
         send_option(table, table.game.highlights_pos, "second choice", "null", -1);
         send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
-        io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);*/
+//        io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);
     }
 }
 
