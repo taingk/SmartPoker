@@ -2,10 +2,13 @@ function check_bets(table, seats) {
     var curseat;
     var bet = 0;
     var idx;
+	var player;
 
     for (idx = 1; idx <= 6; ++idx) {
         if (table.playing_seats.indexOf(idx) != -1) {
             curseat = get_seat(seats, idx);
+			if (!curseat.player.bankroll)
+				console.log('Bonjour tu es fauché ! ' + curseat.player.bankroll, curseat.player.nickname);
             if (+curseat.bet > bet)
                 bet = +curseat.bet;
         }
