@@ -192,9 +192,6 @@ io.on("connection", function(socket) {
 			socket.disconnect();
         }
     }
-	socket.on('pong', function(data){
-		console.log("Pong received from client");
-	});
 	setTimeout(sendHeartbeat, 8000);
     send_bets(table); // Currents bets on the table.
     socket_listens_players(socket, table);
