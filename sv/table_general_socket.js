@@ -116,6 +116,9 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             socket.leave(private_channelx);
             socket.disconnect();
         } else {
+			socket.on("seatNb1", function(){
+				console.log('TEST TEST TEST');
+			});
 			socket.emit("seatNb");
             socket.on("seatNbDc", function(seat_dc) {
                 console.log('Je deco! seat numero ' + seat_dc);
