@@ -61,6 +61,8 @@ function socket_listens_global_settings(socket, table, nb_seat) {
     var private_channelx;
     var i = 0;
     var j = null;
+	var k;
+	var l;
     var seatPlayer;
 
     socket.emit("player name info");
@@ -118,9 +120,6 @@ function socket_listens_global_settings(socket, table, nb_seat) {
         } else if (disconnect != "transport close") {
             console.log("Seat 'waiting' disconnect");
             private_channelx = get_table(table.id, tables).id + seat_nb;
-			console.log(seat_nb);
-			console.log(private_channelx);
-			console.log(private_idx);
             for (; i < private_idx.length; i++) {
                 j = private_idx[i];
                 if (j == private_channelx) {
@@ -128,11 +127,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     io.to(table.id).emit("kick player", j.slice(-1));
                 }
             }
-			console.log('log !! ' + j, i);
-        } else {
-            var k;
-            var l;
-
+        } else if (disconnect == "transport close") {
             for (k = 0, l = 0; k < tables_ids.length; k++) {
                 l = table.id;
                 if (l == tables_ids[k])
@@ -140,5 +135,8 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             }
             console.log(tables_ids);
         }
+		else {
+			console.log('The useless else.');
+		}
     });
 }
