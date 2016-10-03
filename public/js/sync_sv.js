@@ -151,7 +151,7 @@ function sync_sv() {
         $("#btn" + seat_nb).css("visibility", "hidden");
         $("#bet_val" + seat_nb).text('');
         $("#player_cards" + seat_nb).attr("src", "../img/avatar.png");
-        $("#last_action" + seat_nb).text('');
+        $("#last_action" + seat_nb).text('FOLD');
     });
     socket.emit("get board");
     socket.on("send flop", function(card1, card2, card3) {
