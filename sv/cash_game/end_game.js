@@ -102,4 +102,6 @@ function reinit(table, game) {
         console.log("Starting a new game...");
         new_cashgame(1, table);
     }
+	else
+		end_timer(table, game);
 }
