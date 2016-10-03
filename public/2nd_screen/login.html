@@ -64,7 +64,6 @@
 		var channel;
 		var seat_nb;
 
-		console.log(seat_nb);
 		window.addEventListener("orientationchange", function() {
 			// Announce the new orientation number
 			if (window.orientation == 0) {
@@ -155,6 +154,7 @@
 				seat_nb = res2;
 			}
 		});
+		console.log(seat_nb);
 		socket.on('ping', function(data) {
 			socket.emit('pong', {
 				beat: 1

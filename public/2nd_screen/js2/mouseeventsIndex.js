@@ -1,6 +1,8 @@
 var g_nickname;
 var g_connected = 0;
 
+console.log("mouse "+seat_nb);
+
 function register_player() {
 	g_nickname = $("#nick_zone").val();
     if (!g_connected)
