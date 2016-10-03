@@ -1,30 +1,34 @@
+var lock = false;
+
 function clear_board(table, game) {
-	var board = setInterval(function() {
-		for (var idx = 1; idx <= 6; ++idx) {
-			var seat = get_seat(table.seats, idx);
-			if (seat.player.bankroll != undefined) {
-				if (seat.player.bankroll <= 0) {
-					console.log(seat.player.nickname + ' is Game Over!');
-					io.to(get_private_id(table.private_ids, seat.player.seat_nb)).emit('game over');
-				}
-			}
-		}
-		io.to(table.id).emit("remove board");
-		clearInterval(board);
-		end_timer(table, game);
-	}, 10000);
+    var board = setInterval(function() {
+        for (var idx = 1; idx <= 6; ++idx) {
+            var seat = get_seat(table.seats, idx);
+            if (seat.player.bankroll != undefined) {
+                if (seat.player.bankroll <= 0) {
+                    console.log(seat.player.nickname + ' is Game Over!');
+                    io.to(get_private_id(table.private_ids, seat.player.seat_nb)).emit('game over');
+                }
+            }
+        }
+        io.to(table.id).emit("remove board");
+        clearInterval(board);
+        if (!lock)
+            end_timer(table, game);
+    }, 10000);
 }
 
 function end_timer(table, game) {
-	io.to(table.id).emit("chrono", 10, "The game is restarting ...");
+	lock = true;
+    io.to(table.id).emit("chrono", 10, "The game is restarting ...");
     var timer = setInterval(function() {
-		io.to(table.id).emit("chrono off");
-		clearInterval(timer);
-		remove_last_actions(table);
-		if (table.playing_seats.length > 1 || table.players_nb > 1)
-    		reinit(table, game);
-		else
-			end_timer(table, game);
+        io.to(table.id).emit("chrono off");
+        clearInterval(timer);
+        remove_last_actions(table);
+        if (table.playing_seats.length > 1 || table.players_nb > 1)
+            reinit(table, game);
+        else
+            end_timer(table, game);
     }, 10000);
 }
 
@@ -57,12 +61,13 @@ function end_game(table, game, winners, player) {
                 io.to(table.id).emit("show down", player.card1, player.card2, idx);
             }
         }
-		clear_board(table, game);
+        clear_board(table, game);
     } else
-		clear_board(table, game);
+        clear_board(table, game);
 }
 
 function reinit(table, game) {
+	lock = false;
     io.to(table.id).emit("win off", 42);
     for (var idx = 1; idx <= 6; ++idx) {
         var seat = get_seat(table.seats, idx);
@@ -90,8 +95,8 @@ function reinit(table, game) {
     for (idx = 1; idx <= 6; ++idx)
         if (get_seat(table.seats, idx).state === "busy")
             table.playing_seats.push(idx);
-	for (var i = 0; i < table.playing_seats.length; i++)
-		get_seat(table.seats, table.playing_seats[i]).state = "playing";
+    for (var i = 0; i < table.playing_seats.length; i++)
+        get_seat(table.seats, table.playing_seats[i]).state = "playing";
     if (table.playing_seats.length > 1) {
         console.log("Starting a new game...");
         new_cashgame(1, table);
