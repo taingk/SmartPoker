@@ -2,7 +2,7 @@ var g_nickname;
 var g_connected = 0;
 
 function register_player() {
-	g_nickname = $("#nick_zone").val();
+    g_nickname = $("#nick_zone").val();
     if (!g_connected)
         socket.emit("is valid nickname", g_nickname, seat_nb);
 
@@ -226,8 +226,10 @@ function mouse_handler_device() {
     $('#pot3').click(pot3_chosen);
     $('#allin').click(allin_chosen);
     $('#disconnect').click(function() {
-
-		console.log(seat_dc);
+        socket.on("seatNb", function() {
+            console.log('First emit done');
+            socket.emit("seatNbDc", seat_dc);
+        });
         socket.disconnect();
         window.location = "http://poker.smartgames.tv/seat-disconnected.html";
     });
