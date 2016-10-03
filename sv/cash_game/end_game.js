@@ -12,6 +12,7 @@ function clear_board(table, game) {
             }
         }
         io.to(table.id).emit("remove board");
+		io.to(table.id).emit("fold off");
         clearInterval(board);
         if (!lock)
             end_timer(table, game);

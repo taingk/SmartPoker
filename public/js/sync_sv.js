@@ -148,12 +148,20 @@ function sync_sv() {
         $("#histoContent").append(text);
     });
     socket.on("fold", function(seat_nb) {
-		$("#seat"+seat_nb).css('opacity','0.5');
+		$("#seat"+seat_nb).css('opacity', '0.3');
         $("#btn" + seat_nb).css("visibility", "hidden");
         $("#bet_val" + seat_nb).text('');
         $("#player_cards" + seat_nb).attr("src", "../img/avatar.png");
         $("#last_action" + seat_nb).text('FOLD');
     });
+	socket.on("fold off", function() {
+		var id;
+
+		for (id = 1; id <= 6; id++) {
+			$("#seat" + id).css('opacity', '1');
+			$("#hSeat" + id).hide();
+		}
+	});
     socket.emit("get board");
     socket.on("send flop", function(card1, card2, card3) {
         $("#b1").attr("src", "img/cards/" + card1 + ".png");
