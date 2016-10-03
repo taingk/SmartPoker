@@ -68,7 +68,8 @@
 		var url = window.location.href;
 		var str = url.match(regex);
 
-		console.log(str);
+		console.log(str[0].slice(-2));
+		console.log(str[0].slice(-2).substr(-1));
 		window.addEventListener("orientationchange", function() {
 			// Announce the new orientation number
 			if (window.orientation == 0) {
