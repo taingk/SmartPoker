@@ -1,7 +1,13 @@
 var g_nickname;
 var g_connected = 0;
+var seatNb;
 
 function register_player() {
+	socket.emit("seat nb");
+	socket.on("seatNb", function(val) {
+		seatNb = val;
+	});
+	console.log(seatNb);
     g_nickname = $("#nick_zone").val();
     if (!g_connected)
         socket.emit("is valid nickname", g_nickname, seat_nb);

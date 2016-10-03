@@ -160,19 +160,11 @@ io.on("connection", function(socket) {
         socket.join(table.id);
         send_qrcodes(table, table.seats);
         table.game.turn_to = "joiners";
-        socket.on('re init', function(table, game) {
-            var player;
-
-            evalhand(table, game);
-            for (idx = 1; idx <= 6; ++idx) {
-                player = get_seat(table.seats, idx).player;
-                console.log(player);
-                io.to(table.id).emit("show down", player.card1, player.card2, idx);
-            }
-            show_down(table, game);
-        });
     }
     if (device_client) {
+		socket.on("seat nb", function(){
+			io.to(table.id).emit("seatNb", seat_nb);
+		});
         if (!get_private_id(table.private_ids, seat_nb)) {
             hide_qr(table, seat_nb);
             private_channel = get_table(table.id, tables).id + seat_nb; //shortId.generate() + seat_nb;
@@ -184,17 +176,19 @@ io.on("connection", function(socket) {
             console.log("Joining private channel " + private_channel);
         } else {
             console.log("Seat busy");
-			socket.disconnect();
+            socket.disconnect();
         }
     }
-	socket.on('pong', function(data){
-    });
+    socket.on('pong', function(data) {});
     setTimeout(sendHeartbeat, 10000);
-    function sendHeartbeat(){
+
+    function sendHeartbeat() {
         setTimeout(sendHeartbeat, 10000);
-        io.sockets.emit('ping', { beat : 1 });
+        io.sockets.emit('ping', {
+            beat: 1
+        });
     }
-	send_bets(table); // Currents bets on the table.
+    send_bets(table); // Currents bets on the table.
     socket_listens_players(socket, table);
     socket_listens_global_settings(socket, table, seat_nb); // Event handler for major events.
 });
