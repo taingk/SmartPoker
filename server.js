@@ -174,7 +174,7 @@ io.on("connection", function(socket) {
             console.log("Joining private channel " + private_channel);
 			curseat = get_seat(table.seats, seat_nb);
 			curseat.state = "available";
-			console.log(curseat.state);
+			console.log(curseat);
         } else {
             console.log("Seat busy");
             socket.disconnect();
