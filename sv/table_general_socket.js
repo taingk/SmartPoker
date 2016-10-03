@@ -123,12 +123,12 @@ function socket_listens_global_settings(socket, table, nb_seat) {
 			console.log(private_idx);
             for (; i < private_idx.length; i++) {
                 j = private_idx[i];
+				console.log('log !! ' + j, i);
                 if (j == private_channelx) {
                     private_idx.splice(i, 1);
                     io.to(table.id).emit("kick player", j.slice(-1));
                 }
             }
-			console.log('log !! ' + j);
         } else {
             var i;
             var j;
