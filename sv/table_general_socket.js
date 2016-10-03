@@ -63,6 +63,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
     var j = null;
     var seatPlayer;
 
+io.to(get_table(table.id, tables).id).emit("seatNb");
     socket.emit("player name info");
     socket.on("socket nickname on table", function(nickname) {
         if (nickname && socket_nickname != nickname)
@@ -116,7 +117,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             socket.leave(private_channelx);
             socket.disconnect();
         } else {
-            io.to(get_table(table.id, tables).id).emit("seatNb");
+
 /*            socket.on("seatNbDc", function(seat_dc) {
                 console.log('Je deco! seat numero ' + seat_dc);
 				seat_nb = seat_dc;
