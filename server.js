@@ -39,8 +39,10 @@ app.get("/", function(request, response) {
 var router = express.Router(); // Express router we use.
 
 router.get("/pokertable-:name", function(request, response) {
+	console.log('Poker table!');
     table_id = request.params.name; // Table ID is which indicates on the URL.
     if (tables_ids.indexOf(table_id) != -1) {
+		console.log('Device Client False!');
         device_client = false;
         response.sendFile("public/index.html", {
             root: __dirname
@@ -55,6 +57,7 @@ router.get("/pokertable-:name", function(request, response) {
 
 router.get("/seat-:name", function(request, response) {
     if (tables_ids.indexOf(request.params.name.substr(5)) != -1) {
+		console.log('Device client True!!');
         device_client = true;
         seat_nb = +request.params.name[0];
         table_id = request.params.name.substr(5); // Indicate we are not on a table.
