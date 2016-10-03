@@ -162,9 +162,6 @@ io.on("connection", function(socket) {
         table.game.turn_to = "joiners";
     }
     if (device_client) {
-		socket.on("seat nb", function(){
-			io.to(table.id).emit("seatNb", seat_nb);
-		});
         if (!get_private_id(table.private_ids, seat_nb)) {
             hide_qr(table, seat_nb);
             private_channel = get_table(table.id, tables).id + seat_nb; //shortId.generate() + seat_nb;
