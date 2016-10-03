@@ -1,6 +1,7 @@
 var lock = false;
 
 function clear_board(table, game) {
+	io.to(table.id).emit("fold off");
     var board = setInterval(function() {
         for (var idx = 1; idx <= 6; ++idx) {
             var seat = get_seat(table.seats, idx);
@@ -12,7 +13,6 @@ function clear_board(table, game) {
             }
         }
         io.to(table.id).emit("remove board");
-		io.to(table.id).emit("fold off");
         clearInterval(board);
         if (!lock)
             end_timer(table, game);
