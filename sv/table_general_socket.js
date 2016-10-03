@@ -63,14 +63,12 @@ function socket_listens_global_settings(socket, table, nb_seat) {
     var j = null;
     var seatPlayer;
 
-	socket.emit("seatNb");
     socket.emit("player name info");
     socket.on("socket nickname on table", function(nickname) {
         if (nickname && socket_nickname != nickname)
             socket_nickname = nickname;
     });
     socket.on("disconnect", function() {
-		//re_qr(table, nb_seat);
         if (socket_nickname) {
             player_seat_idx = get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname);
             private_channelx = get_table(table.id, tables).id + player_seat_idx;
@@ -118,15 +116,20 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             socket.leave(private_channelx);
             socket.disconnect();
         } else {
-			private_channelx = get_table(table.id, tables).id + seat_nb;
+            socket.emit("seatNb");
+            socket.on("seatNbDc", function(seat_dc) {
+                console.log('Je deco! seat numero ' + seat_dc);
+				seat_nb = seat_dc;
+            });
+            private_channelx = get_table(table.id, tables).id + seat_nb;
 
             console.log("Seat 'waiting' disconnect");
-        	for (; i < private_idx.length; i++) {
+            for (; i < private_idx.length; i++) {
                 j = private_idx[i];
                 if (j == private_channelx) {
                     private_idx.splice(i, 1);
-					io.to(table.id).emit("kick player", seat_nb);
-				}
+                    io.to(table.id).emit("kick player", seat_nb);
+                }
             }
         }
     });

@@ -71,9 +71,8 @@
 		seat_dc = str[0].slice(5,6);
 
 		socket.on("seatNb", function(){
-			console.log('Salut je suis numero '+seat_dc);
+			socket.emit("seatNbDc", seat_dc);
 		});
-
 		window.addEventListener("orientationchange", function() {
 			// Announce the new orientation number
 			if (window.orientation == 0) {
