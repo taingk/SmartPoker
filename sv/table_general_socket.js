@@ -115,17 +115,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             }
             socket.leave(private_channelx);
             socket.disconnect();
-        }/* else if (!device_client) {
-			var i;
-			var j;
-
-			for (i = 0, j = 0; i < tables_ids.length; i++) {
-				j = table.id;
-				if (j == tables_ids[i])
-					tables_ids.splice(i, 1);
-			}
-			console.log(tables_ids);
-        }*/ else {
+        } else if (device_client) {
             console.log("Seat 'waiting' disconnect");
             private_channelx = get_table(table.id, tables).id + seat_nb;
             for (; i < private_idx.length; i++) {
@@ -135,6 +125,16 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     io.to(table.id).emit("kick player", seat_nb);
                 }
             }
+        } else if (!device_client) {
+            var i;
+            var j;
+
+            for (i = 0, j = 0; i < tables_ids.length; i++) {
+                j = table.id;
+                if (j == tables_ids[i])
+                    tables_ids.splice(i, 1);
+            }
+            console.log(tables_ids);
         }
     });
 }
