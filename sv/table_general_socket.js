@@ -122,10 +122,10 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                 j = private_idx[i];
                 if (j == private_channelx) {
                     private_idx.splice(i, 1);
-                    io.to(table.id).emit("kick player", seat_nb);
+                    io.to(table.id).emit("kick player", j.slice(-1));
                 }
             }
-        } else {
+        } /*else {
             var i;
             var j;
 
@@ -135,6 +135,6 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     tables_ids.splice(i, 1);
             }
             console.log(tables_ids);
-        }
+        }*/
     });
 }
