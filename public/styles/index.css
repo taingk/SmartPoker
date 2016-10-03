@@ -24,21 +24,6 @@ body
 	src: url('polices/Roboto-Bold.ttf');
 }
 
-.flip {
-    height: 199px;
-    width: 300px;
-    margin: 0 auto;
-}
-.flip .front {
-    width: 300px;
-    height: auto;
-}
-.flip .back {
-    background: #2184cd;
-    color: #fff;
-    text-align: center;
-}
-
 #chrono {
 	position: absolute;
 	top: 290px;

@@ -116,14 +116,16 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             socket.leave(private_channelx);
             socket.disconnect();
         } else {
-			console.log('else :' + seat_nb);
-			console.log("Seat 'waiting' disconnect");
-            private_channelx = get_table(table.id, tables).id + seat_nb;
-            for (; i < private_idx.length; i++) {
-                j = private_idx[i];
-                if (j == private_channelx) {
-                    private_idx.splice(i, 1);
-                    io.to(table.id).emit("kick player", seat_nb);
+            if (!device_client) {
+                console.log('else :' + seat_nb);
+                console.log("Seat 'waiting' disconnect");
+                private_channelx = get_table(table.id, tables).id + seat_nb;
+                for (; i < private_idx.length; i++) {
+                    j = private_idx[i];
+                    if (j == private_channelx) {
+                        private_idx.splice(i, 1);
+                        io.to(table.id).emit("kick player", seat_nb);
+                    }
                 }
             }
         }
