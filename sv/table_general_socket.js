@@ -125,7 +125,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     io.to(table.id).emit("kick player", seat_nb);
                 }
             }
-        } else if (main_screen) {
+        } else {
             var i;
             var j;
 
