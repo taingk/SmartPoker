@@ -123,20 +123,20 @@ function socket_listens_global_settings(socket, table, nb_seat) {
 			console.log(private_idx);
             for (; i < private_idx.length; i++) {
                 j = private_idx[i];
-				console.log('log !! ' + j, i);
                 if (j == private_channelx) {
                     private_idx.splice(i, 1);
                     io.to(table.id).emit("kick player", j.slice(-1));
                 }
             }
+			console.log('log !! ' + j, i);
         } else {
-            var i;
-            var j;
+            var k;
+            var l;
 
-            for (i = 0, j = 0; i < tables_ids.length; i++) {
-                j = table.id;
-                if (j == tables_ids[i])
-                    tables_ids.splice(i, 1);
+            for (k = 0, l = 0; k < tables_ids.length; k++) {
+                l = table.id;
+                if (l == tables_ids[k])
+                    tables_ids.splice(k, 1);
             }
             console.log(tables_ids);
         }
