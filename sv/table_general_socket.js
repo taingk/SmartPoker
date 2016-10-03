@@ -117,10 +117,10 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             socket.disconnect();
         } else {
 			socket.emit("seatNb");
-/*            socket.on("seatNbDc", function(seat_dc) {
+            socket.on("seatNbDc", function(seat_dc) {
                 console.log('Je deco! seat numero ' + seat_dc);
 				seat_nb = seat_dc;
-            });*/
+            });
             private_channelx = get_table(table.id, tables).id + seat_nb;
 
             console.log("Seat 'waiting' disconnect");
