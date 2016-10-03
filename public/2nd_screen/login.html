@@ -63,7 +63,12 @@
 		var socket = io();
 		var channel;
 		var seat_nb;
+		var seat_dc;
+		var regex = /seat-\d{1}-/;
+		var url = window.location.href;
+		var str = url.match(regex);
 
+		console.log(str);
 		window.addEventListener("orientationchange", function() {
 			// Announce the new orientation number
 			if (window.orientation == 0) {
@@ -154,7 +159,6 @@
 				seat_nb = res2;
 			}
 		});
-		console.log(seat_nb);
 		socket.on('ping', function(data) {
 			socket.emit('pong', {
 				beat: 1
