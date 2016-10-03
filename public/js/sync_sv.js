@@ -148,6 +148,7 @@ function sync_sv() {
         $("#histoContent").append(text);
     });
     socket.on("fold", function(seat_nb) {
+		$("#seat"+seat_nb).css('opacity','0.5');
         $("#btn" + seat_nb).css("visibility", "hidden");
         $("#bet_val" + seat_nb).text('');
         $("#player_cards" + seat_nb).attr("src", "../img/avatar.png");
