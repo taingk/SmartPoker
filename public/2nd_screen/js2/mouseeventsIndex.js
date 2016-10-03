@@ -226,11 +226,6 @@ function mouse_handler_device() {
     $('#pot3').click(pot3_chosen);
     $('#allin').click(allin_chosen);
     $('#disconnect').click(function() {
-		socket.emit('seatNb1');
-        socket.on("seatNb", function() {
-            console.log('First emit done');
-            socket.emit("seatNbDc", seat_dc);
-        });
         socket.disconnect();
         window.location = "http://poker.smartgames.tv/seat-disconnected.html";
     });
