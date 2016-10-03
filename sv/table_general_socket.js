@@ -118,6 +118,9 @@ function socket_listens_global_settings(socket, table, nb_seat) {
         } else if (disconnect != "transport close") {
             console.log("Seat 'waiting' disconnect");
             private_channelx = get_table(table.id, tables).id + seat_nb;
+			console.log(seat_nb);
+			console.log(private_channelx);
+			console.log(private_idx);
             for (; i < private_idx.length; i++) {
                 j = private_idx[i];
                 if (j == private_channelx) {
