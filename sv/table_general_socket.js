@@ -125,7 +125,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     tables_ids.splice(i, 1);
             }
             console.log(tables_ids);
-        } else if (disconnect == "client namespace disconnect") {
+        } else /*if (disconnect == "client namespace disconnect") */{
 			console.log("Seat 'waiting' disconnect");
 			private_channelx = get_table(table.id, tables).id + seat_nb;
 			for (; i < private_idx.length; i++) {
@@ -136,6 +136,5 @@ function socket_listens_global_settings(socket, table, nb_seat) {
 				}
 			}
         }
-		console.log(disconnect);
     });
 }
