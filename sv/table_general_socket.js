@@ -69,7 +69,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             socket_nickname = nickname;
     });
     socket.on("disconnect", function() {
-		re_qr(table, nb_seat);
+		//re_qr(table, nb_seat);
         if (socket_nickname) {
             player_seat_idx = get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname);
             private_channelx = get_table(table.id, tables).id + player_seat_idx;
