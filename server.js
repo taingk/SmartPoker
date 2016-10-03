@@ -23,7 +23,6 @@ var fs = require("fs"); // Files parsing utility.
 var device_client; // Identify client type.
 var _ = require("underscore"); // Required.
 var texas = require("texas"); // Poker Hands evaluator we use.
-var main_screen = false;
 
 /*******************************************/
 /*          	ROUTING                    */
@@ -40,7 +39,6 @@ app.get("/", function(request, response) {
 var router = express.Router(); // Express router we use.
 
 router.get("/pokertable-:name", function(request, response) {
-	main_screen = true;
     table_id = request.params.name; // Table ID is which indicates on the URL.
     if (tables_ids.indexOf(table_id) != -1) {
         device_client = false;
@@ -57,7 +55,6 @@ router.get("/pokertable-:name", function(request, response) {
 
 router.get("/seat-:name", function(request, response) {
     if (tables_ids.indexOf(request.params.name.substr(5)) != -1) {
-		main_screen = false;
         device_client = true;
         seat_nb = +request.params.name[0];
         table_id = request.params.name.substr(5); // Indicate we are not on a table.
