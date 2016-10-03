@@ -226,6 +226,8 @@ function mouse_handler_device() {
     $('#pot3').click(pot3_chosen);
     $('#allin').click(allin_chosen);
     $('#disconnect').click(function() {
+
+		console.log(seat_dc);
         socket.disconnect();
         window.location = "http://poker.smartgames.tv/seat-disconnected.html";
     });
