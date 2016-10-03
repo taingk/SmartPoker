@@ -115,7 +115,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             }
             socket.leave(private_channelx);
             socket.disconnect();
-        } else if (!device_client) {
+        }/* else if (!device_client) {
 			var i;
 			var j;
 
@@ -125,8 +125,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
 					tables_ids.splice(i, 1);
 			}
 			console.log(tables_ids);
-        } else {
-            console.log('else :' + seat_nb);
+        }*/ else {
             console.log("Seat 'waiting' disconnect");
             private_channelx = get_table(table.id, tables).id + seat_nb;
             for (; i < private_idx.length; i++) {
