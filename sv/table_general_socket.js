@@ -116,8 +116,11 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             socket.leave(private_channelx);
             socket.disconnect();
         } else {
-			if (seat_nb == "undefined")
-				return;
+			var i;
+
+			for (i = 0; i < tables_ids.length; i++)
+				console.log(tables_ids);
+
             console.log('else :' + seat_nb);
             console.log("Seat 'waiting' disconnect");
             private_channelx = get_table(table.id, tables).id + seat_nb;
