@@ -172,6 +172,9 @@ io.on("connection", function(socket) {
             });
             socket.join(private_channel);
             console.log("Joining private channel " + private_channel);
+			curseat = get_seat(table.seats, seat_nb);
+			curseat.state = "waiting";
+			console.log(curseat.state);
         } else {
             console.log("Seat busy");
             socket.disconnect();
