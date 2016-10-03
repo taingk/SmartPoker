@@ -9,6 +9,7 @@
 	<!-- [LIBRARY] -->
 	<script type="text/javascript" src="lib/jquery.js"></script>
 	<script type="text/javascript" src="lib/ngine.js"></script>
+	<script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
 	<!-- <script type="text/javascript" src="lib/keyhandler.js"></script> -->
 	<!-- [CSS] -->
 	<link rel="stylesheet" href="styles/index.css" type="text/css" />
@@ -33,8 +34,8 @@
 	<script>
 		var socket = io();
 		$(document).ready(function() {
-//			var nb = prompt('Hello, how many players ?');
-//			socket.emit('nb player', nb);
+			//			var nb = prompt('Hello, how many players ?');
+			//			socket.emit('nb player', nb);
 			socket.on("hide qrcode", function(seat_nb) {
 				$("#qr_spot" + seat_nb).css("visibility", "hidden");
 				$("#scan_msg" + seat_nb).css("visibility", "hidden");
@@ -68,6 +69,21 @@
 		});
 	</script>
 	<div id="container"><span class="loading">Loading table...</span></div>
+	<div class="flip">
+		<div class="front">
+			<h3>Some text in the front!</h3>
+		</div>
+		<div class="back">
+			<h3>Some Text in the Back!</h3>
+		</div>
+	</div>
+	<script>
+		$(function() {
+			$(".flip").flip({
+				trigger: 'hover'
+			});
+		});
+	</script>
 	<div id="chrono">
 	</div>
 	<div id="last_action"></div>
