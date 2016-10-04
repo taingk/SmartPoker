@@ -71,72 +71,73 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             socket_nickname = nickname;
     });
     socket.on("disconnect", function(disconnect) {
-            if (socket_nickname) {
-                player_seat_idx = get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname);
-                private_channelx = get_table(table.id, tables).id + player_seat_idx;
-                for (; i < private_idx.length; i++) {
-                    j = private_idx[i];
-                    if (j == private_channelx)
+        if (socket_nickname) {
+            player_seat_idx = get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname);
+            private_channelx = get_table(table.id, tables).id + player_seat_idx;
+            for (; i < private_idx.length; i++) {
+                j = private_idx[i];
+                if (j == private_channelx)
+                    private_idx.splice(i, 1);
+            }
+            console.log(private_idx);
+            if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
+                console.log('in waiting dc');
+                remove_from_seat_array(table, socket_nickname);
+                remove_from_playing_seats(table.playing_seats, player_seat_idx);
+                console.log("table playing seats " + table.playing_seats);
+                io.to(table.id).emit("bet", player_seat_idx, 0);
+                io.to(table.id).emit("kick player", player_seat_idx);
+                if (table.players_nb > 0)
+                    --table.players_nb;
+            } else if (table.game.moment == "preflop" || table.game.moment == "flop" || table.game.moment == "turn" || table.game.moment == "river") {
+                console.log('in game dc');
+                remove_from_seat_array(table, socket_nickname);
+                remove_from_playing_seats(table.playing_seats, player_seat_idx);
+                seatPlayer = get_seat(table.seats, player_seat_idx);
+                seatPlayer.player = -1;
+                seatPlayer.bet = 0;
+                console.log("table playing seats " + table.playing_seats);
+                if (player_seat_idx == table.game.highlights_pos) {
+                    io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
+                    table.game.highlights_pos = 0;
+                    if (table.playing_seats.length == 1)
+                        console.log('return one player left');
+                    else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
+                        next_moment(table, table.game);
+                    else
+                        switch_next_player(table)
+                }
+                io.to(table.id).emit("bet", player_seat_idx, 0);
+                io.to(table.id).emit("kick player", player_seat_idx);
+                if (table.players_nb > 0)
+                    --table.players_nb;
+                if (table.playing_seats.length == 1) {
+                    return one_playing_player_left(table);
+                }
+            }
+            socket.leave(private_channelx);
+            socket.disconnect();
+        } else if (disconnect != "transport close") {
+            console.log("Seat 'waiting' disconnect");
+            private_channelx = get_table(table.id, tables).id + seat_nb;
+            for (; i < private_idx.length; i++) {
+                j = private_idx[i];
+                if (j == private_channelx) {
+                    if (j.slice(-1) > 0 && j.slice(-1) < 7) {
                         private_idx.splice(i, 1);
-                }
-                console.log(private_idx);
-                if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
-                    console.log('in waiting dc');
-                    remove_from_seat_array(table, socket_nickname);
-                    remove_from_playing_seats(table.playing_seats, player_seat_idx);
-                    console.log("table playing seats " + table.playing_seats);
-                    io.to(table.id).emit("bet", player_seat_idx, 0);
-                    io.to(table.id).emit("kick player", player_seat_idx);
-                    if (table.players_nb > 0)
-                        --table.players_nb;
-                } else if (table.game.moment == "preflop" || table.game.moment == "flop" || table.game.moment == "turn" || table.game.moment == "river"){
-                    console.log('in game dc');
-                    remove_from_seat_array(table, socket_nickname);
-                    remove_from_playing_seats(table.playing_seats, player_seat_idx);
-                    seatPlayer = get_seat(table.seats, player_seat_idx);
-                    seatPlayer.player = -1;
-                    seatPlayer.bet = 0;
-                    console.log("table playing seats " + table.playing_seats);
-                    if (player_seat_idx == table.game.highlights_pos) {
-                        io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
-                        table.game.highlights_pos = 0;
-                        if (table.playing_seats.length == 1)
-                            console.log('return one player left');
-                        else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
-                            next_moment(table, table.game);
-                        else
-                            switch_next_player(table)
-                    }
-                    io.to(table.id).emit("bet", player_seat_idx, 0);
-                    io.to(table.id).emit("kick player", player_seat_idx);
-                    if (table.players_nb > 0)
-                        --table.players_nb;
-                    if (table.playing_seats.length == 1) {
-                        return one_playing_player_left(table);
+                        io.to(table.id).emit("kick player", j.slice(-1));
                     }
                 }
-                socket.leave(private_channelx);
-                socket.disconnect();
-            } else if (disconnect != "transport close") {
-                console.log("Seat 'waiting' disconnect");
-                private_channelx = get_table(table.id, tables).id + seat_nb;
-                for (; i < private_idx.length; i++) {
-                    j = private_idx[i];
-                    if (j == private_channelx) {
-                        if (j.slice(-1) > 0 && j.slice(-1) < 7) {
-                            private_idx.splice(i, 1);
-                            io.to(table.id).emit("kick player", j.slice(-1));
-                        }
-                    }
-                } else if (disconnect == "transport close") {
-                    for (k = 0, l = 0; k < tables_ids.length; k++) {
-                        l = table.id;
-                        if (l == tables_ids[k])
-                            tables_ids.splice(k, 1);
-                    }
-                    console.log(tables_ids);
-                } else {
-                    console.log('The useless else.');
-                }
-            });
-    }
+            }
+        } else if (disconnect == "transport close") {
+            for (k = 0, l = 0; k < tables_ids.length; k++) {
+                l = table.id;
+                if (l == tables_ids[k])
+                    tables_ids.splice(k, 1);
+            }
+            console.log(tables_ids);
+        } else {
+            console.log('The useless else.');
+        }
+    });
+}
