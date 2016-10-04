@@ -158,10 +158,6 @@
 				seat_nb = res2;
 			}
 		});
-		socket.on('ping', function(data) {
-			console.log(data);
-			socket.emit('pong', data);
-		});
 		socket.on('game over', function() {
 			$('#msg').text('Game over!');
 			$('#curtain').hide();
