@@ -177,7 +177,7 @@ io.on("connection", function(socket) {
             socket.disconnect();
         }
     }
-    socket.on('pong', function(data) {});
+    socket.on('pong', function(data) {console.log('Pong');});
     setTimeout(sendHeartbeat, 10000);
 
     function sendHeartbeat() {
