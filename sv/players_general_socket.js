@@ -56,6 +56,8 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("send river", table.game.board[4]);
     });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
+		if (decision == "FOLD" || decision == "PASS")
+			console.log('Je fold ou je pass ' + decision, channel_id);
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
@@ -63,6 +65,7 @@ function socket_listens_players(socket, table) {
 
         if (table.playing_seats.length == 2)
             table.game.highlights_pos = seat_nb;
+		console.log('Salut je voulais fold '+seat_nb, table.game.highlights_pos);
         if (seat_nb != table.game.highlights_pos)
             return;
         if (bet_amount && bet_amount[bet_amount.length - 1] == "$") {
