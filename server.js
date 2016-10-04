@@ -23,7 +23,7 @@ var fs = require("fs"); // Files parsing utility.
 var device_client; // Identify client type.
 var _ = require("underscore"); // Required.
 var texas = require("texas"); // Poker Hands evaluator we use.
-var manager = io.Manager('http://82.127.122.187:1337', { autoConnect: false });
+var manager = io.socket('http://82.127.122.187:1337', { autoConnect: false });
 
 setTimeout(function(){
   manager.open(); // Won't start connecting until now
