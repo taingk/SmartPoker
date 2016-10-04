@@ -102,7 +102,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     table.game.highlights_pos = 0;
                     if (table.playing_seats.length == 1)
                         console.log('return one player left');
-                    else if (table.game.round_nb > table.playing_seats.length)
+                    else if (table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats))
                         next_moment(table, table.game);
                     else
                         switch_next_player(table)

@@ -104,8 +104,6 @@ function pass_decision(table) {
     console.log('Pass decision');
     if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
         next_moment(table, table.game);
-    else if (table.game.round_nb < table.playing_seats.length)
-        switch_next_player(table);
 	else
 		switch_next_player(table);
     ++table.game.round_nb;
