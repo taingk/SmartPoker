@@ -23,6 +23,8 @@ var fs = require("fs"); // Files parsing utility.
 var device_client; // Identify client type.
 var _ = require("underscore"); // Required.
 var texas = require("texas"); // Poker Hands evaluator we use.
+io.set('heartbeat timeout', 4000);
+io.set('heartbeat interval', 2000);
 
 /*******************************************/
 /*          	ROUTING                    */
