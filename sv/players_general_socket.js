@@ -70,10 +70,10 @@ function socket_listens_players(socket, table) {
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
+		io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         if (table.playing_seats.length < 2)
             return one_playing_player_left(table);
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
-        io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
         decision == "PASS" ? pass_decision(table) : next_decision(table, decision);
     });
