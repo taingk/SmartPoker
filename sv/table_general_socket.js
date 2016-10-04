@@ -117,7 +117,6 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                 }
             }
             socket.leave(private_channelx);
-            socket.disconnect();
         } else if (disconnect != "transport close") {
             console.log("Seat 'waiting' disconnect");
             private_channelx = get_table(table.id, tables).id + seat_nb;
@@ -130,6 +129,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     }
                 }
             }
+			socket.leave(private_channelx);
         } else if (disconnect == "transport close") {
             for (k = 0, l = 0; k < tables_ids.length; k++) {
                 l = table.id;
@@ -140,5 +140,6 @@ function socket_listens_global_settings(socket, table, nb_seat) {
         } else {
             console.log('The useless else.');
         }
+		socket.disconnect();
     });
 }
