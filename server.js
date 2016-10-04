@@ -13,7 +13,11 @@ var cfg = require("./conf.json"); // Configuration file, mainly to use aliases/m
 var express = require("express"); // Web application framework we use.
 var app = express(); // Express server handle.
 var http = require("http").createServer(app); // Web server object with express server as request listener.
-var io = require("socket.io")(http); // Socket interface, server side.
+var io = require("socket.io")(http, {
+    'pingTimeout': '10000',
+    'pingInterval': '2500',
+    'reconnection': 'false'
+}); // Socket interface, server side.
 var nsp = require("express-namespace"); // Namespace utility.
 var shortId = require("shortid"); // Universal short unique-ID generator.
 var table_name; // Common table name prefix.
@@ -23,9 +27,6 @@ var fs = require("fs"); // Files parsing utility.
 var device_client; // Identify client type.
 var _ = require("underscore"); // Required.
 var texas = require("texas"); // Poker Hands evaluator we use.
-io.set('pingTimeout', 10000);
-io.set('pingInterval', 2500);
-io.set('reconnection', false);
 
 /*******************************************/
 /*          	ROUTING                    */
@@ -157,7 +158,7 @@ io.on("connection", function(socket) {
             '2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', 'td', 'jd', 'qd', 'kd', '1d',
             '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', 'th', 'jh', 'qh', 'kh', '1h');
         console.log("Creating a new table...\nTable ID: " + table_id);
-		console.log(tables_ids);
+        console.log(tables_ids);
         curgame = new Game(deck, -1, -1, cfg.conf.small_blind, -1, cfg.conf.big_blind, 0, 0, 0, 0, "waiting", 0, new Array());
         table = new_table(table_id, 0, "waiting", new Array(), +cfg.conf.start_bankroll, new_table_seats(), curgame, new Array(), new Array()); // We're also calling a function.
         tables.push(table);
