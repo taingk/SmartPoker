@@ -177,15 +177,12 @@ io.on("connection", function(socket) {
             socket.disconnect();
         }
     }
-    socket.on('pong', function(data) {console.log('Pong');});
-    setTimeout(sendHeartbeat, 10000);
-
-    function sendHeartbeat() {
-        setTimeout(sendHeartbeat, 10000);
-        io.sockets.emit('ping', {
-            beat: 1
-        });
-    }
+    setInterval(function(){
+		io.to(table.id).emit('ping', {beat: 1});
+	}, 10000);
+	socket.on('pong', function(data) {
+		console.log(data);
+	});
     send_bets(table); // Currents bets on the table.
     socket_listens_players(socket, table);
     socket_listens_global_settings(socket, table, seat_nb); // Event handler for major events.

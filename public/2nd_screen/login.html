@@ -159,9 +159,8 @@
 			}
 		});
 		socket.on('ping', function(data) {
-			socket.emit('pong', {
-				beat: 1
-			});
+			console.log(data);
+			socket.emit('pong', data);
 		});
 		socket.on('game over', function() {
 			$('#msg').text('Game over!');
