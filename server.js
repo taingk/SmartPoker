@@ -181,7 +181,7 @@ io.on("connection", function(socket) {
 		io.to(table.id).emit('ping', {beat: 1});
 	}, 10000);
 	socket.on('pong', function(data) {
-		console.log(data);
+		console.log('data '+data);
 	});
     send_bets(table); // Currents bets on the table.
     socket_listens_players(socket, table);
