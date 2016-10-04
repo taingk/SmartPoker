@@ -58,11 +58,10 @@ function socket_listens_players(socket, table) {
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
         if (!decision || !channel_id)
             return;
-        var seat_nb = +channel_id[channel_id.length - 1];
+        var seat_nb = table.game.highlights_pos;
+		console.log(seat_nb, channel_id[channel_id.length - 1]);
         var player = get_seat(table.seats, seat_nb).player;
-
-		if (table.playing_seats.length == 2)
-            table.game.highlights_pos = seat_nb;
+//			channel_id[channel_id.length - 1];
         if (bet_amount && bet_amount[bet_amount.length - 1] == "$") {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
