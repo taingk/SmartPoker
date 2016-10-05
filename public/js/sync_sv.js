@@ -30,7 +30,6 @@ function sync_sv() {
     socket.on("timer action", function(table) {
         var sec = 0;
 
-		clearInterval(lockTimer);
     	lockTimer = setInterval(function() {
             sec++;
 			console.log('secondes '+sec);
@@ -42,6 +41,7 @@ function sync_sv() {
                 sec = 0;
                 timeLock = false;
                 socket.emit("stop timer action", table);
+				clearInterval(lockTimer);
 				clearInterval(lockTimer);
             }
         }, 1000);
