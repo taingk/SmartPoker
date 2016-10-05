@@ -7,6 +7,7 @@ var timeLock = false;
 var lockTimer;
 var lock = false;
 var lockEnd = false;
+var sec = 0;
 
 function sync_sv() {
     socket.emit("get seated players");
@@ -28,23 +29,7 @@ function sync_sv() {
         timeLock = true;
     });
     socket.on("timer action", function(table) {
-        var sec = 0;
-
-    	lockTimer = setInterval(function() {
-            sec++;
-			console.log('secondes '+sec);
-            if (timeLock && sec != 30) {
-				sec = 0
-                clearInterval(lockTimer);
-                timeLock = false;
-            } else if (sec == 30) {
-                sec = 0;
-                timeLock = false;
-                socket.emit("stop timer action", table);
-				clearInterval(lockTimer);
-				clearInterval(lockTimer);
-            }
-        }, 1000);
+		lockTimer = setTimeout(timer_action, 1000);
     });
     socket.on("seated players info", function(seat, seat_idx) {
         $("#qr" + seat_idx).css("visibility", "hidden");
@@ -249,6 +234,21 @@ function sync_sv() {
     socket.on("lock is false end", function(faux) {
         lockEnd = faux;
     })
+}
+
+function timer_action() {
+	sec++;
+	console.log('secondes '+sec);
+	if (timeLock && sec != 30) {
+		sec = 0
+		clearTimeout(lockTimer);
+		timeLock = false;
+	} else if (sec == 30) {
+		sec = 0;
+		timeLock = false;
+		socket.emit("stop timer action", table);
+		clearTimeout(lockTimer);
+	}
 }
 
 function check_timeLock(action) {
