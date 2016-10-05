@@ -33,13 +33,13 @@ function socket_listens_players(socket, table) {
             for (var i = 0; i < table.playing_seats.length; i++)
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
             console.log(table.game.moment);
-            if (table.players_nb >= 1 && table.game.moment == "waiting") {
+//            if (table.players_nb >= 1 && table.game.moment == "waiting") {
 				io.to(table.id).emit("start game", socket, table);
 /*                if (lock)
                     return;
                 else
                     tryChrono(socket, table);
-*/            }
+*///            }
             return;
         }
     });
