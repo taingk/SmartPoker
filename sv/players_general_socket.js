@@ -34,13 +34,14 @@ function socket_listens_players(socket, table) {
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
             console.log(table.game.moment);
             if (table.players_nb >= 1 && table.game.moment == "waiting") {
-				io.to(table.id).emit("what is lock");
-				socket.on("lock is true or false", function(lock) {
-					if (lock)
-	                    return;
-	                else
-	                    tryChrono(socket, table);
-				});
+                io.to(table.id).emit("what is lock");
+                socket.on("lock is true or false", function(lock) {
+					console.log('1 '+ lock);
+                    if (lock)
+                        return;
+                    else
+                        tryChrono(socket, table);
+                });
             }
             return;
         }
@@ -71,7 +72,7 @@ function socket_listens_players(socket, table) {
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
-		io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
+        io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         if (table.playing_seats.length < 2)
             return one_playing_player_left(table);
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
@@ -105,8 +106,8 @@ function pass_decision(table) {
     console.log('Pass decision');
     if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats))
         next_moment(table, table.game);
-	else
-		switch_next_player(table);
+    else
+        switch_next_player(table);
     ++table.game.round_nb;
 }
 
@@ -126,13 +127,15 @@ function next_decision(table, decision) {
 function tryChrono(socket, table) {
     io.to(table.id).emit("lock is true", true);
     io.to(table.id).emit("chrono", 45, "The game will begin ...");
+	console.log('2');
     var timer = setInterval(function() {
+		console.log('chrono off');
         clearInterval(timer);
         io.to(table.id).emit("chrono off");
         if (table.playing_seats.length > 1) {
             console.log("Starting a new game...");
             new_cashgame(socket, table);
-			io.to(table.id).emit("lock is false", false);
+            io.to(table.id).emit("lock is false", false);
         } else
             tryChrono(socket, table);
     }, 45000);
