@@ -24,7 +24,6 @@ function end_timer(table, game) {
         clearInterval(timer);
         remove_last_actions(table);
         if (table.playing_seats.length > 1 || table.players_nb > 1) {
-			console.log('reinit');
             reinit(table, game);
             io.to(table.id).emit("lock is false end", false);
         } else {
@@ -102,6 +101,7 @@ function reinit(table, game) {
     if (table.playing_seats.length > 1) {
         console.log("Starting a new game...");
         new_cashgame(1, table);
-    } else
+    } else {
         end_timer(table, game);
+	}
 }

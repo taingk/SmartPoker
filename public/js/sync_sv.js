@@ -122,7 +122,6 @@ function sync_sv() {
         }
     });
     socket.on("i fold", function(decision, private_ids, zero) {
-        console.log('I fold or I pass ok');
         socket.emit("player decision", decision, private_ids, zero);
     })
     socket.on("bankroll modification", function(seat_idx, player) {

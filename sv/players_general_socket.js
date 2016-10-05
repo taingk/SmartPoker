@@ -62,12 +62,10 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("send river", table.game.board[4]);
     });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
-		console.log('quel est ta decision putaing '+decision);
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
         var player = get_seat(table.seats, seat_nb).player;
-		console.log('je suis la');
         if (table.playing_seats.length == 2)
             table.game.highlights_pos = seat_nb;
         if (seat_nb != table.game.highlights_pos) {
@@ -78,11 +76,10 @@ function socket_listens_players(socket, table) {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
-		console.log('treat decision inc');
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         if (table.playing_seats.length < 2) {
-			console.log('je rentre');
+			console.log('je ne dois pas rentrer ici!');
             return one_playing_player_left(table);
 		}
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
