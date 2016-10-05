@@ -123,7 +123,7 @@ function next_decision(table, decision) {
 }
 
 function tryChrono(socket, table) {
-    lock = true;
+    /*lock = true;
     io.to(table.id).emit("chrono", 45, "The game will begin ...");
     var timer = setInterval(function() {
         clearInterval(timer);
@@ -134,7 +134,8 @@ function tryChrono(socket, table) {
             lock = false;
         } else
             tryChrono(socket, table);
-    }, 45000);
+    }, 45000);*/
+	io.to(table.id).emit("play game", socket, table);
 }
 
 function treat_decision(table, seat, decision, bet_amount, player, seat_nb, rc) {
