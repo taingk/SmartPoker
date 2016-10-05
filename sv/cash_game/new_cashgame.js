@@ -201,7 +201,6 @@ function game_routine(socket, table) {
     var sb; // small blind.
     var bb; // big blind.
 
-	table = get_table(table.id, tables);
     table.game.d_pos = find_dealer(table, table.game);
     table.game.sb_pos = find_sb(table, table.game);
     table.game.bb_pos = find_bb(table, table.game);

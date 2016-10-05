@@ -241,15 +241,6 @@ function sync_sv() {
     socket.on("lock is false", function(faux) {
         lock = faux;
     })
-    socket.on("what is lock end", function(table, game) {
-        socket.emit("lock is true or false end", lockEnd, table, game);
-    });
-    socket.on("lock is true end", function(vrai) {
-        lockEnd = vrai;
-    })
-    socket.on("lock is false end", function(faux) {
-        lockEnd = faux;
-    })
 }
 
 function check_timeLock(action) {

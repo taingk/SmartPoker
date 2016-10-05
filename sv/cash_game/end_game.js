@@ -1,3 +1,5 @@
+var lock = false;
+
 function clear_board(table, game) {
     io.to(table.id).emit("fold off");
     var board = setInterval(function() {
@@ -11,13 +13,13 @@ function clear_board(table, game) {
             }
         }
         io.to(table.id).emit("remove board");
-        io.to(table.id).emit("what is lock end", get_table(table.id, tables), game);
+        end_timer(table, game);
         clearInterval(board);
     }, 10000);
 }
 
 function end_timer(table, game) {
-    io.to(table.id).emit("lock is true end", true);
+    lock = true;
     io.to(table.id).emit("chrono", 10, "The game is restarting ...");
     var timer = setInterval(function() {
         io.to(table.id).emit("chrono off");
@@ -25,7 +27,7 @@ function end_timer(table, game) {
         remove_last_actions(table);
         if (table.playing_seats.length > 1 || table.players_nb > 1) {
             reinit(table, game);
-            io.to(table.id).emit("lock is false end", false);
+            lock= false;
         } else {
             end_timer(table, game);
         }
