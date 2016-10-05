@@ -36,17 +36,17 @@ function socket_listens_players(socket, table) {
             if (table.players_nb >= 1 && table.game.moment == "waiting") {
 				console.log('first');
                 io.to(table.id).emit("what is lock");
-                socket.on("lock is true or false", function(lock) {
-					console.log('1 '+ lock);
-                    if (lock)
-                        return;
-                    else
-                        tryChrono(socket, table);
-                });
             }
             return;
         }
     });
+	socket.on("lock is true or false", function(lock) {
+		console.log('1 '+ lock);
+		if (lock)
+			return;
+		else
+			tryChrono(socket, table);
+	});
     socket.on("get seated players", function() {
         send_seats_infos(table);
     });
