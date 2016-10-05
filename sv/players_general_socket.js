@@ -35,7 +35,7 @@ function socket_listens_players(socket, table) {
             console.log(table.game.moment);
 //            if (table.players_nb >= 1 && table.game.moment == "waiting") {
 			console.log(socket);
-			io.to(table.id).emit("start game lock", socket, get_table(table.id, tables));
+			start_game_lock(socket, table)
 /*                if (lock)
                     return;
                 else
@@ -101,6 +101,11 @@ function socket_listens_players(socket, table) {
         io.to(table.id).emit('give Idx', table_id);
     });
     io.to(table.id).emit("pot modification", table.game.pot_amount);
+}
+
+function start_game_lock(socket, table) {
+	console.log('function  game lock');
+	io.to(table.id).emit("start game lock", socket, get_table(table.id, tables));
 }
 
 function pass_decision(table) {
