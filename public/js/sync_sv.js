@@ -7,7 +7,6 @@ var timeLock = false;
 var lockTimer;
 var lock = false;
 var lockEnd = false;
-var sec = 0;
 
 function sync_sv() {
     socket.emit("get seated players");
@@ -29,7 +28,22 @@ function sync_sv() {
         timeLock = true;
     });
     socket.on("timer action", function(table) {
-		lockTimer = setTimeout(timer_action, 1000, table);
+        var sec = 0;
+
+        lockTimer = setInterval(function() {
+            sec++;
+			console.log(sec);
+            if (timeLock && sec != 30) {
+				sec = 0;
+                timeLock = false;
+				clearInterval(lockTimer);
+            } else if (sec == 30) {
+                sec = 0;
+                timeLock = false;
+                socket.emit("stop timer action", table);
+				clearInterval(lockTimer);
+            }
+        }, 1000);
     });
     socket.on("seated players info", function(seat, seat_idx) {
         $("#qr" + seat_idx).css("visibility", "hidden");
@@ -106,6 +120,7 @@ function sync_sv() {
         }
     });
     socket.on("i fold", function(decision, private_ids, zero) {
+        console.log('I fold or I pass ok');
         socket.emit("player decision", decision, private_ids, zero);
     })
     socket.on("bankroll modification", function(seat_idx, player) {
@@ -124,6 +139,7 @@ function sync_sv() {
             $("#last_action" + seat_idx).text((Math.floor(amount * 100)) / 100 + "$");
         }
     });
+
     socket.on("last action", function(decision, seat_nb, amount) {
         amount == 0 ? amount = "" : amount = " " + amount + "$";
         var nick = $("#player_name" + seat_nb).text();
@@ -233,23 +249,6 @@ function sync_sv() {
     socket.on("lock is false end", function(faux) {
         lockEnd = faux;
     })
-}
-
-function timer_action() {
-	sec++;
-	console.log('secondes '+sec);
-	if (timeLock && sec != 30) {
-		sec = 0
-		clearTimeout(lockTimer);
-		timeLock = false;
-	} else if (sec == 30) {
-		sec = 0;
-		timeLock = false;
-		socket.emit("stop timer action", table);
-		clearTimeout(lockTimer);
-	} else {
-		socket.emit("timer action", table);
-	}
 }
 
 function check_timeLock(action) {
