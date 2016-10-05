@@ -29,7 +29,7 @@ function sync_sv() {
         timeLock = true;
     });
     socket.on("timer action", function(table) {
-		lockTimer = setTimeout(timer_action, 1000);
+		lockTimer = setTimeout(timer_action, 1000, table);
     });
     socket.on("seated players info", function(seat, seat_idx) {
         $("#qr" + seat_idx).css("visibility", "hidden");
@@ -124,7 +124,6 @@ function sync_sv() {
             $("#last_action" + seat_idx).text((Math.floor(amount * 100)) / 100 + "$");
         }
     });
-
     socket.on("last action", function(decision, seat_nb, amount) {
         amount == 0 ? amount = "" : amount = " " + amount + "$";
         var nick = $("#player_name" + seat_nb).text();
@@ -248,6 +247,8 @@ function timer_action() {
 		timeLock = false;
 		socket.emit("stop timer action", table);
 		clearTimeout(lockTimer);
+	} else {
+		socket.emit("timer action", table);
 	}
 }
 
