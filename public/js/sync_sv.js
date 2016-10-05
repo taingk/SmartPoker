@@ -5,7 +5,6 @@ var newTables;
 var push = true;
 var timeLock = false;
 var lockTimer;
-var lock = false;
 
 function sync_sv() {
     socket.emit("get seated players");
@@ -64,13 +63,6 @@ function sync_sv() {
         $("#player_bankroll" + player.seat_nb).text((Math.floor(+player.bankroll * 100)) / 100 + "$");
         $("#player_cards" + player.seat_nb).css("visibility", "visible");
     });
-	socket.on("start game lock", function(socket, table){
-		console.log('start game');
-		if (lock)
-			return;
-		else
-			tryChrono(socket, table);
-	});
     socket.on("kick player", function(seat_nb) {
         $("#qr" + seat_nb).css("visibility", "visible");
         $("#qr_spot" + seat_nb).css("visibility", "visible");
@@ -145,6 +137,7 @@ function sync_sv() {
             $("#last_action" + seat_idx).text((Math.floor(amount * 100)) / 100 + "$");
         }
     });
+
     socket.on("last action", function(decision, seat_nb, amount) {
         amount == 0 ? amount = "" : amount = " " + amount + "$";
         var nick = $("#player_name" + seat_nb).text();
@@ -236,22 +229,6 @@ function sync_sv() {
     socket.on("win off", function() {
         $("#winner, #card1_1, #card2_1, #card1_2, #card2_2, #card1_3, #card2_3, #card1_4, #card2_4, #card1_5, #card2_5, #card1_6, #card2_6").css("visibility", "hidden");
     });
-}
-
-function tryChrono(socket, table) {
-    lock = true;
-    io.to(table.id).emit("chrono", 45, "The game will begin ...");
-    var timer = setInterval(function() {
-        clearInterval(timer);
-        io.to(table.id).emit("chrono off");
-        if (table.playing_seats.length > 1) {
-            console.log("Starting a new game...");
-			socket.emit("play cashgame", socket, table)
-            lock = false;
-        } else {
-            tryChrono(socket, table);
-		}
-    }, 45000);
 }
 
 function check_timeLock(action) {
