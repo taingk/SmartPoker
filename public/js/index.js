@@ -7,7 +7,6 @@ function 	init()
 									if (jQueryReady && keyhandlerReady && eventIndexReady && mouseEventReady)
 									{
 										lib.init();
-										sync_sv();
 										mouse_handler();
 										clearInterval(end);
 									}
