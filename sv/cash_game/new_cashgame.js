@@ -187,12 +187,9 @@ function send_blinds(table, sb, bb) {
 
 function ask_first_player(table, game) {
     io.to(table.id).emit("timer action", table, get_seat(table.seats, game.highlights_pos).player.nickname);
-	table = get_table(table.id, tables);
-    //start_timer(table, get_seat(table.seats, game.highlights_pos).player.nickname);
-    send_option(table, table.game.highlights_pos, "first choice", "call", /*game.highlights_pos === game.sb_pos ? game.curbet / 2 :*/ table.game.curbet);
-    send_option(table, table.game.highlights_pos, "second choice", "null", -1 /*game.highlights_pos === game.sb_pos ? game.curbet * 2 / 2 : game.curbet */ );
-    send_option(table, table.game.highlights_pos, "third choice", "fold", table.game.highlights_pos, 0);
-    /* SEE PLAYER GENERAL SOCKETS FOR THE FOLLOWING */
+    send_option(table, game.highlights_pos, "first choice", "call", /*game.highlights_pos === game.sb_pos ? game.curbet / 2 :*/ game.curbet);
+    send_option(table, game.highlights_pos, "second choice", "null", -1 /*game.highlights_pos === game.sb_pos ? game.curbet * 2 / 2 : game.curbet */ );
+    send_option(table, game.highlights_pos, "third choice", "fold", game.highlights_pos, 0);
 }
 
 function players_wait_mode(table) {
@@ -204,6 +201,7 @@ function game_routine(socket, table) {
     var sb; // small blind.
     var bb; // big blind.
 
+	table = get_table(table.id, tables);
     table.game.d_pos = find_dealer(table, table.game);
     table.game.sb_pos = find_sb(table, table.game);
     table.game.bb_pos = find_bb(table, table.game);
