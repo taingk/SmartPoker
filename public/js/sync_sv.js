@@ -30,6 +30,7 @@ function sync_sv() {
     socket.on("timer action", function(table) {
         var sec = 0;
 
+		clearInterval(lockTimer);
     	lockTimer = setInterval(function() {
             sec++;
 			console.log('secondes '+sec);
@@ -39,9 +40,9 @@ function sync_sv() {
                 timeLock = false;
             } else if (sec == 30) {
                 sec = 0;
-                clearInterval(lockTimer);
                 timeLock = false;
                 socket.emit("stop timer action", table);
+				clearInterval(lockTimer);
             }
         }, 1000);
     });
@@ -120,7 +121,6 @@ function sync_sv() {
         }
     });
     socket.on("i fold", function(decision, private_ids, zero) {
-        console.log('I fold or I pass ok');
         socket.emit("player decision", decision, private_ids, zero);
     })
     socket.on("bankroll modification", function(seat_idx, player) {
