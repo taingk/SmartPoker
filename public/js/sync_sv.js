@@ -241,6 +241,7 @@ function sync_sv() {
         lock = faux;
     })
 	socket.on("what is lock end", function(table, game) {
+		console.log('suis je deux fois ?');
 		socket.emit("lock is true or false end", lockEnd, table, game);
 	});
 	socket.on("lock is true end", function(vrai) {
