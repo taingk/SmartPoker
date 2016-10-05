@@ -62,6 +62,7 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("send river", table.game.board[4]);
     });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
+		console.log('quel est ta decision putaing '+decision);
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
@@ -342,8 +343,6 @@ function one_playing_player_left(table) {
     io.to(table.id).emit("bankroll modification", table.playing_seats[0], player);
     if (table.game.moment != "waiting" || table.game.moment != "waiting end game")
         return end_game(table, table.game, 42, player);
-    else {
-		console.log("JE SUIS LA HEIN");
+    else
         return;
-	}
 }
