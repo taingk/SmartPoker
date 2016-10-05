@@ -32,7 +32,7 @@ function sync_sv() {
 
     	lockTimer = setInterval(function() {
             sec++;
-			console.log('secondes 'sec);
+			console.log('secondes '+sec);
             if (timeLock && sec != 30) {
                 clearInterval(lockTimer);
                 timeLock = false;
