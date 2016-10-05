@@ -187,10 +187,11 @@ function send_blinds(table, sb, bb) {
 
 function ask_first_player(table, game) {
     io.to(table.id).emit("timer action", table, get_seat(table.seats, game.highlights_pos).player.nickname);
+	table = get_table(table.id, tables);
     //start_timer(table, get_seat(table.seats, game.highlights_pos).player.nickname);
-    send_option(table, game.highlights_pos, "first choice", "call", /*game.highlights_pos === game.sb_pos ? game.curbet / 2 :*/ game.curbet);
-    send_option(table, game.highlights_pos, "second choice", "null", -1 /*game.highlights_pos === game.sb_pos ? game.curbet * 2 / 2 : game.curbet */ );
-    send_option(table, game.highlights_pos, "third choice", "fold", game.highlights_pos, 0);
+    send_option(table, table.game.highlights_pos, "first choice", "call", /*game.highlights_pos === game.sb_pos ? game.curbet / 2 :*/ table.game.curbet);
+    send_option(table, table.game.highlights_pos, "second choice", "null", -1 /*game.highlights_pos === game.sb_pos ? game.curbet * 2 / 2 : game.curbet */ );
+    send_option(table, table.game.highlights_pos, "third choice", "fold", table.game.highlights_pos, 0);
     /* SEE PLAYER GENERAL SOCKETS FOR THE FOLLOWING */
 }
 
