@@ -34,6 +34,7 @@ function sync_sv() {
             sec++;
 			console.log('secondes '+sec);
             if (timeLock && sec != 30) {
+				sec = 0
                 clearInterval(lockTimer);
                 timeLock = false;
             } else if (sec == 30) {
