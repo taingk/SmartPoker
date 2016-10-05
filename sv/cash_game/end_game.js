@@ -1,5 +1,3 @@
-var lock = false;
-
 function clear_board(table, game) {
     io.to(table.id).emit("fold off");
     var board = setInterval(function() {
@@ -19,7 +17,6 @@ function clear_board(table, game) {
 }
 
 function end_timer(table, game) {
-    lock = true;
     io.to(table.id).emit("chrono", 10, "The game is restarting ...");
     var timer = setInterval(function() {
         io.to(table.id).emit("chrono off");
@@ -27,7 +24,6 @@ function end_timer(table, game) {
         remove_last_actions(table);
         if (table.playing_seats.length > 1 || table.players_nb > 1) {
             reinit(table, game);
-            lock= false;
         } else {
             end_timer(table, game);
         }
@@ -69,9 +65,7 @@ function end_game(table, game, winners, player) {
 }
 
 function reinit(table, game) {
-
-    lock = false;
-    io.to(table.id).emit("win off", 42);
+	io.to(table.id).emit("win off", 42);
     for (var idx = 1; idx <= 6; ++idx) {
         var seat = get_seat(table.seats, idx);
         seat.player.card_1 = "undefined";

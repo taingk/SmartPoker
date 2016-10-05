@@ -73,7 +73,6 @@ function socket_listens_players(socket, table) {
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         if (table.playing_seats.length < 2) {
-			console.log('je ne dois pas rentrer ici!');
             return one_playing_player_left(table);
 		}
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
