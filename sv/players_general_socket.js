@@ -34,6 +34,7 @@ function socket_listens_players(socket, table) {
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
             console.log(table.game.moment);
             if (table.players_nb >= 1 && table.game.moment == "waiting") {
+				console.log('first');
                 io.to(table.id).emit("what is lock");
                 socket.on("lock is true or false", function(lock) {
 					console.log('1 '+ lock);
