@@ -107,13 +107,6 @@ function register_player() {
     socket.on("init cards", function() {
         $("#card1, #card2").attr("src", "img/cards/card_back.png");
     });
-	socket.on("start game", function(socket, table){
-		console.log('start game');
-	/*	if (lock)
-			return;
-		else
-			tryChrono(socket, table);
-	*/});
 }
 
 function choice1_chose() {
