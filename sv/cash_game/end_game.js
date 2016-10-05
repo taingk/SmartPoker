@@ -1,7 +1,5 @@
-var lock = false;
-
 function clear_board(table, game) {
-	io.to(table.id).emit("fold off");
+    io.to(table.id).emit("fold off");
     var board = setInterval(function() {
         for (var idx = 1; idx <= 6; ++idx) {
             var seat = get_seat(table.seats, idx);
@@ -13,23 +11,24 @@ function clear_board(table, game) {
             }
         }
         io.to(table.id).emit("remove board");
+        io.to(table.id).emit("what is lock end");
         clearInterval(board);
-        if (!lock)
-            end_timer(table, game);
     }, 10000);
 }
 
 function end_timer(table, game) {
-	lock = true;
+    io.to(table.id).emit("lock is true end", true);
     io.to(table.id).emit("chrono", 10, "The game is restarting ...");
     var timer = setInterval(function() {
         io.to(table.id).emit("chrono off");
         clearInterval(timer);
         remove_last_actions(table);
-        if (table.playing_seats.length > 1 || table.players_nb > 1)
+        if (table.playing_seats.length > 1 || table.players_nb > 1) {
             reinit(table, game);
-        else
+            io.to(table.id).emit("lock is false end", false);
+        } else {
             end_timer(table, game);
+        }
     }, 10000);
 }
 
@@ -69,7 +68,7 @@ function end_game(table, game, winners, player) {
 
 function reinit(table, game) {
 
-	lock = false;
+    lock = false;
     io.to(table.id).emit("win off", 42);
     for (var idx = 1; idx <= 6; ++idx) {
         var seat = get_seat(table.seats, idx);
@@ -102,7 +101,6 @@ function reinit(table, game) {
     if (table.playing_seats.length > 1) {
         console.log("Starting a new game...");
         new_cashgame(1, table);
-    }
-	else
-		end_timer(table, game);
+    } else
+        end_timer(table, game);
 }

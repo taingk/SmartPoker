@@ -6,6 +6,7 @@ var push = true;
 var timeLock = false;
 var lockTimer;
 var lock = false;
+var lockEnd = false;
 
 function sync_sv() {
     socket.emit("get seated players");
@@ -231,7 +232,6 @@ function sync_sv() {
         $("#winner, #card1_1, #card2_1, #card1_2, #card2_2, #card1_3, #card2_3, #card1_4, #card2_4, #card1_5, #card2_5, #card1_6, #card2_6").css("visibility", "hidden");
     });
     socket.on("what is lock", function() {
-		console.log(lock);
         socket.emit("lock is true or false", lock);
     });
     socket.on("lock is true", function(vrai) {
@@ -240,6 +240,15 @@ function sync_sv() {
     socket.on("lock is false", function(faux) {
         lock = faux;
     })
+	socket.on("what is lock end", function() {
+		socket.emit("lock is true or false", lockEnd);
+	});
+	socket.on("lock is true end", function(vrai) {
+		lockEnd = vrai;
+	})
+	socket.on("lock is false end", function(faux) {
+		lockEnd = faux;
+	})
 }
 
 function check_timeLock(action) {

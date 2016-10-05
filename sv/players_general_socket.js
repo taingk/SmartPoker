@@ -33,19 +33,22 @@ function socket_listens_players(socket, table) {
             for (var i = 0; i < table.playing_seats.length; i++)
                 get_seat(table.seats, table.playing_seats[i]).state = "playing";
             console.log(table.game.moment);
-            if (table.players_nb >= 1 && table.game.moment == "waiting") {
-				console.log('first');
+            if (table.players_nb >= 1 && table.game.moment == "waiting")
                 io.to(table.id).emit("what is lock");
-            }
             return;
         }
     });
-	socket.on("lock is true or false", function(lock) {
-		console.log('1 '+ lock);
-		if (lock)
+    socket.on("lock is true or false", function(lock) {
+        if (lock)
+            return;
+        else
+            tryChrono(socket, table);
+    });
+	socket.on("lock is true or false end", function(lock) {
+	    if (lock)
 			return;
 		else
-			tryChrono(socket, table);
+	        end_timer(table, game);
 	});
     socket.on("get seated players", function() {
         send_seats_infos(table);
@@ -128,9 +131,7 @@ function next_decision(table, decision) {
 function tryChrono(socket, table) {
     io.to(table.id).emit("lock is true", true);
     io.to(table.id).emit("chrono", 45, "The game will begin ...");
-	console.log('2');
     var timer = setInterval(function() {
-		console.log('chrono off');
         clearInterval(timer);
         io.to(table.id).emit("chrono off");
         if (table.playing_seats.length > 1) {
