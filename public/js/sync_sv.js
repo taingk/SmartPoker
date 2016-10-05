@@ -241,7 +241,7 @@ function sync_sv() {
         lock = faux;
     })
 	socket.on("what is lock end", function() {
-		socket.emit("lock is true or false", lockEnd);
+		socket.emit("lock is true or false end", lockEnd);
 	});
 	socket.on("lock is true end", function(vrai) {
 		lockEnd = vrai;
