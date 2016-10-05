@@ -5,6 +5,7 @@ var newTables;
 var push = true;
 var timeLock = false;
 var lockTimer;
+var lock = false;
 
 function sync_sv() {
     socket.emit("get seated players");
@@ -106,7 +107,7 @@ function sync_sv() {
             for (idx = 1; idx <= 6; idx++) {
                 pos_idx = $("#hSeat" + idx);
                 pos_idx.hide();
-				pos_idx.stop();
+                pos_idx.stop();
                 pos_idx.css("width", "100%");
             }
         } else if (new_state == "on") {
@@ -118,7 +119,7 @@ function sync_sv() {
         }
     });
     socket.on("i fold", function(decision, private_ids, zero) {
-		console.log('I fold or I pass ok');
+        console.log('I fold or I pass ok');
         socket.emit("player decision", decision, private_ids, zero);
     })
     socket.on("bankroll modification", function(seat_idx, player) {
@@ -149,20 +150,20 @@ function sync_sv() {
         $("#histoContent").append(text);
     });
     socket.on("fold", function(seat_nb) {
-		$("#seat"+seat_nb).css('opacity', '0.3');
+        $("#seat" + seat_nb).css('opacity', '0.3');
         $("#btn" + seat_nb).css("visibility", "hidden");
         $("#bet_val" + seat_nb).text('');
         $("#player_cards" + seat_nb).attr("src", "../img/avatar.png");
         $("#last_action" + seat_nb).text('FOLD');
     });
-	socket.on("fold off", function() {
-		var id;
+    socket.on("fold off", function() {
+        var id;
 
-		for (id = 1; id <= 6; id++) {
-			$("#seat" + id).css('opacity', '1');
-			$("#hSeat" + id).hide();
-		}
-	});
+        for (id = 1; id <= 6; id++) {
+            $("#seat" + id).css('opacity', '1');
+            $("#hSeat" + id).hide();
+        }
+    });
     socket.emit("get board");
     socket.on("send flop", function(card1, card2, card3) {
         $("#b1").attr("src", "img/cards/" + card1 + ".png");
@@ -229,9 +230,15 @@ function sync_sv() {
     socket.on("win off", function() {
         $("#winner, #card1_1, #card2_1, #card1_2, #card2_2, #card1_3, #card2_3, #card1_4, #card2_4, #card1_5, #card2_5, #card1_6, #card2_6").css("visibility", "hidden");
     });
-	socket.on("play game", function(socket, game) {
-		console.log('salut salut');
-	});
+    socket.on("what is lock", function() {
+        socket.emit("lock is true or false", lock);
+    });
+    socket.on("lock is true", function(vrai) {
+        lock = vrai;
+    })
+    socket.on("lock is false", function(faux) {
+        lock = faux;
+    })
 }
 
 function check_timeLock(action) {
