@@ -11,7 +11,7 @@ function clear_board(table, game) {
             }
         }
         io.to(table.id).emit("remove board");
-        io.to(table.id).emit("what is lock end");
+        io.to(table.id).emit("what is lock end", table, game);
         clearInterval(board);
     }, 10000);
 }

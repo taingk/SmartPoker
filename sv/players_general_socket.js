@@ -44,7 +44,7 @@ function socket_listens_players(socket, table) {
         else
             tryChrono(socket, table);
     });
-	socket.on("lock is true or false end", function(lock) {
+	socket.on("lock is true or false end", function(lock, table, game) {
 	    if (lock)
 			return;
 		else
