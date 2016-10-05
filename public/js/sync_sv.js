@@ -7,7 +7,7 @@ var timeLock = false;
 var lockTimer;
 var lock = false;
 var lockEnd = false;
-
+var i = 0;
 function sync_sv() {
     socket.emit("get seated players");
     socket.on("chrono", function(i, str) {
@@ -241,7 +241,9 @@ function sync_sv() {
         lock = faux;
     })
 	socket.on("what is lock end", function(table, game) {
-		console.log('suis je deux fois ?');
+
+		i++;
+		console.log(i);
 		socket.emit("lock is true or false end", lockEnd, table, game);
 	});
 	socket.on("lock is true end", function(vrai) {
