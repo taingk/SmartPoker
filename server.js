@@ -181,6 +181,18 @@ io.on("connection", function(socket) {
             socket.disconnect();
         }
     }
+	socket.on("lock is true or false", function(lock) {
+		if (lock)
+			return;
+		else
+			tryChrono(socket, table);
+	});
+	socket.on("lock is true or false end", function(lock, table, game) {
+		if (lock)
+			return;
+		else
+			end_timer(table, game);
+	});
     send_bets(table); // Currents bets on the table.
     socket_listens_players(socket, table);
     socket_listens_global_settings(socket, table, seat_nb); // Event handler for major events.

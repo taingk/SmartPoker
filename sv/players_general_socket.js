@@ -38,18 +38,6 @@ function socket_listens_players(socket, table) {
             return;
         }
     });
-    socket.on("lock is true or false", function(lock) {
-        if (lock)
-            return;
-        else
-            tryChrono(socket, table);
-    });
-	socket.on("lock is true or false end", function(lock, table, game) {
-	    if (lock)
-			return;
-		else
-	        end_timer(table, game);
-	});
     socket.on("get seated players", function() {
         send_seats_infos(table);
     });
