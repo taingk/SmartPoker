@@ -77,7 +77,6 @@ function socket_listens_players(socket, table) {
             bet_amount = bet_amount.slice(0, bet_amount.length - 1);
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
-		console.log('TU ne va pas fold enculé '+decision);
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
         io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
         if (table.playing_seats.length < 2)
@@ -343,6 +342,8 @@ function one_playing_player_left(table) {
     io.to(table.id).emit("bankroll modification", table.playing_seats[0], player);
     if (table.game.moment != "waiting" || table.game.moment != "waiting end game")
         return end_game(table, table.game, 42, player);
-    else
+    else {
+		console.log("JE SUIS LA HEIN");
         return;
+	}
 }
