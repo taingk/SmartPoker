@@ -5,6 +5,7 @@ var newTables;
 var push = true;
 var timeLock = false;
 var lockTimer;
+var lock = false;
 
 function sync_sv() {
     socket.emit("get seated players");
@@ -229,6 +230,28 @@ function sync_sv() {
     socket.on("win off", function() {
         $("#winner, #card1_1, #card2_1, #card1_2, #card2_2, #card1_3, #card2_3, #card1_4, #card2_4, #card1_5, #card2_5, #card1_6, #card2_6").css("visibility", "hidden");
     });
+	socket.on("start game", function(socket, table){
+		if (lock)
+			return;
+		else
+			tryChrono(socket, table);
+	});
+}
+
+function tryChrono(socket, table) {
+    lock = true;
+    io.to(table.id).emit("chrono", 45, "The game will begin ...");
+    var timer = setInterval(function() {
+        clearInterval(timer);
+        io.to(table.id).emit("chrono off");
+        if (table.playing_seats.length > 1) {
+            console.log("Starting a new game...");
+			socket.emit("play cashgame", socket, table)
+            lock = false;
+        } else {
+            tryChrono(socket, table);
+		}
+    }, 45000);
 }
 
 function check_timeLock(action) {
