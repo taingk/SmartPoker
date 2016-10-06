@@ -104,12 +104,18 @@ function socket_listens_players(socket, table) {
 
 function pass_decision(table) {
     console.log('Pass decision');
-    if (table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats))
+    if (table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
+		console.log('1');
         next_moment(table, table.game);
-	else if (table.game.round_nb == table.playing_seats.length && check_bets(table, table.seats))
+	}
+	else if (table.game.round_nb == table.playing_seats.length && check_bets(table, table.seats)) {
+		console.log('2');
 		switch_next_player(table)
-    else
+	}
+    else {
+		console.log('3');
         switch_next_player(table);
+	}
     ++table.game.round_nb;
 }
 
