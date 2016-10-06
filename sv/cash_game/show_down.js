@@ -11,17 +11,22 @@ function	evalwin(table, game)
 			player = get_seat(table.seats, idx).player;
 		if (player.rank_value)
 		{
-			console.log('Je rentre ici');
+			console.log('Je rentre ici '+ player.rank_value);
 			if (!best || player.rank_value > best.rank_value)
 				best = player;
 			else if (player.rank_value === best.rank_value)
 				winners.push(player);
 		}
+		else {
+			console.log('Je rentre dans le else ');
+			winners.push('42');
+		}
 		++idx;
 	}
 	if (!winners.length)
 		winners.push(best);
-		console.log('winners array '+ winners);
+		for (var i = 6; i >= 1; i--)
+			console.log('winners array '+ winners[i]);
 	return winners;
 }
 
