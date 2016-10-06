@@ -110,16 +110,16 @@ function pass_decision(table) {
 		console.log('1');
         next_moment(table, table.game);
 	}
-	else if (table.game.round_nb == table.playing_seats.length && check_bets(table, table.seats, pass)) {
+	else if (table.game.round_nb <= table.playing_seats.length && check_bets(table, table.seats, pass)) {
 		console.log('2');
 		switch_next_player(table)
-	}
+	}/*
     else {
 		console.log('3');
 		if (table.game.round_nb >= table.playing_seats.length)
 			return next_moment(table, table.game);
         switch_next_player(table);
-	}
+	}*/
     ++table.game.round_nb;
 }
 
