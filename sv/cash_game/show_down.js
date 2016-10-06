@@ -9,14 +9,10 @@ function evalwin(table, game) {
             player = get_seat(table.seats, idx).player;
             if (player.rank_value != 'undefined') {
                 console.log('Je rentre ici ' + player.rank_value);
-                if (!best || player.rank_value > best.rank_value){
+                if (!best || player.rank_value > best.rank_value)
                     best = player;
-					console.log(best);
-				}
-                else if (player.rank_value === best.rank_value) {
+                else if (player.rank_value === best.rank_value)
                     winners.push(player);
-					console.log(player);
-				}
             } else {
                 winners.push(best);
             }
@@ -37,11 +33,9 @@ function show_down(table, game) {
     if (!(winners = evalwin(table, game)))
         console.log("Can't retrieve winner(s)! Game error!");
     console.log("And the winner is..." + winners[0].nickname);
-
     for (var i = 1; i < 7; i++) {
         io.to(get_private_id(table.private_ids, i)).emit("cancel buttons", "hidden");
     }
-
     if (winners.length == 1) {
         winners[0].bankroll += game.pot_amount;
         io.to(table.id).emit("bankroll modification", winners[0].seat_nb, winners[0]);
