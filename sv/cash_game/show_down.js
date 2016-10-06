@@ -14,8 +14,8 @@ function evalwin(table, game) {
                 else if (player.rank_value === best.rank_value)
                     winners.push(player);
             } else {
-                console.log('Je rentre dans le else ');
-                winners.push('42');
+				player.rank_value = 42;
+                winners.push(player);
             }
         }
         ++idx;
@@ -23,7 +23,8 @@ function evalwin(table, game) {
     if (!winners.length)
         winners.push(best);
     for (var i = 6; i >= 1; i--)
-        console.log('winners array ' + winners[i]);
+		if (get_seat(table.seats, i).state == "playing")
+        	console.log('winners array ' + winners[i].nickname);
     return winners;
 }
 
