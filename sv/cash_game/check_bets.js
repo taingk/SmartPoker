@@ -21,7 +21,7 @@ function check_bets(table, seats) {
             curseat = get_seat(seats, idx);
 			if (!curseat.player.bankroll) {
 				console.log('Ca continue!');
-				continue;
+				break;
 			}
             if (curseat.bet <= 0 || bet > 0 && curseat.bet != bet) {
                 console.log("BETS DIFFERS");
