@@ -9,9 +9,10 @@ function evalwin(table, game) {
             player = get_seat(table.seats, idx).player;
             if (player.rank_value != 'undefined') {
                 console.log('Je rentre ici ' + player.rank_value);
-                if (!best || player.rank_value > best.rank_value)
+                if (!best || player.rank_value > best.rank_value){
                     best = player;
 					console.log(best);
+				}
                 else if (player.rank_value === best.rank_value) {
                     winners.push(player);
 					console.log(player);
