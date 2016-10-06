@@ -11,10 +11,11 @@ function evalwin(table, game) {
                 console.log('Je rentre ici ' + player.rank_value);
                 if (!best || player.rank_value > best.rank_value)
                     best = player;
-                else if (player.rank_value === best.rank_value)
+                else if (player.rank_value === best.rank_value) {
                     winners.push(player);
+					console.log(player);
+				}
             } else {
-				player.rank_value = 42;
                 winners.push(player);
             }
         }
@@ -22,9 +23,6 @@ function evalwin(table, game) {
     }
     if (!winners.length)
         winners.push(best);
-    for (var i = 6; i >= 1; i--)
-		if (get_seat(table.seats, i).state == "playing")
-        	console.log('winners array ' + winners[i].nickname);
     return winners;
 }
 
@@ -36,6 +34,7 @@ function show_down(table, game) {
     table.game.moment = "waiting end game";
     if (!(winners = evalwin(table, game)))
         console.log("Can't retrieve winner(s)! Game error!");
+	console.log(winners[0]);
     console.log("And the winner is..." + winners[0].nickname);
 
     for (var i = 1; i < 7; i++) {
