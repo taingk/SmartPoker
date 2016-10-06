@@ -19,6 +19,7 @@ function evalwin(table, game) {
     }
     if (!winners.length)
         winners.push(best);
+	console.log(winners);
     return winners;
 }
 
@@ -28,9 +29,12 @@ function show_down(table, game) {
 
     table = get_table(table.id, tables);
     table.game.moment = "waiting end game";
-    if (!(winners = evalwin(table, game)))
+    if (!(winners = evalwin(table, game))) {
         console.log("Can't retrieve winner(s)! Game error!");
-    console.log("And the winner is..." + winners[0].nickname);
+		winners = 42;
+	}
+	else
+    	console.log("And the winner is..." + winners[0].nickname);
 
     for (var i = 1; i < 7; i++) {
         io.to(get_private_id(table.private_ids, i)).emit("cancel buttons", "hidden");
