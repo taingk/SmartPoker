@@ -19,8 +19,6 @@ function check_bets(table, seats) {
     for (idx = 1; idx <= 6; ++idx) {
         if (table.playing_seats.indexOf(idx) != -1) {
             curseat = get_seat(seats, idx);
-			if (!curseat.player.bankroll)
-				bet = curseat.bet
             else if (curseat.bet <= 0 || bet > 0 && curseat.bet != bet) {
                 console.log("BETS DIFFERS");
                 return (0);
