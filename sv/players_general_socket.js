@@ -56,6 +56,10 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("send river", table.game.board[4]);
     });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
+		if (decision == "PASS" && table.game.round_nb != 0)
+		 	decision = "CALL";
+		else
+			decision = "CHECK";
         if (!decision || !channel_id)
             return;
         var seat_nb = +channel_id[channel_id.length - 1];
