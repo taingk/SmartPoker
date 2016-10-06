@@ -21,7 +21,9 @@ function check_bets(table, seats, pass) {
         if (table.playing_seats.indexOf(idx) != -1) {
             curseat = get_seat(seats, idx);
             if (curseat.bet <= 0 || bet > 0 && curseat.bet != bet) {
-                console.log("BETS DIFFERS");
+				console.log(pass);
+                pass ? console.log("SAME BETS") : console.log("BETS DIFFERS");
+				pass ? bet = curseat.bet : return pass;
                 return pass;
             }
             if (curseat.bet > 0)

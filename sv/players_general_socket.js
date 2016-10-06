@@ -106,18 +106,12 @@ function pass_decision(table) {
 	var pass = 1;
 
     console.log('Pass decision');
-    if (table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats)) {
-		console.log('1');
+    if (table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats))
         next_moment(table, table.game);
-	}
-	else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats, pass)) {
-		console.log('2');
+	else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats, pass))
 		switch_next_player(table);
-	}
-    else {
-		console.log('3');
+    else
         switch_next_player(table);
-	}
     ++table.game.round_nb;
 }
 
