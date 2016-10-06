@@ -252,6 +252,7 @@ function stop_high_rollers(table) {
 
 function new_cashgame(socket, table) {
     init_obj(table);
+	io.to(table.id).emit("remove board");
     io.to(table.id).emit("highlights", table.game.highlights_pos, "off");
     table.game.moment = "preflop";
     table.game.round_nb = socket === 42 ? 0 : 1;

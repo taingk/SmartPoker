@@ -328,8 +328,8 @@ function next_moment(table, game) {
 }
 
 function one_playing_player_left(table) {
+	table = get_table(table.id, tables);
     var player = get_seat(table.seats, table.playing_seats[0]).player;
-    table = get_table(table.id, tables);
 
     player.bankroll += +table.game.pot_amount;
     io.to(table.id).emit("bankroll modification", table.playing_seats[0], player);
