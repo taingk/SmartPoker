@@ -58,7 +58,7 @@ function socket_listens_players(socket, table) {
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
 		if (decision == "PASS" && table.game.round_nb != 0)
 		 	decision = "CALL";
-		else
+		else if (decision == "PASS" && table.game.round_nb == 0)
 			decision = "CHECK";
         if (!decision || !channel_id)
             return;
