@@ -56,8 +56,12 @@ function socket_listens_players(socket, table) {
             io.to(table.id).emit("send river", table.game.board[4]);
     });
     socket.on("player decision", function(decision, channel_id, bet_amount, rc) {
-		if (decision == "PASS" && table.game.round_nb != 0)
+		var pass = 0;
+
+		if (decision == "PASS" && table.game.round_nb != 0) {
 		 	decision = "CALL";
+			pass = 1;
+		}
 		else if (decision == "PASS" && table.game.round_nb == 0)
 			decision = "CHECK";
         if (!decision || !channel_id)
@@ -75,13 +79,13 @@ function socket_listens_players(socket, table) {
             bet_amount = (Math.round(+bet_amount * 100)) / 100;
         }
         treat_decision(table, get_seat(table.seats, seat_nb), decision, bet_amount, get_seat(table.seats, seat_nb).player, seat_nb, rc);
-        io.to(table.id).emit("last action", decision, seat_nb, bet_amount);
+        io.to(table.id).emit("last action", pass ? "PASS" : decision, seat_nb, bet_amount);
         if (table.playing_seats.length < 2) {
             return one_playing_player_left(table);
 		}
         console.log(decision + " " + bet_amount + " has been chosen by seat n°" + seat_nb);
         console.log(table.game.round_nb + "/" + table.playing_seats.length);
-        decision == "PASS" ? pass_decision(table) : next_decision(table, decision);
+        next_decision(table, decision);
     });
     socket.on("action done", function() {
         io.to(table.id).emit("action is true");
@@ -104,19 +108,6 @@ function socket_listens_players(socket, table) {
         io.to(table.id).emit('give Idx', table_id);
     });
     io.to(table.id).emit("pot modification", table.game.pot_amount);
-}
-
-function pass_decision(table) {
-	var pass = 1;
-
-    console.log('Pass decision');
-    if (table.game.round_nb > table.playing_seats.length && check_bets(table, table.seats))
-        next_moment(table, table.game);
-	else if (table.game.round_nb >= table.playing_seats.length && check_bets(table, table.seats, pass))
-		switch_next_player(table);
-    else
-        switch_next_player(table);
-    ++table.game.round_nb;
 }
 
 function next_decision(table, decision) {
