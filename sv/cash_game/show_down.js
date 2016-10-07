@@ -49,7 +49,7 @@ function show_down(table, game) {
     for (idx = 1; idx <= 6; ++idx) {
         if (table.playing_seats.indexOf(idx) != -1) {
             player = get_seat(table.seats, idx).player;
-            io.to(table.id).emit("show down", player.card1, player.card2, idx);
+            io.to(table.id).emit("show down", player.card1, player.card2, idx, table);
         }
     }
     return end_game(table, game, winners, player);

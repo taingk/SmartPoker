@@ -56,7 +56,7 @@ function end_game(table, game, winners, player) {
         io.to(table.id).emit("winner", player.seat_nb, 'disconnected');
         for (idx = 1; idx <= 6; ++idx) {
             if ((player = get_seat(table.seats, idx).player) != -1) {
-                io.to(table.id).emit("show down", player.card1, player.card2, idx);
+                io.to(table.id).emit("show down", player.card1, player.card2, idx, table);
             }
         }
         clear_board(table, game);

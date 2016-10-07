@@ -195,8 +195,9 @@ function sync_sv() {
         for (var idx = 1; idx <= 6; ++idx)
             $("#btn" + idx).css("visibility", "hidden");
     });
-    socket.on("show down", function(card1, card2, seat_nb) {
+    socket.on("show down", function(card1, card2, seat_nb, table) {
         if ($('#qr_spot' + seat_nb).css('visibility') == 'hidden') {
+			console.log('NB PLAYER SANS FOLD ' +table.playing_seats.length);
             if (card1 != -1 && card2 != -1) {
                 $("#card1_" + seat_nb).attr("src", "../img/cards/" + card1 + ".png");
                 $("#card2_" + seat_nb).attr("src", "../img/cards/" + card2 + ".png");
