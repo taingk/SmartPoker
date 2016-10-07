@@ -30,20 +30,20 @@ function sync_sv() {
     socket.on("timer action", function(table) {
         var sec = 0;
 
-		clearInterval(lockTimer);
-		timeLock=false;
+        clearInterval(lockTimer);
+        timeLock = false;
         lockTimer = setInterval(function() {
             sec++;
-			console.log(sec);
+            console.log(sec);
             if (timeLock && sec != 30) {
-				sec = 0;
+                sec = 0;
                 timeLock = false;
-				clearInterval(lockTimer);
+                clearInterval(lockTimer);
             } else if (sec == 30) {
                 sec = 0;
                 timeLock = false;
                 socket.emit("stop timer action", table);
-				clearInterval(lockTimer);
+                clearInterval(lockTimer);
             }
         }, 1000);
     });
@@ -196,16 +196,17 @@ function sync_sv() {
             $("#btn" + idx).css("visibility", "hidden");
     });
     socket.on("show down", function(card1, card2, seat_nb, table) {
-        if ($('#qr_spot' + seat_nb).css('visibility') == 'hidden') {
-			console.log('NB PLAYER SANS FOLD ' +table.playing_seats.length);
-            if (card1 != -1 && card2 != -1) {
-                $("#card1_" + seat_nb).attr("src", "../img/cards/" + card1 + ".png");
-                $("#card2_" + seat_nb).attr("src", "../img/cards/" + card2 + ".png");
-                $("#card1_" + seat_nb).css("visibility", "visible");
-                $("#card2_" + seat_nb).css("visibility", "visible");
-            } else {
-                $("#card1_" + seat_nb).css("visibility", "hidden");
-                $("#card2_" + seat_nb).css("visibility", "hidden");
+        if (table.playing_seats.length >= 2) {
+            if ($('#qr_spot' + seat_nb).css('visibility') == 'hidden') {
+                if (card1 != -1 && card2 != -1) {
+                    $("#card1_" + seat_nb).attr("src", "../img/cards/" + card1 + ".png");
+                    $("#card2_" + seat_nb).attr("src", "../img/cards/" + card2 + ".png");
+                    $("#card1_" + seat_nb).css("visibility", "visible");
+                    $("#card2_" + seat_nb).css("visibility", "visible");
+                } else {
+                    $("#card1_" + seat_nb).css("visibility", "hidden");
+                    $("#card2_" + seat_nb).css("visibility", "hidden");
+                }
             }
         }
     });
