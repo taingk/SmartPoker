@@ -81,6 +81,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     private_idx.splice(i, 1);
             }
             console.log(private_idx);
+			socket.leave(private_channelx);
             if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
                 console.log('in waiting dc');
                 remove_from_seat_array(table, socket_nickname);
@@ -116,7 +117,6 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     return one_playing_player_left(table);
                 }
             }
-            socket.leave(private_channelx);
         } else if (disconnect != "transport close") {
             console.log("Seat 'waiting' disconnect");
             private_channelx = get_table(table.id, tables).id + seat_nb;
@@ -137,8 +137,9 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     tables_ids.splice(k, 1);
             }
             console.log(tables_ids);
+			socket.leave(tables_ids);
         } else {
-            console.log('The useless else.');
+            console.log('The impossible else.');
         }
 		socket.disconnect();
     });
