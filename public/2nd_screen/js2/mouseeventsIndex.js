@@ -72,8 +72,6 @@ function register_player() {
         } else if (choice == "null" && amount < 0) {
             $('#choice2').hide();
         } else if ((choice == "raise" || choice == "bet") && amount >= 0) {
-            if (!amount)
-                console.log('amount : ' + amount);
             $('#choice2').show();
             $("#c2").text(choice.toUpperCase() + " +");
             $("#c2_amount").text((Math.floor(amount * 100)) / 100 + "$");
@@ -215,7 +213,6 @@ function allin_chosen() {
 }
 
 function mouse_handler_device() {
-    console.log('Clic!');
     $("#play").click(register_player);
     $("#choice1").click(choice1_chose);
     $("#choice2").click(choice2_chose);

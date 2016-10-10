@@ -24,7 +24,6 @@ function sync_sv() {
         $("#chrono").empty();
     });
     socket.on("action is true", function() {
-        console.log('timeLock est true');
         timeLock = true;
     });
     socket.on("timer action", function(table) {
@@ -34,7 +33,6 @@ function sync_sv() {
         timeLock = false;
         lockTimer = setInterval(function() {
             sec++;
-            console.log(sec);
             if (timeLock && sec != 30) {
                 sec = 0;
                 timeLock = false;
