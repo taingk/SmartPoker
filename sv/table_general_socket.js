@@ -71,7 +71,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
             socket_nickname = nickname;
     });
     socket.on("disconnect", function(disconnect) {
-		console.log('disconnect '+disconnect);
+        console.log('disconnect ' + disconnect);
         if (socket_nickname) {
             player_seat_idx = get_player_seat_by_nickname(get_table(table.id, tables).seats, socket_nickname);
             private_channelx = get_table(table.id, tables).id + player_seat_idx;
@@ -81,7 +81,7 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     private_idx.splice(i, 1);
             }
             console.log(private_idx);
-			socket.leave(private_channelx);
+            socket.leave(private_channelx);
             if (player_seat_idx && (table.game.moment == "waiting" || table.game.moment == "waiting end game")) {
                 console.log('in waiting dc');
                 remove_from_seat_array(table, socket_nickname);
@@ -129,18 +129,30 @@ function socket_listens_global_settings(socket, table, nb_seat) {
                     }
                 }
             }
-			socket.leave(private_channelx);
+            socket.leave(private_channelx);
         } else if (disconnect == "transport close") {
+            private_channelx = get_table(table.id, tables).id + seat_nb;
             for (k = 0, l = 0; k < tables_ids.length; k++) {
                 l = table.id;
-                if (l == tables_ids[k])
+                if (l == tables_ids[k]) {
+                    for (; i < private_idx.length; i++) {
+                        j = private_idx[i];
+                        if (j == private_channelx) {
+                            if (j.slice(-1) > 0 && j.slice(-1) < 7) {
+                                private_idx.splice(i, 1);
+                                io.to(table.id).emit("kick player", j.slice(-1));
+                            }
+                        }
+                    }
                     tables_ids.splice(k, 1);
+                }
             }
             console.log(tables_ids);
-			socket.leave(tables_ids);
+            socket.leave(private_channelx);
+            socket.leave(tables_ids);
         } else {
             console.log('The impossible else.');
         }
-		socket.disconnect();
+        socket.disconnect();
     });
 }
