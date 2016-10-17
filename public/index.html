@@ -69,6 +69,32 @@
 		});
 	</script>
 	<div id="container"><span class="loading">Loading table...</span></div>
+	<div id="prompt1">
+		<p style="font-size:20px">You can connect on a table without flashing a QR code.</p>
+		<p style="font-size:20px">Just put the link of the seat you want on your phone's browser.</p>
+		<br>
+		<script>
+			socket.emit("need Id");
+			socket.on("give Idx", function(idx) {
+				for (var i = 1; i < 7; i++) {
+					$("#prompt1").append('<p style="font-size:20px">Seat ' + i + ' : ' + 'http://poker.smartgames.tv/seat-' + i + '-id-' + idx + '</p>');
+				}
+			});
+		</script>
+	</div>
+	<div id="prompt2">
+		<h1 style="text-align:center">Poker No Limit Holdem</h1>
+		<br>
+		<p>The goal is to win the chips of the other players.</p>
+		<p>To do so, you need to have the more valuable hands in the table to win.</p>
+		<p>From weaker to stronger :</p>
+		<p>High Card < One Pair < Two Pair < Three of a kind < Straight</p>
+		<p>Flush < Full house < Four of a kind < Straight Flush < Five of a kind</p>
+		<br>
+		<br>
+		<br>
+		<span id="contact">support@ngine-networks.com</span>
+	</div>
 	<div id="chrono">
 	</div>
 	<div id="last_action"></div>
@@ -172,32 +198,6 @@
 	<img id="b3" alt="" src="" alt="" />
 	<img id="b4" alt="" src="" alt="" />
 	<img id="b5" alt="" src="" alt="" />
-	<div id="prompt1">
-		<p style="font-size:20px">You can connect on a table without flashing a QR code.</p>
-		<p style="font-size:20px">Just put the link of the seat you want on your phone's browser.</p>
-		<br>
-		<script>
-			socket.emit("need Id");
-			socket.on("give Idx", function(idx) {
-				for (var i = 1; i < 7; i++) {
-					$("#prompt1").append('<p style="font-size:20px">Seat ' + i + ' : ' + 'http://poker.smartgames.tv/seat-' + i + '-id-' + idx + '</p>');
-				}
-			});
-		</script>
-	</div>
-	<div id="prompt2">
-		<h1 style="text-align:center">Poker No Limit Holdem</h1>
-		<br>
-		<p>The goal is to win the chips of the other players.</p>
-		<p>To do so, you need to have the more valuable hands in the table to win.</p>
-		<p>From weaker to stronger :</p>
-		<p>High Card < One Pair < Two Pair < Three of a kind < Straight</p>
-		<p>Flush < Full house < Four of a kind < Straight Flush < Five of a kind</p>
-		<br>
-		<br>
-		<br>
-		<span id="contact">support@ngine-networks.com</span>
-	</div>
 	<h2></h2>
 	<div id='historique'>
 		<div id='histoContent'>
