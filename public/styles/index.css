@@ -658,12 +658,17 @@ h2 {
 #prompt1, #prompt2
 {
    	position:absolute;
-    top:150px;
+/*    top:150px;
     left:125px;
     right: 118px;
     width:1040px;
     height:405px;
-    color: white;
+*/
+	top: 20%;
+	left: 20%;
+	height: 60%;
+	width: 60%;
+	color: white;
     border:2px solid rgb(0, 0, 0);
     background-color: rgba(0,0,0,0.92);
     border-radius:4px;
