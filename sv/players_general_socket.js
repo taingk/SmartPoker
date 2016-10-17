@@ -247,10 +247,6 @@ function switch_next_player(table) {
                 return show_down(table, table.game);
             }
         }
-        /*        send_option(table, table.game.highlights_pos, "first choice", "check", -1);
-                send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-                send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
-        */
         io.to(table.id).emit("action is true");
         io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);
     }
@@ -318,10 +314,6 @@ function next_moment(table, game) {
                 return show_down(table, table.game);
             }
         }
-        /*        send_option(table, table.game.highlights_pos, "first choice", "check", -1);
-                send_option(table, table.game.highlights_pos, "second choice", "null", -1);
-                send_option(table, table.game.highlights_pos, "third choice", "fold", -1);
-        */
         io.to(table.id).emit("action is true");
         io.to(table.id).emit("i fold", "PASS", get_private_id(table.private_ids, table.game.highlights_pos), 0);
     }
